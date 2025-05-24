@@ -1,1 +1,7 @@
 node_modules
+# Ambienti locali
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
