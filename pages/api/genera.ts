@@ -9,45 +9,70 @@ const openai = new OpenAI({
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { topic, niche, style, intensity } = req.body;
+  const { topic, niche, style, intensity, mode = 'generate', userScript = '' } = req.body;
 
   try {
     
     // Crea un nuovo thread di conversazione
     const thread = await openai.beta.threads.create();
 
-    // Aggiungi il messaggio dell'utente al thread
-    await openai.beta.threads.messages.create(thread.id, {
-      role: 'user',
-      content: `
-  Crea uno script lungo (1200–1500 parole) in stile narrativo riflessivo ed epico, basato su questo personaggio/anime/tema: “${topic}”
+    // ✅ Prompt di raffinamento (fisso e professionale)
+const refinePrompt = `
+Migliora il seguente testo ottimizzando stile, grammatica, scorrevolezza, coerenza narrativa e impatto comunicativo.
 
-  Lo script deve essere creato sulla base delle scelte dell’utente e sarà quindi:
-  – Scorrevole e coinvolgente, con uno stile da documentario emotivo o storytelling YouTube
-  – Strutturato in forma narrativa fluida (no scalette), con transizioni psicologiche forti (es. “ed è qui che tutto cambia”)
-  – Capace di evolversi nel tono (es. da riflessivo a epico)
-  – Perfettamente adatto alla registrazione audio
+Obiettivi specifici:
+– Correggi errori grammaticali, sintattici e lessicali
+– Migliora il ritmo e la fluidità delle frasi senza alterare il significato
+– Elimina ripetizioni, ambiguità o espressioni poco efficaci
+– Rafforza la coerenza logica tra le parti, mantenendo la struttura tematica
+– Potenzia il tono e l’efficacia espressiva dove necessario
+– Mantieni un registro professionale, chiaro e coinvolgente
 
-  Includi obbligatoriamente:
-  – 1200/1500 parole di script e della durata di 10 minuti
-  – Voice-over integrato (tra parentesi: tono, ritmo, pause)
-  – Scene con timestamp verificati (episodio + minuto esatto, fonti affidabili)
-  – Approfondimenti culturali, psicologici o simbolici
-  – Montaggio suggerito: evidenzia i momenti visivi più forti o emotivi
-  – Call to action narrativa *inserita nell’ultima frase*, senza chiusura esplicita
+Restituisci solo la versione migliorata, pronta per la pubblicazione o la lettura ad alta voce. Non aggiungere commenti o spiegazioni.
 
-  Se possibile, aggiungi anche:
-  – Titolo YouTube ottimizzato per CTR e curiosità
-  – Descrizione SEO con parole chiave e hashtag
+${userScript}
+`;
 
-  Una volta completato tutto, riscrivi lo script sotto forma di **testo esteso in stile parlato**, contenente tutto lo script in forma fluida e naturale, come se fosse già pronto per essere registrato dal voice-over, senza sintesi o riassunti.
+// ✅ Prompt classico per generazione
+const generationPrompt = `
+Crea uno script lungo (1200–1500 parole) in stile narrativo riflessivo ed epico, basato su questo personaggio/anime/tema: “${topic}”
 
-  Queste sono le preferenze dell’utente:
-  – Nicchia: ${niche}
-  – Stile narrativo scelto: ${style}
-  – Intensità emotiva: ${intensity}
-  `,
-    });
+Lo script deve essere creato sulla base delle scelte dell’utente e sarà quindi:
+– Scorrevole e coinvolgente, con uno stile da documentario emotivo o storytelling YouTube
+– Strutturato in forma narrativa fluida (no scalette), con transizioni psicologiche forti (es. “ed è qui che tutto cambia”)
+– Capace di evolversi nel tono (es. da riflessivo a epico)
+– Perfettamente adatto alla registrazione audio
+
+Includi obbligatoriamente:
+– 1200/1500 parole di script e della durata di 10 minuti
+– Voice-over integrato (tra parentesi: tono, ritmo, pause)
+– Scene con timestamp verificati (episodio + minuto esatto, fonti affidabili)
+– Approfondimenti culturali, psicologici o simbolici
+– Montaggio suggerito: evidenzia i momenti visivi più forti o emotivi
+– Call to action narrativa *inserita nell’ultima frase*, senza chiusura esplicita
+
+Se possibile, aggiungi anche:
+– Titolo YouTube ottimizzato per CTR e curiosità
+– Descrizione SEO con parole chiave e hashtag
+
+Una volta completato tutto, riscrivi lo script sotto forma di **testo esteso in stile parlato**, contenente tutto lo script in forma fluida e naturale, come se fosse già pronto per essere registrato dal voice-over, senza sintesi o riassunti.
+
+Queste sono le preferenze dell’utente:
+– Nicchia: ${niche}
+– Stile narrativo scelto: ${style}
+– Intensità emotiva: ${intensity}
+`;
+
+// ✅ Aggiungi il messaggio dell'utente al thread
+await openai.beta.threads.messages.create(thread.id, {
+  role: 'user',
+  content: [
+    {
+      type: 'text',
+      text: mode === 'refine' ? refinePrompt : generationPrompt,
+    },
+  ],
+});
 
     // Avvia il run con l'Assistant personale
     const run = await openai.beta.threads.runs.create(thread.id, {
@@ -83,14 +108,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Cerca il contenuto di tipo "text"
     const textBlock = lastAssistantMessage.content.find((c) => c.type === 'text');
+    console.log('TEXT BLOCK:', JSON.stringify(textBlock, null, 2));
 
-    if (!textBlock || !('text' in textBlock)) {
-      console.warn('Nessun contenuto testuale nel messaggio:', lastAssistantMessage.content);
-      return res.status(200).json({ script: 'Nessuna risposta generata' });
-    }
+   if (!textBlock || typeof textBlock.text?.value !== 'string') {
+  console.warn('Nessun contenuto testuale valido nel messaggio:', lastAssistantMessage.content);
+  return res.status(200).json({ script: 'Nessuna risposta generata' });
+}
 
-    const script = textBlock.text.value.trim();
-    res.status(200).json({ script });
+const script = textBlock.text.value.trim();
+res.status(200).json({ script });
   }
   catch (error) {
   console.error(error);

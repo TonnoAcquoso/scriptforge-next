@@ -1,6 +1,63 @@
 /* styles/globals.css */
 
-/* MENU A COMPARSA*/
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================= */
+/* 🎯 VARIABILI GLOBALI TEMI     */
+/* ============================= */
+
+html[data-theme='light'] {
+  --bg-color: #f7f7f7;
+  --text-color: #111111;
+  --bg-rgb: 247, 247, 247;
+  --text-rgb: 17, 17, 17;
+}
+
+html[data-theme='dark'] {
+  --bg-color: #0e0e11;
+  --text-color: #ffffff;
+  --bg-rgb: 14, 14, 17;
+  --text-rgb: 255, 255, 255;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
+
+
+/* ============================= */
+/* 📋 OUTPUT STYLE ADATTIVO      */
+/* ============================= */
+
+html[data-theme='dark'] .output {
+  background-color: #ffffff1a;
+  color: #f0f0f0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme='light'] .output,
+html[data-theme='light'] .historyBox {
+  background-color: rgba(0, 0, 0, 0);
+  color: #111;
+  border: 1px solid #00000026;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ============================= */
+/* 📜 MENU A COMPARSA            */
+/* ============================= */
+
 .menuContainer {
   position: absolute;
   top: 1rem;
@@ -22,7 +79,7 @@
 
 .menuPopup {
   position: absolute;
-  top: 45px; /* o quanto basta sotto il menuIcon */
+  top: 45px;
   right: 20px;
   display: flex;
   flex-direction: column;
@@ -30,6 +87,44 @@
   gap: 10px;
   margin-top: 0.5rem;
   z-index: 999;
+}
+
+/* 🌐 Pulsanti del menu a comparsa */
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;              /* Icona e testo affiancati */
+  flex-wrap: nowrap;               /* ❌ Evita il wrapping del contenuto */
+  text-align: center;
+  gap: 0.6rem;
+
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  white-space: nowrap;             /* ✅ Forza tutto su UNA sola riga */
+  overflow: hidden;                /* ✅ Previene overflow visivo */
+  text-overflow: ellipsis;         /* ✅ Aggiunge i "..." se necessario */
+}
+
+.menuButton:hover {
+  background: #ffffff30;
+  transform: scale(1.03);
+  box-shadow: 0 4px 16px rgba(0, 183, 255, 0.3);
+}
+
+.menuButton svg {
+  color: var(--accent-color, #00aeff);
 }
 
 .accordionBlock {
@@ -55,138 +150,112 @@
   text-decoration: underline;
 }
 
-html[data-theme='dark'] .output {
-  background-color: #ffffff1a;
-  color: #f0f0f0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-}
+/* ============================= */
+/* 💎 PULSANTI AZIONE MODERNI    */
+/* ============================= */
 
-/* Tema Light */
-html[data-theme='light'] {
-  --bg-color: #f7f7f7;
-  --text-color: #111111;
-}
-
-/* Tema Dark */
-html[data-theme='dark'] {
-  --bg-color: #0e0e11;
-  --text-color: #ffffff;
-}
-
-html[data-theme='light'] .output
-html[data-theme='light'] .historyBox {
-  background-color: rgba(0, 0, 0, 0);
-  color: #111;
-  border: 1px solid #00000026;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-}
-
-/* Body globale */
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  font-family: Arial, sans-serif;
-}
-
-/* PULSANTE TEMA (TONDO) 
-.toggleTheme {
-  position: absolute;
-  top: 1.5rem;
-  right: 1rem;
-  z-index: 1000;
-  width: 55px;
-  height: 40px;
-  border-radius: 30%;
-  font-size: 1rem;
-  display: flex;
+.glassButton {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  gap: 0.5rem;
+  padding: 0.75rem 1.3rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   border: none;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.toggleTheme.animate {
-  animation: rotate 1s ease;
-}
-
-html[data-theme='dark'] .toggleTheme {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-html[data-theme='light'] .toggleTheme {
-  background: rgba(44, 44, 44, 0.1);
-  color: #000000;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-} */
-
-/* PULSANTE GENERA SCRIPT (VETROSO) */
-.glassButton {
-  padding: 0.75rem 1.75rem;
-  border-radius: 20px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 220px;
-  border: none;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-html[data-theme='dark'] .glassButton {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-html[data-theme='light'] .glassButton {
-  background: rgba(0, 0, 0, 0.08);
-  color: #000000;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-}
-
-body {
-  transition: background-color 1s ease, color 1s ease;
-  background-color: var(--bg-color);
+  border-radius: 14px;
   color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+  background: linear-gradient(to right, rgba(0, 183, 255, 0.08), rgba(0, 183, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 183, 255, 0.07);
 }
+
+.glassButton:hover {
+  background: linear-gradient(to right, rgba(0, 183, 255, 0.15), rgba(0, 183, 255, 0.05));
+  box-shadow: 0 10px 30px rgba(0, 183, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+/* 🖱️ Feedback click */
+.glassButton:active {
+  transform: scale(0.97);
+  box-shadow: 0 4px 16px rgba(0, 183, 255, 0.1);
+}
+
+/* ✨ Glow dinamico */
+.glassButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glassButton:hover::before {
+  opacity: 1;
+  animation: buttonShine 1.4s ease-in-out infinite;
+}
+
+@keyframes buttonShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 🌟 Lucide icon animata */
+.glassButton svg {
+  transition: transform 0.3s ease;
+}
+
+.glassButton:hover svg {
+  transform: rotate(6deg) scale(1.08);
+}
+
+/* 📐 Griglia pulsanti: compatta, leggibile, reattiva */
+.buttonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+
+/* 📱 Mobile fix: mantiene due colonne, senza allungare tutto */
+@media (max-width: 480px) {
+  .buttonGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .glassButton {
+    font-size: 0.9rem;
+    padding: 0.85rem 1rem;
+  }
+}
+
+/* ============================= */
+/* 📱 RESPONSIVE BUTTON ADAPT    */
+/* ============================= */
 
 @media screen and (max-width: 768px) {
-  .glassButton {
+  .glassButton,
+  .actionButton {
     font-size: 1rem;
     padding: 1rem 1.2rem;
     min-width: 180px;
   }
 
-  .toggleTheme {
-    top: 1rem;
-    right: 1rem;
-    width: 50px;
-    height: 40px;
-    font-size: 0.75rem;
-  }
   .menuContainer {
     position: fixed;
     top: 20px;
@@ -194,195 +263,152 @@ body {
     z-index: 999;
   }
 
-  .menuPopup {
-    top: 60px;
-    right: 10px;
-    gap: 8px;
-    padding: 0.5rem;
-    background: rgba(214, 204, 204, 0.586);
-    backdrop-filter: blur(6px);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px #bca61700;
-    width: 50vw;
+  /* 📱 Menu a comparsa su dispositivi mobili */
+.menuPopup {
+    position: absolute;
+    top: 42px; /* subito sotto il bottone hamburger */
+    right: 12px;
+    width: 194.7px; /* margine laterale mobile */
     max-width: 320px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.8rem;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    gap: 0.6rem;
+    z-index: 1000;
   }
 
-  .menuPopup button {
+  .menuPopup .glassButton {
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
     width: 100%;
-    font-size: 1rem;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    border-radius: 10px;
   }
-
-  .guideBox {
-    width: 70%;
-    font-size: 0.9rem;
-    padding: 1rem;
-    margin-top: 0.5rem;
-    box-sizing: 0;
-  }
-
-  .guideBox ul {
-    padding-left: 1rem;
-  }
+  
+  
 }
 
-/* ESPORTAZIONE */
+/* ============================= */
+/* 📤 STILE MODALE ESPORTAZIONE (Popup elegante) */
+/* ============================= */
+
+/* 🔲 Sfondo scuro semi-trasparente per popup */
 .exportModal {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(4px);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
 
+/* 🧱 Box centrale del popup */
 .modalContent {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  padding: 2rem 1.5rem;
-  border-radius: 20px;
-  max-width: 360px;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.9));
+  padding: 2rem 1.8rem;
+  border-radius: 24px;
+  max-width: 400px;
   width: 90%;
   color: var(--text-color);
   text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  animation: fadeInUp 0.3s ease-out;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.25s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modalContent h3 {
-  margin-bottom: 1rem;
   font-size: 1.2rem;
-}
-
-.modalContent input {
-  width: 100%;
-  padding: 0.7rem 1rem;
-  font-size: 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.05);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
   color: var(--text-color);
-  margin-bottom: 1.2rem;
 }
 
+/* 📝 Input nome file */
+.modalContent input {
+  width: 91%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.modalContent input:focus {
+  outline: none;
+  border-color: #4fc3f7;
+  box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.3);
+}
+
+/* 🧩 Pulsanti azione */
 .exportButtons {
-  margin-top: 2rem;
+  margin-top: 0;
   display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .exportButtons .glassButton,
 .modalContent .glassButton {
   flex: 1;
-  padding: 0.7rem 1rem;
+  padding: 0.9rem 1.2rem;
   font-size: 1rem;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
 }
 
-/* ANIMAZIONI PULSANTI */
-.glassButton {
-  transition: all 0.25s ease;
-}
-
-.glassButton:hover {
-  transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.glassButton:active {
-  transform: scale(0.98);
-  filter: brightness(0.9);
-}
-
-/* MODALE: miglior spacing */
+/* 🟥 Pulsante annulla con stile diverso e centrato */
 .modalContent .glassButton.cancelButton {
-  margin-top: 2rem;
+  background: rgba(255, 60, 60, 0.1);
+  color: #ff4d4d;
+  margin-top: 1.8rem;
+
+  /* ✅ Centratura */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  border: 1px solid rgba(255, 77, 77, 0.3);
+}
+
+.modalContent .glassButton.cancelButton:hover {
+  background: rgba(255, 77, 77, 0.15);
+  transform: scale(1.04);
+}
+
+/* 🧊 Hover su tutti gli altri pulsanti */
+.modalContent .glassButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
-  } to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-/* GUIDA INTERATTIVA 
-.guideWrapper {
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.guideToggle {
-  position: absolute;
-  top: 5rem;
-  right: 1rem;
-  z-index: 800;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: inherit;
-  padding: 0.6rem 1.2rem;
-  border-radius: 12px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.guideToggle:hover {
-  background: rgba(255, 255, 255, 0.15);
-} */
-
-
-.guideBox {
-  position: absolute;
-  top: 11rem;
-  right: 1rem;
-  z-index: 800;
-  margin-top: 0.5rem;
-  padding: 1rem 1.2rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: inherit;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
-
-.guideBox ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-.guideBox li {
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-  line-height: 1.5;
-} 
-
-@keyframes slideInFade {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
   }
   to {
     opacity: 1;
@@ -390,33 +416,39 @@ body {
   }
 }
 
-/* SKELETON LOADER */
-.skeletonLoader {
-  width: 100%;
-  max-width: 800px;
-  margin: 2rem auto;
+/* ============================= */
+/* 🧼 OTTIMIZZAZIONE PULSANTI    */
+/* ============================= */
+
+.outputButtons {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem; /* ✅ spazio aumentato tra pulsanti */
+  margin-top: 1.5rem;
 }
 
-.skeleton-line {
-  height: 1rem;
-  background: linear-gradient(90deg, #9991, #eee3, #9991);
-  border-radius: 6px;
-  animation: pulse 1.5s ease-in-out infinite;
+/* ============================= */
+/* 🔄 ANIMAZIONE GENERICA        */
+/* ============================= */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.skeleton-line.short {
-  width: 40%;
-}
+/* ============================= */
+/* ALTRE SEZIONI MANTENUTE INVARIATE
+   (modulo guida, skeleton, analisi) */
+/* ============================= */
 
-@keyframes pulse {
-  0% { background-position: -200px 0; }
-  100% { background-position: calc(200px + 100%) 0; }
-}
-
-/* CRONOLOGIA SCRIPT*/
+/* 💠 Sezione Cronologia Script */
 .historyBox {
   margin-top: 2rem;
   width: 100%;
@@ -442,3 +474,208 @@ body {
   margin-bottom: 0.5rem;
 }
 
+/* 🦴 Skeleton Loader (animazione di caricamento) */
+
+.skeletonLoader {
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-line {
+  height: 1rem;
+  background: linear-gradient(90deg, #9991, #eee3, #9991);
+  border-radius: 6px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-line.short {
+  width: 40%;
+}
+
+@keyframes pulse {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+/* 📦 Guida Interattiva (non fissa, senza scrollbar visibile) */
+.guideBox {
+  position: absolute; /* ✅ non più fissa */
+  top: 10.5rem;
+  right: 2.2rem;
+  z-index: 500;
+  margin: 2rem auto; /* ✅ centrata verticalmente */
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-color);
+  text-align: left;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  box-sizing: border-box;
+  width: 70%;
+  max-width: 560px;
+  overflow: hidden; /* ✅ nasconde la scrollbar laterale */
+  animation: fadeInUp 0.2s ease-out;
+}
+
+/* 🧠 Titolo guida */
+.guideBox h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+/* 📋 Lista punti guida */
+.guideBox ul {
+  padding-left: 1rem;
+  margin: 0;
+  list-style-type: none;
+}
+
+.guideBox li {
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ✅ Stile per toggle confronto */
+.toggleDiff {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+/* ✅ Aggiunte (verde) */
+.diff-added {
+  background-color: #ccffcc;
+  color: #006600;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin: 0 2px;
+  display: inline;
+}
+
+/* ✅ Rimosse (rosso barrato) */
+.diff-removed {
+  background-color: #ffcccc;
+  color: #b30000;
+  text-decoration: line-through;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin: 0 2px;
+  display: inline;
+}
+
+/* ✅ Parti neutre (normale) */
+.diff-neutral {
+  color: inherit;
+}
+
+  /* 🔘 Nasconde il pulsante .guideClose su schermi più larghi di 768px */
+@media (min-width: 769px) {
+  .guideClose {
+    display: none;
+  }
+}
+/* 📱 Responsive su iPhone e mobile */
+@media screen and (max-width: 768px) {
+  .guideBox {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    z-index: 1000;
+    margin: 0;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    height: 80vh;
+    max-height: 85vh;
+    padding: 1.5rem;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    animation: slideUp 0.3s ease-out;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .guideClose {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .guideClose:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+  }
+
+  .guideBox h3 {
+    font-size: 1.15rem;
+  }
+
+  .guideBox li {
+    font-size: 0.9rem;
+  }
+
+  /* 🌫️ Overlay sfocato sotto la guida */
+.guideOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 850; /* deve stare sotto la guida e sopra tutto il resto */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.2); /* leggera oscurazione */
+  transition: opacity 0.3s ease;
+}
+}
+
+  /* ✨ Animazione fade-up 
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+} */
