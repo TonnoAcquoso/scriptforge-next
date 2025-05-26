@@ -1,31 +1,11 @@
-:global(html[data-theme='light']) {
-  --bg-color: #f7f7f7;
-  --text-color: #111111;
-  --bg-rgb: 247, 247, 247;
-  --text-rgb: 17, 17, 17;
-}
-:global(html[data-theme='dark']) {
-  --bg-color: #0e0e11;
-  --text-color: #ffffff;
-  --bg-rgb: 14, 14, 17;
-  --text-rgb: 255, 255, 255;
-}
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  font-family: Arial, sans-serif;
-}
-:global(html[data-theme='dark']) .output {
+
+html[data-theme='dark'] .output {
   background-color: #ffffff1a;
   color: #f0f0f0;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 }
-:global(html[data-theme='light']) .output, html[data-theme='light'] .historyBox {
+html[data-theme='light'] .output, html[data-theme='light'] .historyBox {
   background-color: rgba(0, 0, 0, 0);
   color: #111;
   border: 1px solid #00000026;

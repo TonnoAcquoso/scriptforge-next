@@ -3081,15 +3081,13 @@ html[data-theme='light'] {
   --bg-rgb: 247, 247, 247;
   --text-rgb: 17, 17, 17;
 }
-
 html[data-theme='dark'] {
   --bg-color: #0e0e11;
   --text-color: #ffffff;
   --bg-rgb: 14, 14, 17;
   --text-rgb: 255, 255, 255;
 }
-
-body {
+.body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
