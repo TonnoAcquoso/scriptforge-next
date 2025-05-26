@@ -9,16 +9,32 @@ const openai = new OpenAI({
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { topic, niche, style, intensity } = req.body;
+  const { topic, niche, style, intensity, mode = 'generate', userScript = '' } = req.body;
 
   try {
+    
     // Crea un nuovo thread di conversazione
     const thread = await openai.beta.threads.create();
 
-    // Aggiungi il messaggio dell'utente al thread
-    await openai.beta.threads.messages.create(thread.id, {
-      role: 'user',
-      content: `
+    // ✅ Prompt di raffinamento (fisso e professionale)
+const refinePrompt = `
+Migliora il seguente testo ottimizzando stile, grammatica, scorrevolezza, coerenza narrativa e impatto comunicativo.
+
+Obiettivi specifici:
+– Correggi errori grammaticali, sintattici e lessicali
+– Migliora il ritmo e la fluidità delle frasi senza alterare il significato
+– Elimina ripetizioni, ambiguità o espressioni poco efficaci
+– Rafforza la coerenza logica tra le parti, mantenendo la struttura tematica
+– Potenzia il tono e l’efficacia espressiva dove necessario
+– Mantieni un registro professionale, chiaro e coinvolgente
+
+Restituisci solo la versione migliorata, pronta per la pubblicazione o la lettura ad alta voce. Non aggiungere commenti o spiegazioni.
+
+${userScript}
+`;
+
+// ✅ Prompt classico per generazione
+const generationPrompt = `
 Crea uno script lungo (1200–1500 parole) in stile narrativo riflessivo ed epico, basato su questo personaggio/anime/tema: “${topic}”
 
 Lo script deve essere creato sulla base delle scelte dell’utente e sarà quindi:
@@ -45,8 +61,18 @@ Queste sono le preferenze dell’utente:
 – Nicchia: ${niche}
 – Stile narrativo scelto: ${style}
 – Intensità emotiva: ${intensity}
-`,
-    });
+`;
+
+// ✅ Aggiungi il messaggio dell'utente al thread
+await openai.beta.threads.messages.create(thread.id, {
+  role: 'user',
+  content: [
+    {
+      type: 'text',
+      text: mode === 'refine' ? refinePrompt : generationPrompt,
+    },
+  ],
+});
 
     // Avvia il run con l'Assistant personale
     const run = await openai.beta.threads.runs.create(thread.id, {
@@ -69,13 +95,31 @@ Queste sono le preferenze dell’utente:
     }
 
     // Recupera l'ultima risposta dell'assistente
+    // Recupera tutti i messaggi
     const messages = await openai.beta.threads.messages.list(thread.id);
-    const last = messages.data.find((m) => m.role === 'assistant');
-    const script = last?.content?.[0]?.text?.value || 'Nessuna risposta generata';
+    console.log('MESSAGES:', JSON.stringify(messages.data, null, 2));
+    // Trova il messaggio più recente dell'assistente
+    const lastAssistantMessage = messages.data.find((m) => m.role === 'assistant');
 
-    res.status(200).json({ script });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Errore nella generazione con Assistant' });
-  }
+    if (!lastAssistantMessage) {
+      console.warn('Nessun messaggio dell’assistente trovato');
+      return res.status(200).json({ script: 'Nessuna risposta generata' });
+    }
+
+    // Cerca il contenuto di tipo "text"
+    const textBlock = lastAssistantMessage.content.find((c) => c.type === 'text');
+    console.log('TEXT BLOCK:', JSON.stringify(textBlock, null, 2));
+
+   if (!textBlock || typeof textBlock.text?.value !== 'string') {
+  console.warn('Nessun contenuto testuale valido nel messaggio:', lastAssistantMessage.content);
+  return res.status(200).json({ script: 'Nessuna risposta generata' });
 }
+
+const script = textBlock.text.value.trim();
+res.status(200).json({ script });
+  }
+  catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Errore nella generazione con Assistant' });
+}
+} 

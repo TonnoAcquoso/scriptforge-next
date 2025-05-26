@@ -334,12 +334,12 @@ const handleCopy = async () => {
       <AnimatePresence>
   {scriptResult && (
     <motion.div
-      className={styles.output} // ✅ Box principale con sfondo opaco, bordi arrotondati, testo elegante
-      initial={{ opacity: 0, y: 20 }} // 🎬 Animazione in entrata: fade + slide up
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.3 }}
-    >
+  className={styles.outputContainer} // ✅ Contenitore principale
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  exit={{ opacity: 0, y: 20 }}
+  transition={{ duration: 0.3 }}
+>
       {/* 🧾 Titolo del risultato, centrato e stilizzato */}
       <motion.div
   className={styles.outputHeader}
@@ -348,26 +348,40 @@ const handleCopy = async () => {
   transition={{ duration: 0.4 }}
 >
   <div className={styles.iconWrap}>
-    <BookOpenCheck size={24} strokeWidth={2.2} className={styles.iconAnimated} />
+    <BookOpenCheck size={24} className={styles.iconAnimated} />
   </div>
-  <h2 className={styles.outputTitle}>Risultato Generato</h2>
+  <h2 className={styles.outputTitle}>Script Generato</h2>
 </motion.div>
 
       {/* 📄 Testo formattato come paragrafo, pre-wrap e giustificato */}
       <div className={styles.outputText}>
-        {scriptResult.trim().split(/\n{2,}/).map((block, i) => (
-      <motion.div
-        key={i}
-        className={styles.scriptBlock}
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: i * 0.05, duration: 0.4 }}
-      >
-        {block.split(/(\(.*?\))/g).map((part, j) => part.match(/^\(.*\)$/) ? (
-          <span key={j} className={styles.tag}>{part} </span>) : ( <span key={j}>{part}</span>))}
-      </motion.div>))}
-      </div>
+  {scriptResult.trim().split(/\n{2,}/).map((block, i) => {
+  // 🔎 Se la riga è solo --- disegnamo un separatore elegante
+  if (block.trim() === '---') {
+    return <div key={`sep-${i}`} className={styles.separator} />;
+  }
+
+  return (
+    <motion.div
+      key={i}
+      className={styles.scriptBlock}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: i * 0.05, duration: 0.4 }}
+    >
+      {block.split(/(\(.*?\))/g).map((part, j) =>
+        part.match(/^\(.*\)$/) ? (
+          <span key={j} className={styles.tag}>{part}</span>
+        ) : (
+          <span key={j}>{part}</span>
+        )
+      )}
+    </motion.div>
+  );
+})}
+</div>
+
 
       {/* 🎛️ Pulsanti azione con layout responsive e coerente: COPIA & ANALIZZA SCRIPT */}
       <div className={styles.buttonGrid}>
