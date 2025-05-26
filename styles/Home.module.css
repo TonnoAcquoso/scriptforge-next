@@ -1,10 +1,10 @@
-html[data-theme='light'] {
+:global(html[data-theme='light']) {
   --bg-color: #f7f7f7;
   --text-color: #111111;
   --bg-rgb: 247, 247, 247;
   --text-rgb: 17, 17, 17;
 }
-html[data-theme='dark'] {
+:global(html[data-theme='dark']) {
   --bg-color: #0e0e11;
   --text-color: #ffffff;
   --bg-rgb: 14, 14, 17;
@@ -19,13 +19,13 @@ body {
   overflow-x: hidden;
   font-family: Arial, sans-serif;
 }
-html[data-theme='dark'] .output {
+:global(html[data-theme='dark']) .output {
   background-color: #ffffff1a;
   color: #f0f0f0;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 }
-html[data-theme='light'] .output, html[data-theme='light'] .historyBox {
+:global(html[data-theme='light']) .output, html[data-theme='light'] .historyBox {
   background-color: rgba(0, 0, 0, 0);
   color: #111;
   border: 1px solid #00000026;
