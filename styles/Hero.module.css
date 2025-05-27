@@ -1,0 +1,72 @@
+/* ===================== */
+/* 🎯 Hero.module.css   */
+/* ===================== */
+
+/* 🎯 Contenitore principale della sezione Hero */
+.hero {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* 🧭 Titolo principale */
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent-color, #00bfff);
+  margin-bottom: 1rem;
+}
+
+/* 📝 Sottotitolo */
+.subtitle {
+  font-size: 1.25rem;
+  color: var(--text-color);
+  max-width: 700px;
+  margin: 0 auto 3rem auto;
+  line-height: 1.6;
+}
+
+/* ⚙️ Griglia delle funzionalità */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* 🧩 Singolo blocco funzionalità */
+.feature {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.feature svg {
+  margin-bottom: 0.8rem;
+  color: var(--accent-color, #00bfff);
+}
+
+/* 🎯 Titolo funzione */
+.feature h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+/* ✏️ Descrizione funzione */
+.feature p {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  line-height: 1.5;
+}
