@@ -21,7 +21,7 @@ interface NavbarProps {
   onToggleTheme: () => void;
 }
 
-export default function Navbar({ onToggleGuide, onToggleTheme }: NavbarProps): JSX.Element {
+export default function Navbar({ onToggleGuide, onToggleTheme }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
