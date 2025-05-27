@@ -16,7 +16,7 @@ build/
 out/
 
 # 🧹 Tailwind output (solo se generato manualmente)
-output.css
+
 
 # 🖥️ Configurazioni locali/macOS
 .DS_Store
