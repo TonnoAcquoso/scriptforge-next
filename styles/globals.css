@@ -4,7 +4,9 @@
 /*! tailwindcss v4.1.7 | MIT License | https://tailwindcss.com */
 @layer base, components, utilities;
 
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 /* ============================= */
 /* 🎯 VARIABILI GLOBALI TEMI     */
 /* ============================= */
