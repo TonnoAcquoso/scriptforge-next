@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, FC } from 'react';
 import styles from '../styles/Navbar.module.css';
 import Link from 'next/link';
 
+
 import { useRouter } from 'next/router'; // 🔁 Navigazione tra pagine
 
 // 🎨 Icone Lucide
@@ -33,7 +34,7 @@ export default function Navbar({ onToggleGuide, onToggleTheme }: NavbarProps) {
     const guideRef = useRef(null);
     const router = useRouter();
     // 🌗 Stato del tema (light o dark)
-    const [theme, setTheme] = useState<"light" | "dark">("light");
+    const [theme, setTheme] = useState("light");
     
 
 
@@ -62,21 +63,25 @@ useEffect(() => {
 }, []);
 
 // 🌗 Gestione tema
-useEffect(() => {
-  const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+const handleToggleTheme = () => {
+  const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
 
-  setTheme(initialTheme);
-  document.documentElement.setAttribute("data-theme", initialTheme);
-}, []);
+  // ✅ Imposta l’attributo corretto
+  document.documentElement.setAttribute("data-theme", newTheme);
 
-const toggleTheme = () => {
-  const nextTheme = theme === "dark" ? "light" : "dark";
-  setTheme(nextTheme);
-  document.documentElement.setAttribute("data-theme", nextTheme);
-  localStorage.setItem("theme", nextTheme);
+  // ✅ Salva nel localStorage
+  localStorage.setItem("theme", newTheme);
+
+  // ✅ Aggiorna lo stato interno
+  setTheme(newTheme);
 };
+
+useEffect(() => {
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  setTheme(savedTheme);
+}, []);
 
 // Gestisce la direzione dello scroll per far scomparire/riapparire i pulsanti su mobile
 useEffect(() => {
@@ -114,16 +119,8 @@ useEffect(() => {
   return () => window.removeEventListener('scroll', handleScroll);
 }, []);
 
-  // ✅ Chiudi il menu cliccando fuori
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+ 
+  
 
   // 🎯 Inizializza le gesture di swipe su dispositivi mobili
   const swipeHandlers = useSwipeable({
@@ -154,61 +151,56 @@ useEffect(() => {
       document.body.style.overflow = '';
     };
   }, [showGuide]);
-  
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        guideRef.current &&
-        !guideRef.current.contains(event.target as Node)
-      ) {
-        setMenuOpen(false); // ✅ Chiude solo il menu
-      }
-    };
-  
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
 
 
   return (
       <nav className={styles.navbar}>
       {/* 📂 Menu popup al posto del titolo "ScriptForge AI", visibile solo su desktop */}
-            <div className={`${styles.menuContainer} ${styles.desktopOnly}`}>
-              <button
-                className={styles.menuButton}
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Apri menu"
-                ref={buttonRef} // 🆕 IMPORTANTE
-              >
-                <Menu size={24} />
-              </button>
+            {/* 📂 Menu popup desktop al posto del titolo */}
+<div className={`${styles.menuContainer} ${styles.desktopOnly}`}>
+  <button
+    className={styles.menuButton}
+    onClick={() => setMenuOpen(!menuOpen)}
+    aria-label="Apri menu"
+    ref={buttonRef}
+  >
+    <Menu size={24} />
+  </button>
+  <Link href="/Hero" className={styles.navButton}>Scopri ScriptForge</Link>
 
-              
-                {menuOpen && ( 
-                  <div ref={menuRef} className={styles.dropdown}>
-                  <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/raffina">Raffina uno Script</a></li>
-                    <li><a href="/analisiscript">Analisi</a></li>
-                    <li><a href="/about">About</a></li>
-                    {/* 🌗 Cambio tema con icona dinamica */}
-                    <li onClick={onToggleTheme} className={styles.themeToggle}>
-                      {theme === "dark" ? (<><Sun size={16} style={{ marginRight: "8px" }} />Tema Chiaro</>) : 
-                          (<><Moon size={16} style={{ marginRight: "8px" }} />Tema Scuro</>)}</li>
-                  </ul>
-                </div>
-              )}
-            </div>
+  {menuOpen && (
+  <div ref={menuRef} className={styles.dropdown}>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/raffina">Raffina uno Script</a></li>
+      <li><a href="/analisiscript">Analisi</a></li>
+      <li><a href="/about">About</a></li>
+
+    
+    </ul>
+  </div>
+)}
+</div>
 
             {/* ✅ Desktop buttons */}
       <div className={styles.navRight}>
         <Link href="/raffina" className={styles.navLink}>Raffina uno Script</Link>
-        <Link href="/Hero" className={styles.navButton}>Scopri ScriptForge</Link>
+         {/* 🌗 Cambio tema */}
+ 
+        <button 
+          onClick={handleToggleTheme}
+          className={styles.desktopButton}>
+          {theme === "dark" ? (
+            <>
+              <Sun size={16} style={{ marginRight: "8px" }} /> Tema Chiaro
+            </>
+          ) : (
+            <>
+              <Moon size={16} style={{ marginRight: "8px" }} /> Tema Scuro
+            </>
+          )}
+        </button>
+   
       </div>
 
       {/* ✅ Mobile buttons dropdown */}
@@ -233,7 +225,7 @@ useEffect(() => {
             >
 
               <button 
-                onClick={toggleTheme}
+                onClick={handleToggleTheme}
                 className={styles.mobileButton} >
                 {theme === "dark" ? ( <><Sun size={16} style={{ marginRight: "8px" }} /> Tema Chiaro</>) : 
                   (<><Moon size={16} style={{ marginRight: "8px" }} />Tema Scuro</>)}

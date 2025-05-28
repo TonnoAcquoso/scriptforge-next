@@ -8,6 +8,7 @@
   justify-content: flex-start;
   width: 100%;
   padding: 1.5rem 1rem;
+  padding-top: 100px;
   text-align: center;
   color: var(--text-color);
   box-sizing: border-box;
@@ -24,6 +25,8 @@
   margin-bottom: 0.5rem;
   filter: drop-shadow(0 0 0.75rem #00ffe5aa);
 }
+
+
 
 /* 🏷️ Titolo e sottotitolo */
 .title {

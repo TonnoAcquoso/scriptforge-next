@@ -1,15 +1,26 @@
 /* styles/globals.css */
-@import './variables.css';
+
 @import "tailwindcss";
 
 /*! tailwindcss v4.1.7 | MIT License | https://tailwindcss.com */
-@layer base, components, utilities;
+@layer base, components, utilities, theme;
 
 /* ============================= */
 /* 🎯 VARIABILI GLOBALI TEMI     */
 /* ============================= */
 
+
 /* 🌤️ Tema Light – Migliorato */
+
+html[data-theme='dark'] {
+  scroll-behavior: smooth;
+  --bg-color: #0e0e11;
+  --text-color: #ffffff;
+  --bg-rgb: 14, 14, 17;
+  --text-rgb: 255, 255, 255;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
 html[data-theme='light'] {
   --bg-color: #f5f7fa;
   --text-color: #111111;
@@ -18,16 +29,7 @@ html[data-theme='light'] {
   --border-color: rgba(0, 0, 0, 0.08);
   --shadow-light: 0 8px 24px rgba(0, 0, 0, 0.05);
   --font-sans: 'Inter', system-ui, sans-serif;
-}
-
-
-
-html[data-theme='dark'] {
-  scroll-behavior: smooth;
-  --bg-color: #0e0e11;
-  --text-color: #ffffff;
-  --bg-rgb: 14, 14, 17;
-  --text-rgb: 255, 255, 255;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 body {
@@ -39,6 +41,11 @@ body {
   letter-spacing: 0.02em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+h2, h3, section {
+  scroll-margin-top: 100px;
 }
 
 /* ============================= */

@@ -58,22 +58,6 @@ const calculateReadingTime = (text: string) => {
 |=====================================|
 */
 
-
-
-// Applica il tema (dark/light) all’HTML principale
-useEffect(() => {
-  document.documentElement.setAttribute('data-theme', theme);
-}, [theme]);
-
-useEffect(() => {
-  const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-
-  setTheme(initialTheme);
-  document.documentElement.setAttribute('data-theme', initialTheme);
-}, []);
-
 // Salva lo script nel localStorage appena viene generato
 useEffect(() => {
   if (scriptResult) {
@@ -109,6 +93,13 @@ useEffect(() => {
     localStorage.setItem('lastScript', scriptResult);
   }
 }, [scriptResult]);
+
+const handleToggleTheme = () => {
+  const newTheme = theme === 'dark' ? 'light' : 'dark';
+  setTheme(newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.documentElement.setAttribute('data-theme', newTheme);
+};
 
 /* 
 |=====================================|
@@ -202,20 +193,19 @@ const handleCopy = async () => {
   }
 };
 
-
-
-const toggleTheme = () => {
-  const newTheme = theme === 'dark' ? 'light' : 'dark';
-  setTheme(newTheme);
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-};
+  // Imposta il tema iniziale in base a localStorage (o default = dark)
+useEffect(() => {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  setTheme(savedTheme as 'light' | 'dark');
+}, []);
 
   return (
     
     <div className={styles.container}>
-      <Navbar onToggleGuide={() => {}} onToggleTheme={toggleTheme} />
-      <img src="/banner_martello.png" alt="Logo" className={styles.logo} />
+    <img src="/banner_martello.png" alt="Logo" className={styles.logo} />
+      <Navbar onToggleGuide={() => {}} onToggleTheme={handleToggleTheme} />
+      
       <h1 className={styles.title}>ScriptForge AI</h1>
       <p className={styles.subtitle}>Il tuo compagno di script</p>
       

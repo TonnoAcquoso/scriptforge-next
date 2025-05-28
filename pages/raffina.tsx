@@ -1,7 +1,6 @@
-import * as React from 'react';
 
 // ✅ Import dei moduli necessari
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/Raffina.module.css';
 import { motion } from 'framer-motion';
 import { Wand2, FileText, ArrowLeftCircle, AlignLeft } from 'lucide-react';
@@ -16,6 +15,16 @@ import useThemeAndDraft from '../utils/useThemeAndDraft'; // 🌓 Tema + salvata
 const AceEditor = dynamic(() => import('react-ace'), { ssr: false });
 
 export default function RaffinaScriptPage() {
+
+  // ✅ Controlla se l'utente vuole modificare manualmente il testo raffinato
+const [enableEditing, setEnableEditing] = useState(false);
+
+// ✅ Contiene la versione modificabile dello script raffinato
+const [editableScript, setEditableScript] = useState('');
+
+// 🧠 Lista delle versioni precedenti dello script modificato
+const [historyVersions, setHistoryVersions] = useState<string[]>([]);
+
   // 🧠 Editor init (solo lato client)
   const [editorReady, setEditorReady] = useState(false);
   useEffect(() => {
@@ -50,6 +59,8 @@ export default function RaffinaScriptPage() {
   // 🔁 Differenze attive?
   const [showDiff, setShowDiff] = useState(false);
 
+  
+
   // 📄 Gestione file txt
   const downloadFile = (text: string, filename: string) => {
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
@@ -71,14 +82,19 @@ export default function RaffinaScriptPage() {
   };
 
   // 📤 Esporta in base al tipo
-  const handleExport = async (type: 'txt' | 'docx') => {
-    if (!refinedScript) return;
-    const name = exportFilename.trim() || 'script';
-    type === 'txt'
-      ? downloadFile(refinedScript, `${name}.txt`)
-      : await downloadDocx(refinedScript, name);
-    setShowExportModal(false);
-  };
+const handleExport = async (type: 'txt' | 'docx') => {
+  if (!finalText) return;
+  const name = exportFilename.trim() || 'script';
+  if (type === 'txt') {
+    downloadFile(finalText, `${name}.txt`);
+  } else {
+    await downloadDocx(finalText, name);
+  }
+  setShowExportModal(false);
+};
+  
+
+  
 
   // 🔁 Raffina il testo inviandolo all'API
   const handleRefine = async () => {
@@ -117,6 +133,32 @@ export default function RaffinaScriptPage() {
   : '';
     
 
+const finalText = enableEditing ? editableScript : refinedScript;
+
+
+// 💾 Salva una nuova versione dello script ogni volta che viene modificato
+const handleScriptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  setHistoryVersions(prev => [...prev, editableScript]);
+  setEditableScript(e.target.value);
+};
+
+const handleUndo = () => {
+  console.log("🌀 Clic su Ripristina");
+  if (historyVersions.length === 0) return;
+  const previousVersion = historyVersions[historyVersions.length - 1];
+  setEditableScript(previousVersion);
+  setHistoryVersions(prev => prev.slice(0, -1));
+};
+
+const handleApplyChanges = () => {
+  console.log("💾 Modifiche applicate");
+  localStorage.setItem("finalEditedScript", editableScript);
+  setHistoryVersions([]);
+};
+
+
+
+
   return (
     <div className={styles.container}>
       {/* 🧠 Intestazione con titolo e descrizione */}
@@ -129,37 +171,14 @@ export default function RaffinaScriptPage() {
       </p>
 
       {/* ✍️ Editor avanzato con evidenziazione e supporto markdown */}
-              <AceEditor
-                mode="markdown"
-                wrapEnabled={true} // ✅ obbliga il ritorno a capo
-                theme="twilight" // Cambia in 'github' se usi tema chiaro
-                value={userScript}
-                onChange={(value) => setUserScript(value)}
-                name="editor"
-                fontSize={14}
-                showPrintMargin={false}
-                showGutter={true}
-                highlightActiveLine={true}
-                setOptions={{
-                  enableBasicAutocompletion: true,
-                  enableLiveAutocompletion: true,
-                  showLineNumbers: true,
-                  tabSize: 2,
-                }}
-                style={{
-                  width: '100%',
-                  height: '320px',
-                  borderRadius: '12px',
-                  marginTop: '1rem',
-                  fontFamily: 'monospace',
-                  padding: '1rem', // ✅ Spazio interno al contenuto
-                  boxSizing: 'border-box', // ✅ Include il padding nei calcoli di dimensione
-                  overflowWrap: 'break-word', // ✅ Va a capo dove serve
-                  whiteSpace: 'pre-wrap', // ✅ Mantiene il testo leggibile e a capo
-                  backgroundColor: 'rgba(255, 255, 255, 0.33)', // ✅ Migliore visibilità bordo editor
-                  color: 'var(--text-color)' // ✅ Colore testo dinamico
-                }}
-              />
+              <div className={styles.customEditorWrapper}>
+                  <textarea
+                    className={styles.customEditor}
+                    placeholder="Inizia a scrivere il tuo script qui..."
+                    value={userScript}
+                    onChange={(e) => setUserScript(e.target.value)}
+                  />
+                </div>
 
       {/* ✨ Bottone per eseguire il raffinamento */}
       <button
@@ -170,8 +189,6 @@ export default function RaffinaScriptPage() {
         {loading ? 'Raffinamento in corso...' : '✨ Migliora Testo'}
       </button>
 
-      
-
       {/* ✅ Toggle per confronto visivo */}
           <label style={{ display: 'block', marginTop: '1.5rem' }}>
   <input
@@ -181,7 +198,7 @@ export default function RaffinaScriptPage() {
     style={{ marginRight: '0.5rem' }}
   />
   Mostra differenze evidenziate
-</label>
+  </label>
       {/* 📊 Confronto Testo Originale vs Raffinato */}
       {refinedScript && (
         <motion.div
@@ -214,7 +231,31 @@ export default function RaffinaScriptPage() {
               </div>
         </motion.div>
       )}
-      
+                  <div className={styles.editorContainer}>
+  <label className={styles.editorToggle}>
+    <input
+      type="checkbox"
+      checked={enableEditing}
+      onChange={() => setEnableEditing(!enableEditing)}
+    />
+    🧠 Entra in modalità editor avanzato
+  </label>
+
+  {enableEditing && (
+    <div className={styles.editorAreaWrapper}>
+      <textarea
+        className={styles.editableArea}
+        value={editableScript}
+        onChange={handleScriptChange}
+      />
+
+      <div className={styles.editorButtons}>
+        <button onClick={handleUndo} className={styles.undoButton}>↩️ Ripristina</button>
+        <button onClick={handleApplyChanges} className={styles.applyButton}>✅ Applica</button>
+      </div>
+    </div>
+  )}
+</div>
       {/* 📤 Pulsante per aprire il popup di esportazione */}
           {refinedScript && (
             <button className="glassButton" onClick={() => setShowExportModal(true)}>

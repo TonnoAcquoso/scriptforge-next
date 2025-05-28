@@ -4,9 +4,21 @@ import type { AppProps } from 'next/app';
 import '@fontsource/inter/400.css'; // Peso normale
 import '@fontsource/inter/600.css'; // Peso medio (opzionale)
 import '@fontsource/inter/700.css'; // Peso bold (opzionale)
-import '../styles/globals.css';     // Il tuo CSS globale
 import '../src/output.css';
+import { ThemeProvider } from 'next-themes'
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+
+import { useEffect } from "react";
+
+
+
+function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
   return <Component {...pageProps} />;
 }
+
+export default MyApp;
