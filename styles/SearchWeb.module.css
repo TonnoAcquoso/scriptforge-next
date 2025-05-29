@@ -1,0 +1,347 @@
+/* 🎯 Contenitore principale */
+.container {
+  padding: 3rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+  color: var(--text-color);
+}
+
+/* 🖋️ Titolo pagina */
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* 🔍 Barra di ricerca moderna e sticky */
+.searchBarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--background);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
+}
+
+/* 🧠 Input moderno */
+.searchInput {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: var(--input-bg);
+  color: var(--text-color);
+  transition: box-shadow 0.2s ease;
+  min-width: 220px;
+  max-width: 600px;
+}
+
+.searchInput:focus {
+  box-shadow: 0 0 0 2px var(--accent-color-transparent);
+}
+
+/* 🔘 Bottone ricerca */
+.searchButton {
+  background: var(--accent-color);
+  color: white;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchButton:hover {
+  background: var(--accent-color-hover);
+}
+
+/* 🕒 Loading */
+.loading {
+  text-align: center;
+  font-style: italic;
+  margin-top: 1rem;
+  color: var(--text-color-muted);
+}
+
+/* 🗂️ Layout: contenuto + sidebar */
+.layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 1200px; /* aumenta lo spazio utile su desktop */
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* 📄 Colonna principale */
+.mainColumn {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 📑 Risultati: layout adattivo */
+.results {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* 🧾 Card singola */
+.resultCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  background-color: var(--card-bg);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.resultCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* 🧠 Titolo del risultato */
+.resultTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--link-color);
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.resultTitle:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* 📖 Snippet descrizione */
+.resultSnippet {
+  font-size: 0.95rem;
+  color: var(--text-color-muted);
+  line-height: 1.6;
+  margin-bottom: 0.6rem;
+  flex-grow: 1;
+}
+
+/* 📎 Fonte e favicon */
+.resultSource {
+  font-size: 0.85rem;
+  color: var(--text-color-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* ✅ Badge “Verificato” */
+.trustedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+}
+
+.trustedIcon {
+  stroke-width: 2;
+}
+
+/* 📦 Sidebar */
+.sidebar {
+  width: 250px;
+  min-width: 200px;
+  margin-left: auto; /* ✅ Spinge la sidebar verso il bordo destro */
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 100px;
+}
+
+/* 🔁 Ricerche recenti nella sidebar */
+.recentSearches {
+  text-align: left;
+}
+
+.recentTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.recentSearches {
+  text-align: right;
+}
+
+.recentList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end; /* ✅ Sposta i bottoni a destra */
+}
+
+.recentButton {
+  padding: 0.4rem 0.8rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  text-align: left;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.recentButton:hover {
+  background-color: var(--accent-color-transparent);
+}
+
+/* 🔁 Paginazione */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.pagination button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--accent-color);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: var(--accent-color-hover);
+}
+
+.favicon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.4rem;
+  object-fit: contain;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* 🌗 Temi light/dark */
+.html.light {
+  --text-color: #111;
+  --text-color-muted: #555;
+  --link-color: #0d47a1;
+  --border-color: #ccc;
+  --input-bg: #fff;
+  --card-bg: #f9f9f9;
+  --accent-color: #0056d2;
+  --accent-color-hover: #003ea1;
+  --accent-color-transparent: rgba(0, 86, 210, 0.2);
+  --background: #ffffff;
+}
+
+.html.dark {
+  --text-color: #f0f0f0;
+  --text-color-muted: #a0a0a0;
+  --link-color: #82b1ff;
+  --border-color: #444;
+  --input-bg: #1e1e1e;
+  --card-bg: #2a2a2a;
+  --accent-color: #4f8cff;
+  --accent-color-hover: #3b6ed1;
+  --accent-color-transparent: rgba(79, 140, 255, 0.2);
+  --background: #0f0f0f;
+}
+
+/* 📱 Responsive layout */
+
+/* Mobile */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .container {
+    padding: 2.5rem 1rem;
+  }
+
+  .searchBarContainer {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .searchInput {
+    width: 100%;
+    flex: 1;
+  }
+
+  .searchButton {
+    width: 100%;
+  }
+
+  .resultCard {
+    padding: 1rem;
+  }
+
+  .resultTitle {
+    font-size: 1.05rem;
+  }
+
+  .resultSnippet {
+    font-size: 0.92rem;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .pagination button {
+    width: 100%;
+  }
+}

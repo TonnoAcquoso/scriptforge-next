@@ -208,6 +208,14 @@ useEffect(() => {
       
       <h1 className={styles.title}>ScriptForge AI</h1>
       <p className={styles.subtitle}>Il tuo compagno di script</p>
+      <div className={styles.ctaContainer}>
+  <Link href="/searchweb">
+    <button className={styles.button3D}>
+      <span className={styles.buttonText}>🔍 Vai alla Ricerca Web</span>
+      <span className={styles.buttonShadow}></span>
+    </button>
+  </Link>
+</div>
       
 
         {/* 📝 Campo Argomento con stile moderno */}
