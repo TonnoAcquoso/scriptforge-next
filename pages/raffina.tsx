@@ -22,6 +22,8 @@ function RaffinaPage() {
 
 // ⌨️ Editor avanzato caricato solo lato client
 const AceEditor = dynamic(() => import('react-ace'), { ssr: false });
+const MotionDiv = motion.div as React.FC<React.HTMLAttributes<HTMLDivElement> & any>;
+const MotionButton = motion.button as React.FC<React.HTMLAttributes<HTMLDivElement> & any>;
 
 export function RaffinaScriptPage() {
 
@@ -252,7 +254,7 @@ const handleApplyChanges = () => {
 
     {/* 📊 Confronto Testo Originale vs Raffinato */}
     {refinedScript && (
-      <motion.div
+      <MotionDiv
         className={styles.resultContainer}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -278,7 +280,7 @@ const handleApplyChanges = () => {
             <pre className={styles.resultText}>{refinedScript}</pre>
           )}
         </div>
-      </motion.div>
+      </MotionDiv>
     )}
 
     {/* 🧠 Editor modificabile (manuale) */}
@@ -349,7 +351,7 @@ const handleApplyChanges = () => {
 
     {/* 🔙 Torna alla Home */}
     <div className={styles.backButtonContainer}>
-      <motion.button
+      <MotionButton
         className={styles.backButton}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -360,12 +362,12 @@ const handleApplyChanges = () => {
       >
         <ArrowLeftCircle size={20} className={styles.backIcon} />
         <span className={styles.backText}>Torna alla Home</span>
-      </motion.button>
+      </MotionButton>
     </div>
 
     {/* 📦 Modale Esportazione */}
     {showExportModal && (
-      <motion.div
+      <MotionDiv
         className="exportModal"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -389,7 +391,7 @@ const handleApplyChanges = () => {
             ❌ Annulla
           </button>
         </div>
-      </motion.div>
+      </MotionDiv>
     )}
   </div>
 );
