@@ -19,6 +19,7 @@ export function SearchWeb() {
   const [totalResults, setTotalResults] = useState(0);
   const [recentQueries, setRecentQueries] = useState<string[]>([]);
   const observerRef = useRef<HTMLDivElement>(null);
+  const MotionDiv = motion.div as React.FC<React.HTMLAttributes<HTMLDivElement> & any>;
 
   const resultsPerPage = 10;
 
@@ -100,7 +101,7 @@ export function SearchWeb() {
         <div className={styles.mainColumn}>
           <div className={styles.results}>
             {results.map((item, index) => (
-              <motion.div
+              <MotionDiv
                 key={index}
                 className={styles.resultCard}
                 initial={{ opacity: 0, y: 20 }}
@@ -126,7 +127,7 @@ export function SearchWeb() {
                     {item.displayLink}
                   </p>
                 )}
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
 

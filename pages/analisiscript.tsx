@@ -27,6 +27,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 export function AnalisiScriptPage() {
   const router = useRouter();
   const [script, setScript] = useState('');
+  const MotionButton = motion.button as React.FC<React.HTMLAttributes<HTMLDivElement> & any>;
 
   // Analizza il testo una volta che lo script è pronto
 const sentimentResult = sentiment.analyze(script);
@@ -195,7 +196,7 @@ const toneIcon =
 )}
       {/* 🔙 Pulsante di ritorno elegante con animazione */}
           <div className={styles.backButtonContainer}>
-            <motion.button
+            <MotionButton
               className={styles.backButton}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 30 }}
@@ -204,7 +205,7 @@ const toneIcon =
               onClick={() => router.push('/')}>
               <ArrowLeftCircle size={22} className={styles.backIcon} />
               <span className={styles.backText}>Torna alla Home</span>
-            </motion.button>
+            </MotionButton>
           </div>
     </div>
   );

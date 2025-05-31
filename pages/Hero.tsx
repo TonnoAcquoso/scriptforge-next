@@ -29,6 +29,7 @@ export function Hero() {
   const [noteFilter, setNoteFilter] = useState('');
   const [copied, setCopied] = useState(false);
   const [isOutputVisible, setIsOutputVisible] = useState(true);
+  const MotionDiv = motion.div as React.FC<React.HTMLAttributes<HTMLDivElement> & any>;
 
 
 
@@ -352,7 +353,7 @@ useEffect(() => {
 
       <AnimatePresence>
   {scriptResult && (
-    <motion.div
+    <MotionDiv
       className={styles.outputContainer} // ✅ Contenitore principale
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -369,7 +370,7 @@ useEffect(() => {
 </button>
 
       {/* 🧾 Titolo */}
-      <motion.div
+      <MotionDiv
         className={styles.outputHeader}
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -379,7 +380,7 @@ useEffect(() => {
           <BookOpenCheck size={24} className={styles.iconAnimated} />
         </div>
         <h2 className={styles.outputTitle}>Script Generato</h2>
-      </motion.div>
+      </MotionDiv>
 
       {/* 📄 Corpo dello script visibile solo se isOutputVisible */}
       {isOutputVisible && (
@@ -390,7 +391,7 @@ useEffect(() => {
             }
 
             return (
-              <motion.div
+              <MotionDiv
                 key={i}
                 className={styles.scriptBlock}
                 initial={{ opacity: 0, y: 10 }}
@@ -405,7 +406,7 @@ useEffect(() => {
                     <span key={j}>{part}</span>
                   )
                 )}
-              </motion.div>
+              </MotionDiv>
             );
           })}
         </div>
@@ -431,7 +432,7 @@ useEffect(() => {
           <span>Raffina Manualmente</span>
         </button>
       </div>
-    </motion.div>
+    </MotionDiv>
   )}
 </AnimatePresence>
 
@@ -439,7 +440,7 @@ useEffect(() => {
       {/* PULSANTE ESPORTA SCRIPT */}
       <AnimatePresence>
       {showExportModal && (
-        <motion.div
+        <MotionDiv
           className="exportModal"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -461,7 +462,7 @@ useEffect(() => {
             </div>
             <button className="glassButton cancelButton" onClick={() => setShowExportModal(false)}>❌ Annulla</button>
           </div>
-        </motion.div>
+        </MotionDiv>
       )}
       </AnimatePresence>
       {scriptResult && (
