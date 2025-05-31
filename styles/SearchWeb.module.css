@@ -1,26 +1,43 @@
-/* 🎯 Contenitore principale */
+/* 🌐 Container principale */
 .container {
   padding: 3rem 1rem;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   color: var(--text-color);
+  animation: fadeIn 0.8s ease-in-out;
 }
 
-/* 🖋️ Titolo pagina */
+/* ✨ Effetto fade-in iniziale */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🖋️ Titolo con gradiente e ombra */
 .title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
+  font-size: 2.8rem;
+  font-weight: 800;
   text-align: center;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(90deg, var(--accent-color), #f50057);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
-/* 🔍 Barra di ricerca moderna e sticky */
+/* 🔍 Barra di ricerca sticky con design avanzato */
 .searchBarContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 1rem;
+  padding: 1.2rem;
   margin-bottom: 2rem;
   width: 100%;
   max-width: 900px;
@@ -28,50 +45,56 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--background);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(90deg, var(--background), var(--background-alt));
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
   flex-wrap: wrap;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-/* 🧠 Input moderno */
+/* 🧠 Campo input con effetto glow */
 .searchInput {
   flex: 1;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  font-size: 1.05rem;
+  border-radius: 12px;
   border: none;
   outline: none;
   background: var(--input-bg);
   color: var(--text-color);
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.3s ease;
   min-width: 220px;
   max-width: 600px;
+  box-shadow: inset 0 0 0 2px transparent;
 }
 
 .searchInput:focus {
-  box-shadow: 0 0 0 2px var(--accent-color-transparent);
+  box-shadow: 0 0 0 3px var(--accent-color-transparent);
 }
 
-/* 🔘 Bottone ricerca */
+/* 🔘 Bottone ricerca con effetto pulsazione */
 .searchButton {
   background: var(--accent-color);
   color: white;
-  padding: 0.7rem 1rem;
+  padding: 0.75rem 1.2rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
 }
 
 .searchButton:hover {
   background: var(--accent-color-hover);
+  transform: scale(1.05);
 }
 
-/* 🕒 Loading */
+/* 🕒 Testo di caricamento */
 .loading {
   text-align: center;
   font-style: italic;
@@ -79,13 +102,12 @@
   color: var(--text-color-muted);
 }
 
-/* 🗂️ Layout: contenuto + sidebar */
+/* 📦 Layout risultati + sidebar */
 .layout {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-  max-width: 1200px; /* aumenta lo spazio utile su desktop */
+  gap: 2.5rem;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -96,35 +118,34 @@
   min-width: 0;
 }
 
-/* 📑 Risultati: layout adattivo */
+/* 🧾 Lista risultati */
 .results {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 2rem;
   width: 100%;
 }
 
-/* 🧾 Card singola */
+/* 🪩 Card risultato con effetto 3D */
 .resultCard {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 1rem 1.2rem;
-  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  border-radius: 16px;
   background-color: var(--card-bg);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .resultCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 32px rgba(0, 0, 0, 0.12);
 }
 
-/* 🧠 Titolo del risultato */
+/* 📌 Titolo del risultato */
 .resultTitle {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: var(--link-color);
   text-decoration: none;
@@ -137,16 +158,16 @@
   text-decoration: underline;
 }
 
-/* 📖 Snippet descrizione */
+/* ✏️ Descrizione */
 .resultSnippet {
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   color: var(--text-color-muted);
-  line-height: 1.6;
+  line-height: 1.7;
   margin-bottom: 0.6rem;
   flex-grow: 1;
 }
 
-/* 📎 Fonte e favicon */
+/* 🧭 Fonte e favicon */
 .resultSource {
   font-size: 0.85rem;
   color: var(--text-color-muted);
@@ -156,7 +177,7 @@
   flex-wrap: wrap;
 }
 
-/* ✅ Badge “Verificato” */
+/* 🔖 Badge verificato */
 .trustedBadge {
   display: inline-flex;
   align-items: center;
@@ -169,93 +190,7 @@
   border-radius: 6px;
 }
 
-.trustedIcon {
-  stroke-width: 2;
-}
-
-/* 📦 Sidebar */
-.sidebar {
-  width: 250px;
-  min-width: 200px;
-  margin-left: auto; /* ✅ Spinge la sidebar verso il bordo destro */
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
-  position: sticky;
-  top: 100px;
-}
-
-/* 🔁 Ricerche recenti nella sidebar */
-.recentSearches {
-  text-align: left;
-}
-
-.recentTitle {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--text-color);
-}
-
-.recentSearches {
-  text-align: right;
-}
-
-.recentList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: flex-end; /* ✅ Sposta i bottoni a destra */
-}
-
-.recentButton {
-  padding: 0.4rem 0.8rem;
-  background-color: var(--input-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-size: 0.85rem;
-  text-align: left;
-  color: var(--text-color);
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.recentButton:hover {
-  background-color: var(--accent-color-transparent);
-}
-
-/* 🔁 Paginazione */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.pagination button {
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 8px;
-  background-color: var(--accent-color);
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.pagination button:hover:not(:disabled) {
-  background-color: var(--accent-color-hover);
-}
-
+/* 📎 Favicon */
 .favicon {
   width: 16px;
   height: 16px;
@@ -265,36 +200,90 @@
   vertical-align: middle;
 }
 
-/* 🌗 Temi light/dark */
+/* 🧱 Sidebar */
+.sidebar {
+  width: 270px;
+  min-width: 200px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 100px;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* 🔁 Ricerche recenti */
+.recentSearches {
+  text-align: right;
+}
+
+.recentTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.recentList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.recentButton {
+  padding: 0.4rem 0.9rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.recentButton:hover {
+  background-color: var(--accent-color-transparent);
+  transform: scale(1.03);
+}
+
+/* 🔽 Anchor invisibile per infinite scroll */
+.scrollAnchor {
+  height: 1px;
+}
+
+/* 🌗 Temi */
 .html.light {
-  --text-color: #111;
-  --text-color-muted: #555;
-  --link-color: #0d47a1;
+  --text-color: #0e0e0e;
+  --text-color-muted: #666;
+  --link-color: #1e40af;
   --border-color: #ccc;
-  --input-bg: #fff;
+  --input-bg: #ffffff;
   --card-bg: #f9f9f9;
   --accent-color: #0056d2;
-  --accent-color-hover: #003ea1;
+  --accent-color-hover: #0041aa;
   --accent-color-transparent: rgba(0, 86, 210, 0.2);
-  --background: #ffffff;
+  --background: #fcfcfc;
+  --background-alt: #f2f2f2;
 }
 
 .html.dark {
-  --text-color: #f0f0f0;
+  --text-color: #f5f5f5;
   --text-color-muted: #a0a0a0;
-  --link-color: #82b1ff;
+  --link-color: #90caf9;
   --border-color: #444;
   --input-bg: #1e1e1e;
   --card-bg: #2a2a2a;
   --accent-color: #4f8cff;
   --accent-color-hover: #3b6ed1;
   --accent-color-transparent: rgba(79, 140, 255, 0.2);
-  --background: #0f0f0f;
+  --background: #111111;
+  --background-alt: #1c1c1c;
 }
 
-/* 📱 Responsive layout */
-
-/* Mobile */
+/* 📱 Responsive */
 @media (max-width: 768px) {
   .layout {
     flex-direction: column;
@@ -333,15 +322,5 @@
 
   .resultSnippet {
     font-size: 0.92rem;
-  }
-
-  .pagination {
-    flex-direction: column;
-    gap: 0.8rem;
-    font-size: 0.95rem;
-  }
-
-  .pagination button {
-    width: 100%;
   }
 }
