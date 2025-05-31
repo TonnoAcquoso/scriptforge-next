@@ -34,6 +34,8 @@ export default function Navbar({ onToggleGuide, onToggleTheme }: NavbarProps) {
     const router = useRouter();
     // 🌗 Stato del tema (light o dark)
     const [theme, setTheme] = useState("light");
+    const MotionDiv = motion.div as React.FC<React.HTMLAttributes<HTMLDivElement> & any>;
+    
 
   const handleLogout = async () => {
   const result = await signOut();
@@ -235,7 +237,7 @@ useEffect(() => {
 
         <AnimatePresence>
           {menuOpen && (
-            <motion.div
+            <MotionDiv
               ref={menuRef}
               className={styles.mobileDropdown}
               initial={{ opacity: 0, y: -10 }}
@@ -260,7 +262,7 @@ useEffect(() => {
                 🚪 Logout
               </button>
 
-            </motion.div>
+            </MotionDiv>
           )}
         </AnimatePresence>
       </div> </nav>
