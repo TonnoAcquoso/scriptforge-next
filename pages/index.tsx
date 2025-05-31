@@ -6,10 +6,11 @@ import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { ClipboardCopy, BarChart4, Search, BookOpenCheck, HeartPulse, PenLine, Compass,
-         Sun, Moon, Info, X, Wand2} from 'lucide-react';
+         Sun, Moon, Info, X, Wand2, ChevronUp, ChevronDown} from 'lucide-react';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
+
 
 
 export default function Home() {
@@ -26,7 +27,7 @@ export default function Home() {
   const [historyOpen, setHistoryOpen] = useState(false);
   const [noteFilter, setNoteFilter] = useState('');
   const [copied, setCopied] = useState(false);
-  
+  const [isOutputVisible, setIsOutputVisible] = useState(true);
 
 
 
@@ -346,77 +347,88 @@ useEffect(() => {
       </div>
       )}
 
+      
+
       <AnimatePresence>
   {scriptResult && (
     <motion.div
-  className={styles.outputContainer} // ✅ Contenitore principale
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: 20 }}
-  transition={{ duration: 0.3 }}
->
-      {/* 🧾 Titolo del risultato, centrato e stilizzato */}
-      <motion.div
-  className={styles.outputHeader}
-  initial={{ opacity: 0, y: -10 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.4 }}
->
-  <div className={styles.iconWrap}>
-    <BookOpenCheck size={24} className={styles.iconAnimated} />
-  </div>
-  <h2 className={styles.outputTitle}>Script Generato</h2>
-</motion.div>
-
-      {/* 📄 Testo formattato come paragrafo, pre-wrap e giustificato */}
-      <div className={styles.outputText}>
-  {scriptResult.trim().split(/\n{2,}/).map((block, i) => {
-  // 🔎 Se la riga è solo --- disegnamo un separatore elegante
-  if (block.trim() === '---') {
-    return <div key={`sep-${i}`} className={styles.separator} />;
-  }
-
-  return (
-    <motion.div
-      key={i}
-      className={styles.scriptBlock}
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: i * 0.05, duration: 0.4 }}
+      className={styles.outputContainer} // ✅ Contenitore principale
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.3 }}
     >
-      {block.split(/(\(.*?\))/g).map((part, j) =>
-        part.match(/^\(.*\)$/) ? (
-          <span key={j} className={styles.tag}>{part}</span>
-        ) : (
-          <span key={j}>{part}</span>
-        )
+      {/* 🔽 Toggle per mostrare/nascondere l'output */}
+      <button
+  onClick={() => setIsOutputVisible(!isOutputVisible)}
+  className={styles.toggleButton}
+>
+  {isOutputVisible ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+  {isOutputVisible ? 'Nascondi Output' : 'Mostra Output'}
+</button>
+
+      {/* 🧾 Titolo */}
+      <motion.div
+        className={styles.outputHeader}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <div className={styles.iconWrap}>
+          <BookOpenCheck size={24} className={styles.iconAnimated} />
+        </div>
+        <h2 className={styles.outputTitle}>Script Generato</h2>
+      </motion.div>
+
+      {/* 📄 Corpo dello script visibile solo se isOutputVisible */}
+      {isOutputVisible && (
+        <div className={styles.outputText}>
+          {scriptResult.trim().split(/\n{2,}/).map((block, i) => {
+            if (block.trim() === '---') {
+              return <div key={`sep-${i}`} className={styles.separator} />;
+            }
+
+            return (
+              <motion.div
+                key={i}
+                className={styles.scriptBlock}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05, duration: 0.4 }}
+              >
+                {block.split(/(\(.*?\))/g).map((part, j) =>
+                  part.match(/^\(.*\)$/) ? (
+                    <span key={j} className={styles.tag}>{part}</span>
+                  ) : (
+                    <span key={j}>{part}</span>
+                  )
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
       )}
-    </motion.div>
-  );
-})}
-</div>
 
-
-      {/* 🎛️ Pulsanti azione con layout responsive e coerente: COPIA & ANALIZZA SCRIPT */}
+      {/* 🎛️ Azioni */}
       <div className={styles.buttonGrid}>
         <button className="glassButton" onClick={handleCopy}>
-        <ClipboardCopy size={18} />
-        <span>{copied ? 'Copiato ✅' : 'Copia'}</span>
+          <ClipboardCopy size={18} />
+          <span>{copied ? 'Copiato ✅' : 'Copia'}</span>
         </button>
 
-        <button className="glassButton" onClick={goToAnalysis} // 🔁 Navigazione verso analisi dettagliata
-        >
+        <button className="glassButton" onClick={goToAnalysis}>
           <BarChart4 size={18} className={styles.icon} />
           <span>Analizza Script</span>
         </button>
+
         <button
-    className="glassButton"
-    onClick={() => router.push('/raffina')} // ➕ Nuovo pulsante
-  >
-    <Wand2 size={18} />
-    <span>Raffina Manualmente</span>
-  </button>
+          className="glassButton"
+          onClick={() => router.push('/raffina')}
+        >
+          <Wand2 size={18} />
+          <span>Raffina Manualmente</span>
+        </button>
       </div>
     </motion.div>
   )}

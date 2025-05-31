@@ -325,3 +325,34 @@
   color: #00bfff;
 }
 
+/* 📱 Pulsante "Scopri" visibile solo su mobile */
+.mobileDiscover {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobileDiscover {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.45rem 0.8rem;
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    position: absolute;
+    left: 1rem;
+    top: 0.85rem;
+    z-index: 998;
+    transition: all 0.3s ease;
+  }
+
+  .mobileDiscover:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.04);
+  }
+}
+

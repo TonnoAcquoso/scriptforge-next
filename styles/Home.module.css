@@ -164,7 +164,6 @@
   padding: 2rem 1.8rem;
   border: 1px solid rgba(0, 255, 229, 0.1);
   border-radius: 1.75rem;
-  box-shadow: 0 0 40px rgba(0, 255, 229, 0.07), 0 0 20px rgba(0, 255, 229, 0.05) inset;
   backdrop-filter: blur(20px) brightness(1.05);
   -webkit-backdrop-filter: blur(20px) brightness(1.05);
   transition: all 0.4s ease, transform 0.3s ease;
@@ -188,7 +187,6 @@
 
 .formGroup:hover {
   transform: translateY(-2px) scale(1.005);
-  box-shadow: 0 0 60px rgba(0, 255, 229, 0.1), 0 0 30px rgba(0, 255, 229, 0.06) inset;
 }
 
 /* ✨ Animazione interna */
@@ -272,9 +270,6 @@
   padding: 1rem 1.25rem;
   font-size: 1.05rem;
   transition: all 0.35s ease;
-  box-shadow:
-    inset 0 0 0 1px rgba(0, 255, 229, 0.03),
-    0 0 0 0 rgba(0, 255, 229, 0);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   position: relative;
@@ -284,9 +279,6 @@
 .input:focus,
 .select:focus {
   border-color: #00fff0;
-  box-shadow:
-    0 0 8px 2px rgba(0, 255, 229, 0.15),
-    0 0 1px 1px rgba(0, 255, 229, 0.2);
   outline: none;
   background: linear-gradient(135deg, #12141d, #1d2029);
 }
@@ -315,7 +307,6 @@
   color: #eaf6ff;
   line-height: 1.8;
   backdrop-filter: blur(18px);
-  box-shadow: 0 0 45px rgba(0, 255, 229, 0.07);
   animation: fadeUp 1.3s ease;
   font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
   font-size: 1.05rem;
@@ -350,9 +341,6 @@
   text-align: center;
   background: linear-gradient(90deg, rgba(0,255,229,0.03), rgba(0,183,255,0.02));
   border-radius: 1rem;
-  box-shadow:
-    0 0 18px rgba(0, 255, 229, 0.12),
-    inset 0 0 12px rgba(0, 255, 229, 0.04);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   position: relative;
@@ -443,7 +431,6 @@
   padding: 2rem;
   border-radius: 1.5rem;
   background: linear-gradient(145deg, rgba(30,30,30,0.9), rgba(10,10,10,0.8));
-  box-shadow: 0 0 25px rgba(0,255,255,0.08);
   backdrop-filter: blur(8px);
   color: var(--text-color);
   display: flex;
@@ -464,7 +451,6 @@
   font-size: 1.1rem;
   line-height: 1.75;
   color: #ffffff;
-  box-shadow: 0 0 0.5rem rgba(0, 255, 255, 0.1);
   transition: background 0.3s ease;
 }
 
@@ -569,7 +555,6 @@
     border-radius: 12px;
     text-align: center;
     width: 100%;
-    box-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
     background: linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,255,255,0.06));
     transition: background 0.3s ease, transform 0.2s ease;
   }
@@ -621,13 +606,11 @@
   background-color: #ffffff1a;
   color: #f0f0f0;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 }
 .html[data-theme='light'] .output, html[data-theme='light'] .historyBox {
   background-color: rgba(0, 0, 0, 0);
   color: #111;
   border: 1px solid #00000026;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 .menuContainer {
   position: absolute;
@@ -684,7 +667,6 @@
 .menuButton:hover {
   background: #ffffff30;
   transform: scale(1.03);
-  box-shadow: 0 4px 16px rgba(0, 183, 255, 0.3);
 }
 .menuButton svg {
   color: var(--accent-color, #00aeff);
@@ -735,7 +717,6 @@
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 16px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 0.8rem;
@@ -779,7 +760,6 @@
   width: 90%;
   color: var(--text-color);
   text-align: center;
-  box-shadow: 0 0 48px rgba(0, 255, 229, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.08);
   animation: fadeInUp 0.35s ease;
   position: relative;
@@ -833,7 +813,6 @@
 .modalContent input:focus {
   outline: none;
   border-color: #14b8a6;
-  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.4);
 }
 
 /* 🔘 Bottoni di esportazione */
@@ -861,7 +840,6 @@
   backdrop-filter: blur(10px);
   color: #e6faff;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 18px rgba(0, 255, 229, 0.06);
   position: relative;
   overflow: hidden;
 }
@@ -869,7 +847,6 @@
 .modalContent .glassButton:hover {
   transform: translateY(-2px);
   background: linear-gradient(to right, rgba(0, 255, 229, 0.15), rgba(0, 255, 229, 0.04));
-  box-shadow: 0 10px 26px rgba(0, 255, 229, 0.12);
 }
 
 /* ❌ Pulsante Annulla */
@@ -884,7 +861,6 @@
 .modalContent .glassButton.cancelButton:hover {
   background: rgba(255, 77, 77, 0.15);
   transform: scale(1.05);
-  box-shadow: 0 0 18px rgba(255, 77, 77, 0.2);
 }
 
 /* ✨ Shine dinamico */
@@ -993,7 +969,6 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 0 40px rgba(0, 255, 229, 0.04);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1057,7 +1032,6 @@
 .historyBox li:hover {
   background: rgba(0, 255, 229, 0.05);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 255, 229, 0.1);
 }
 
 /* 🌈 Animazioni */
@@ -1111,7 +1085,6 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--text-color);
   text-align: left;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
   box-sizing: border-box;
@@ -1165,10 +1138,6 @@
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 5px 15px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.04);
   perspective: 800px;
   transform-style: preserve-3d;
   overflow: hidden;
@@ -1194,15 +1163,10 @@
 
 .button3D:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow:
-    0 12px 28px rgba(0, 255, 255, 0.15),
-    0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .button3D:active {
   transform: translateY(1px) scale(0.98);
-  box-shadow:
-    0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* ✨ Glow dinamico al testo */
@@ -1219,6 +1183,38 @@
 @keyframes shimmerText {
   0% { background-position: 0% }
   100% { background-position: 200% }
+}
+
+/* 🎚️ Contenitore toggle */
+.outputToggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+/* ⬇️ Toggle button elegante */
+.toggleButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--accent-color);
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.toggleButton:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: scale(1.03);
 }
 
 /* 📱 Responsive */
@@ -1255,7 +1251,6 @@
     -webkit-backdrop-filter: blur(14px);
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     animation: slideUp 0.3s ease-out;
-    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25);
   }
   .guideClose {
     position: absolute;

@@ -155,7 +155,15 @@ useEffect(() => {
 
   return (
       <nav className={styles.navbar}>
-      {/* 📂 Menu popup al posto del titolo "ScriptForge AI", visibile solo su desktop */}
+        {/* 🔍 Pulsante mobile esterno visibile solo su mobile */}
+            <button
+              className={styles.mobileDiscover}
+              onClick={() => router.push('/Hero')}
+            >
+              <Info size={16} /> Scopri ScriptForge AI
+            </button>
+
+      
             {/* 📂 Menu popup desktop al posto del titolo */}
 <div className={`${styles.menuContainer} ${styles.desktopOnly}`}>
   <button
@@ -203,6 +211,8 @@ useEffect(() => {
    
       </div>
 
+      
+
       {/* ✅ Mobile buttons dropdown */}
       <div className={styles.mobileMenuWrapper}>
         <button
@@ -235,12 +245,6 @@ useEffect(() => {
                 className={styles.mobileButton}
                 onClick={() => {setMenuOpen(false);router.push('/raffina');}}>
                   <Wand2 size={18} />Raffina uno Script
-              </button>
-
-              <button
-                className={styles.mobileButton}
-                onClick={() => {setMenuOpen(false); router.push('/Hero');}}>
-                <Info size={18} /> Scopri ScriptForge
               </button>
 
             </motion.div>
