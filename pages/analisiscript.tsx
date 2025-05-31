@@ -18,12 +18,13 @@ import { motion } from 'framer-motion';
 import { Clock, FileText, Brain, ArrowLeftCircle, BarChart, Smile, Meh, Frown } from 'lucide-react'; // Icone usate
 // Importa la libreria di analisi del tono
 import Sentiment from 'sentiment';
+import withAuth from '../utils/withAuth';
 const sentiment = new Sentiment();
 
 // ✅ Registriamo i moduli per Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-export default function AnalisiScriptPage() {
+export function AnalisiScriptPage() {
   const router = useRouter();
   const [script, setScript] = useState('');
 
@@ -208,3 +209,6 @@ const toneIcon =
     </div>
   );
 }
+
+// ✅ Applica l'HOC al momento dell'export
+export default withAuth(AnalisiScriptPage);

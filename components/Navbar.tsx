@@ -4,9 +4,8 @@ import * as React from 'react';
 import { useState, useEffect, useRef, FC } from 'react';
 import styles from '../styles/Navbar.module.css';
 import Link from 'next/link';
-
-
-import { useRouter } from 'next/router'; // 🔁 Navigazione tra pagine
+import { useRouter } from 'next/router';
+import { signOut } from '../utils/auth';
 
 // 🎨 Icone Lucide
 import { Menu, X, Info, Wand2, Sun, Moon } from 'lucide-react';
@@ -35,7 +34,15 @@ export default function Navbar({ onToggleGuide, onToggleTheme }: NavbarProps) {
     const router = useRouter();
     // 🌗 Stato del tema (light o dark)
     const [theme, setTheme] = useState("light");
-    
+
+  const handleLogout = async () => {
+  const result = await signOut();
+  if (result.error) {
+    console.error('Errore durante il logout:', result.error.message);
+  } else {
+    router.push('/signup');
+  }
+};
 
 
 
@@ -155,6 +162,8 @@ useEffect(() => {
 
   return (
       <nav className={styles.navbar}>
+          
+
         {/* 🔍 Pulsante mobile esterno visibile solo su mobile */}
             <button
               className={styles.mobileDiscover}
@@ -183,12 +192,13 @@ useEffect(() => {
       <li><a href="/raffina">Raffina uno Script</a></li>
       <li><a href="/analisiscript">Analisi</a></li>
       <li><a href="/about">About</a></li>
-
-    
+      <button onClick={handleLogout} className={styles.mobileButton}>
+      🚪 Logout
+    </button>
     </ul>
-  </div>
-)}
-</div>
+      </div>
+      )}
+      </div>
 
             {/* ✅ Desktop buttons */}
       <div className={styles.navRight}>
@@ -245,6 +255,9 @@ useEffect(() => {
                 className={styles.mobileButton}
                 onClick={() => {setMenuOpen(false);router.push('/raffina');}}>
                   <Wand2 size={18} />Raffina uno Script
+              </button>
+              <button onClick={handleLogout} className={styles.mobileButton}>
+                🚪 Logout
               </button>
 
             </motion.div>

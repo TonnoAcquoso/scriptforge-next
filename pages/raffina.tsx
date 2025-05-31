@@ -11,10 +11,19 @@ import dynamic from 'next/dynamic';
 import highlightDiff from '../utils/highlightDiff'; // 🔍 Per evidenziare differenze
 import useThemeAndDraft from '../utils/useThemeAndDraft'; // 🌓 Tema + salvataggio automatico
 
+
+import withAuth from '../utils/withAuth';
+
+function RaffinaPage() {
+  return <div>Benvenuto nella pagina Raffina!</div>;
+}
+
+
+
 // ⌨️ Editor avanzato caricato solo lato client
 const AceEditor = dynamic(() => import('react-ace'), { ssr: false });
 
-export default function RaffinaScriptPage() {
+export function RaffinaScriptPage() {
 
   type HistoryEntry = {
   note: string;
@@ -385,3 +394,5 @@ const handleApplyChanges = () => {
   </div>
 );
 }
+// ✅ Applica l'HOC al momento dell'export
+export default withAuth(RaffinaScriptPage);

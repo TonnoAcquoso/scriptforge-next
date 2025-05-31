@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from '../styles/SearchWeb.module.css';
 import { Search } from 'lucide-react';
 import { motion } from 'framer-motion';
+import withAuth from '../utils/withAuth';
 
 interface SearchResult {
   title: string;
@@ -10,7 +11,7 @@ interface SearchResult {
   displayLink?: string;
 }
 
-export default function SearchWeb() {
+export function SearchWeb() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -161,3 +162,6 @@ export default function SearchWeb() {
     </div>
   );
 }
+
+// ✅ Applica l'HOC al momento dell'export
+export default withAuth(SearchWeb);

@@ -14,7 +14,7 @@
         "clsx": "^2.1.1",
         "docx": "^9.5.0",
         "file-saver": "^2.0.5",
-        "framer-motion": "^10.16.1",
+        "framer-motion": "12.14.0",
         "lucide-react": "^0.511.0",
         "next": "14.2.29",
         "next-themes": "^0.4.6",
@@ -64,23 +64,6 @@
       "engines": {
         "node": ">=6.0.0"
       }
-    },
-    "node_modules/@emotion/is-prop-valid": {
-      "version": "0.8.8",
-      "resolved": "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-0.8.8.tgz",
-      "integrity": "sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==",
-      "license": "MIT",
-      "optional": true,
-      "dependencies": {
-        "@emotion/memoize": "0.7.4"
-      }
-    },
-    "node_modules/@emotion/memoize": {
-      "version": "0.7.4",
-      "resolved": "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.7.4.tgz",
-      "integrity": "sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==",
-      "license": "MIT",
-      "optional": true
     },
     "node_modules/@fontsource/inter": {
       "version": "5.2.5",
@@ -1460,21 +1443,24 @@
       }
     },
     "node_modules/framer-motion": {
-      "version": "10.16.1",
-      "resolved": "https://registry.npmjs.org/framer-motion/-/framer-motion-10.16.1.tgz",
-      "integrity": "sha512-K6TXr5mZtitC/dxQCBdg7xzdN0d5IAIrlaqCPKtIQVdzVPGC0qBuJKXggHX1vjnP5gPOFwB1KbCCTWcnFc3kWg==",
+      "version": "12.14.0",
+      "resolved": "https://registry.npmjs.org/framer-motion/-/framer-motion-12.14.0.tgz",
+      "integrity": "sha512-P/CLiA+YLc0GL1nB2bgtRBFAbRh0aawU5KPLqnXi6QEZQE2BEwqgIH8qUIT7cMN+4a4nj0iZ2uWTKOrzcYsyGQ==",
       "license": "MIT",
       "dependencies": {
+        "motion-dom": "^12.14.0",
+        "motion-utils": "^12.12.1",
         "tslib": "^2.4.0"
       },
-      "optionalDependencies": {
-        "@emotion/is-prop-valid": "^0.8.2"
-      },
       "peerDependencies": {
-        "react": "^18.0.0",
-        "react-dom": "^18.0.0"
+        "@emotion/is-prop-valid": "*",
+        "react": "^18.0.0 || ^19.0.0",
+        "react-dom": "^18.0.0 || ^19.0.0"
       },
       "peerDependenciesMeta": {
+        "@emotion/is-prop-valid": {
+          "optional": true
+        },
         "react": {
           "optional": true
         },
@@ -2054,6 +2040,21 @@
       "funding": {
         "url": "https://github.com/sponsors/isaacs"
       }
+    },
+    "node_modules/motion-dom": {
+      "version": "12.15.0",
+      "resolved": "https://registry.npmjs.org/motion-dom/-/motion-dom-12.15.0.tgz",
+      "integrity": "sha512-D2ldJgor+2vdcrDtKJw48k3OddXiZN1dDLLWrS8kiHzQdYVruh0IoTwbJBslrnTXIPgFED7PBN2Zbwl7rNqnhA==",
+      "license": "MIT",
+      "dependencies": {
+        "motion-utils": "^12.12.1"
+      }
+    },
+    "node_modules/motion-utils": {
+      "version": "12.12.1",
+      "resolved": "https://registry.npmjs.org/motion-utils/-/motion-utils-12.12.1.tgz",
+      "integrity": "sha512-f9qiqUHm7hWSLlNW8gS9pisnsN7CRFRD58vNjptKdsqFLpkVnX00TNeD6Q0d27V9KzT7ySFyK1TZ/DShfVOv6w==",
+      "license": "MIT"
     },
     "node_modules/mri": {
       "version": "1.2.0",
