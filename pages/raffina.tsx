@@ -13,8 +13,6 @@ import highlightDiff from '../utils/highlightDiff'; // 🔍 Per evidenziare diff
 import useThemeAndDraft from '../utils/useThemeAndDraft'; // 🌓 Tema + salvataggio automatico
 import withAuth from '../utils/withAuth';
 
-const router = useRouter();
-const { user } = useUser();
 
 
 
@@ -31,13 +29,22 @@ const MotionButton = motion.button as React.FC<React.HTMLAttributes<HTMLDivEleme
 
 export function RaffinaScriptPage() {
 
+const router = useRouter();
+const { user } = useUser();
+const [isClient, setIsClient] = useState(false);
+
   useEffect(() => {
-    if (!user) {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient && !user) {
       router.replace(`/signup?redirect=${encodeURIComponent(router.asPath)}`);
     }
-  }, [user]);
+  }, [user, isClient]);
 
-  if (!user) return null;
+  if (!isClient || !user) return null;
+
 
   type HistoryEntry = {
   note: string;
