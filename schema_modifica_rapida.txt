@@ -1,0 +1,21 @@
+SCHEMA MODIFICA RAPIDA
+
+1. DESCRIZIONE DELLA MODIFICA
+Scrivi in 1-2 righe cosa si intende ottenere o migliorare nel codice (es. "rendere il pulsante più visibile su mobile", "aggiungere animazione al logo", ecc).
+
+2. BLOCCO JSX/TSX
+Incolla solo il blocco di codice da modificare o inserire, come ad esempio un <div> o un <button> completo. Se va sostituito, specifica da quale riga parte.
+
+3. CLASSI CSS COINVOLTE (+ FILE)
+Elenca le classi CSS interessate dalla modifica e indica in quale file si trovano, ad esempio:
+- .glassButton (Home.module.css)
+- .outputContainer (globals.css)
+
+4. TARGET
+Specifica a chi è destinata la modifica:
+- solo mobile
+- solo desktop
+- entrambi
+
+5. DETTAGLI EXTRA O RESTRIZIONI
+Aggiungi qui tutto ciò che non rientra nei punti precedenti: transizioni desiderate, compatibilità, comportamento dinamico, effetti speciali, ecc.
