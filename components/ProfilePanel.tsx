@@ -67,7 +67,11 @@ export default function ProfilePanel({ onClose }) {
                   onClose();
                 }}
               >
-                <Clock size={16} /> <span>Cronologia Script</span>
+                <Clock size={16} />
+                <span>
+                  Cronologia Script
+                  <span className={styles.badge}>In Arrivo</span> {/* ✅ Badge */}
+                </span>
               </button>
             </div>
           ) : (

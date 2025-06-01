@@ -89,6 +89,35 @@
   gap: 1rem;
 }
 
+/* 🏷️ Badge “Beta/Nuovo” con stile tech */
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.65rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, #64ffda, #5c6eff);
+  border-radius: 0.5rem;
+  margin-left: 0.5rem;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 /* 📱 Ottimizzazione per Mobile */
 /* 📱 Ottimizzazione per Mobile */
 @media (max-width: 640px) {

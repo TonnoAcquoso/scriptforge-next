@@ -168,7 +168,7 @@ useEffect(() => {
         {/* 🔍 Pulsante mobile esterno visibile solo su mobile */}
             <button
               className={styles.mobileDiscover}
-              onClick={() => router.push('/Hero')}
+              onClick={() => router.push('/')}
             >
               <Info size={16} /> Scopri ScriptForge AI
             </button>
