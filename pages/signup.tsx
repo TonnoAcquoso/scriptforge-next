@@ -16,6 +16,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
   const [totpCode, setTotpCode] = useState('');
   const [qrUrl, setQrUrl] = useState('');
+  const [manualSecret, setManualSecret] = useState('');
   const [factorId, setFactorId] = useState('');
   const [mfaRequired, setMfaRequired] = useState(false);
 
@@ -46,46 +47,40 @@ export default function SignUpPage() {
     const method = isLogin ? signIn : signUp;
     const { data, error } = await method(email, password);
 
-if (error) {
-  setMessage(`Errore: ${error.message}`);
-  return;
-}
-
-// 🔁 Recupera sessione attiva
-await supabase.auth.getSession();
-
     if (error) {
       setMessage(`Errore: ${error.message}`);
-    } else {
-      if (isLogin) {
-        // Dopo login → controlla se utente ha già MFA attiva
-        const { data: factors, error: factorError } = await getTotpFactors();
-        if (factorError) {
-          setMessage('Errore nel recupero dei fattori MFA.');
+      return;
+    }
+
+    await supabase.auth.getSession();
+
+    if (isLogin) {
+      const { data: factors, error: factorError } = await getTotpFactors();
+      if (factorError) {
+        setMessage('Errore nel recupero dei fattori MFA.');
+        return;
+      }
+
+      const verifiedTotp = factors?.totp?.find(f => f.status === 'verified');
+
+      if (verifiedTotp) {
+        setFactorId(verifiedTotp.id);
+        setMfaRequired(true);
+      } else {
+        const { data: mfaData, error: mfaError } = await setupTotp();
+        if (mfaError || !mfaData?.totp?.qr_code || !mfaData?.totp?.secret) {
+          setMessage('❌ Impossibile configurare MFA. Riprova.');
           return;
         }
 
-        const verifiedTotp = factors?.totp?.find(f => f.status === 'verified');
-
-        if (verifiedTotp) {
-          // Utente già configurato → chiedi solo codice
-          setFactorId(verifiedTotp.id);
-          setMfaRequired(true);
-        } else {
-          // Nessun TOTP → crea nuovo QR
-          const { data: mfaData, error: mfaError } = await setupTotp();
-          if (mfaError || !mfaData?.totp?.qr_code) {
-            setMessage('❌ Impossibile configurare MFA. Riprova.');
-            return;
-          }
-
-          setQrUrl(mfaData.totp.qr_code);
-          setFactorId(mfaData.id);
-          setMfaRequired(true);
-        }
-      } else {
-        setMessage('✅ Registrazione completata. Ora puoi effettuare il login.');
+        setQrUrl(mfaData.totp.qr_code);
+        setManualSecret(mfaData.totp.secret);
+        setFactorId(mfaData.id);
+        setMfaRequired(true);
+        setMessage('');
       }
+    } else {
+      setMessage('✅ Registrazione completata. Ora puoi effettuare il login.');
     }
   };
 
@@ -182,6 +177,12 @@ await supabase.auth.getSession();
                   <img src={qrUrl} alt="QR Code MFA" />
                 </div>
               </>
+            )}
+
+            {manualSecret && (
+              <p className={styles.secretKey}>
+                Inserimento manuale: <strong>{manualSecret}</strong>
+              </p>
             )}
 
             <input
