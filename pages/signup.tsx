@@ -60,7 +60,11 @@ export default function SignUpPage() {
   setIsLoading(true);
 
   if (!isLogin) {
-    const exists = await isEmailRegistered(email);
+  setIsLoading(true);
+
+  try {
+    const exists = await isEmailRegistered(email.trim().toLowerCase());
+
     if (exists) {
       toast.error('❌ Account già esistente. Effettua il login.');
       setIsLoading(false);
@@ -70,15 +74,22 @@ export default function SignUpPage() {
     if (recaptchaRef.current) {
       const token = await recaptchaRef.current.executeAsync();
       recaptchaRef.current.reset();
-      setRecaptchaToken(token || '');
 
       if (!token) {
-        setMessage('⚠️ Verifica reCAPTCHA fallita. Riprova.');
+        toast.error('⚠️ Verifica reCAPTCHA fallita. Riprova.');
         setIsLoading(false);
         return;
       }
+
+      setRecaptchaToken(token);
     }
+  } catch (error) {
+    console.error('Errore durante il controllo email:', error);
+    toast.error('⚠️ Errore durante la verifica. Riprova più tardi.');
+    setIsLoading(false);
+    return;
   }
+}
 
   const method = isLogin ? signIn : signUp;
   const { data, error } = await method(email, password);
