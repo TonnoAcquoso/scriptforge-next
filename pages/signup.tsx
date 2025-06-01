@@ -157,6 +157,19 @@ export default function SignUpPage() {
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
+            {!isLogin && (
+                <div className={styles.passwordCriteria}>
+                  <p className={password.length >= 8 ? styles.valid : styles.invalid}>
+                    Almeno 8 caratteri
+                  </p>
+                  <p className={/\d/.test(password) ? styles.valid : styles.invalid}>
+                    Almeno un numero
+                  </p>
+                  <p className={/[A-Z]/.test(password) ? styles.valid : styles.invalid}>
+                    Almeno una lettera maiuscola
+                  </p>
+                </div>
+              )}
 
             <button onClick={handleSubmit} className={styles.signupButton}>
               {isLogin ? 'Login' : 'Registrati'}

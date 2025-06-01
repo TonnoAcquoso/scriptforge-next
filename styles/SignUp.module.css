@@ -270,3 +270,42 @@
 .disclaimerContent a:hover {
   color: #0284c7;
 }
+
+/* 🔐 Blocco criteri password */
+.passwordCriteria {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(180, 200, 240, 0.3);
+  padding: 0.8rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #334155;
+  margin-top: -0.4rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+/* ✅ Criterio soddisfatto */
+.valid::before {
+  content: "✔ ";
+  color: #10b981; /* verde */
+  font-weight: 600;
+}
+.valid {
+  color: #10b981;
+  transition: color 0.3s ease;
+}
+
+/* ❌ Criterio non soddisfatto */
+.invalid::before {
+  content: "✘ ";
+  color: #ef4444; /* rosso */
+  font-weight: 600;
+}
+.invalid {
+  color: #ef4444;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
