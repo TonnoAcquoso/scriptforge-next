@@ -55,12 +55,21 @@ export const setupTotp = async () => {
   return { data, error }; // data.totp.qr_code, data.id
 };
 
-// ✅ Verifica TOTP dopo che l’utente ha inserito il codice dall’app
 export const verifyTotp = async (code: string, factorId: string) => {
-  const { data, error } = await supabase.auth.mfa.challengeAndVerify({
+  // 1. Crea una challenge
+  const { data: challengeData, error: challengeError } = await supabase.auth.mfa.challenge({ factorId });
+
+  if (challengeError || !challengeData?.id) {
+    return { data: null, error: challengeError || new Error('Impossibile creare la challenge MFA.') };
+  }
+
+  // 2. Verifica il codice TOTP con challengeId
+  const { data, error } = await supabase.auth.mfa.verify({
     factorId,
+    challengeId: challengeData.id,
     code,
   });
+
   return { data, error };
 };
 

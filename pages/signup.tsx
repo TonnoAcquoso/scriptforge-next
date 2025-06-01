@@ -167,7 +167,7 @@ export default function SignUpPage() {
   const handleVerifyTotp = async () => {
   console.log('🧪 Verifica TOTP con', { factorId, totpCode });
 
-  const { error: verifyError } = await verifyTotp(factorId, totpCode);
+  const { error: verifyError } = await verifyTotp(totpCode, factorId);
 
   if (verifyError) {
     console.error('❌ Errore verifica TOTP:', verifyError);
