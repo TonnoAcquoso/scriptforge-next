@@ -164,7 +164,6 @@ useEffect(() => {
 
   return (
       <nav className={styles.navbar}>
-          
 
         {/* 🔍 Pulsante mobile esterno visibile solo su mobile */}
             <button
