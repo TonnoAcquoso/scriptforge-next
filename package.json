@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.5",
+
     "@supabase/auth-js": "^2.70.0",
-    "@supabase/supabase-js": "^2.43.1",
+    "@supabase/supabase-js": "^2.49.8",
     "@tailwindcss/cli": "^4.1.7",
     "clsx": "^2.1.1",
     "docx": "^9.5.0",

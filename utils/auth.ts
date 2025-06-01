@@ -56,20 +56,15 @@ export const setupTotp = async () => {
 };
 
 // ✅ Verifica TOTP dopo che l’utente ha inserito il codice dall’app
-export const verifyTotp = async (factorId: string, code: string) => {
-  const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({ factorId });
-  if (challengeError) return { error: challengeError };
-
-  const { error } = await supabase.auth.mfa.verify({
+export const verifyTotp = async (code: string, factorId: string) => {
+  const { data, error } = await supabase.auth.mfa.challengeAndVerify({
     factorId,
-    challengeId: challenge.id,
     code,
   });
-
-  
-
-  return { error };
+  return { data, error };
 };
+
+
 // ✅ Lista dei fattori MFA abilitati per l'utente (utile per sapere se è già registrato)
 export const getTotpFactors = async () => {
   const { data, error } = await supabase.auth.mfa.listFactors();
