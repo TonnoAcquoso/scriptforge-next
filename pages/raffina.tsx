@@ -52,6 +52,8 @@ const [isClient, setIsClient] = useState(false);
   content: string;
 };
 
+
+
 const [history, setHistory] = useState<HistoryEntry[]>([]);
 
 const loadScript = (index: number) => {
