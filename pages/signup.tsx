@@ -195,9 +195,13 @@ export default function SignUpPage() {
                     ref={recaptchaRef}
                   />
                 )}
-            <button onClick={handleSubmit} className={styles.signupButton}>
-              {isLogin ? 'Login' : 'Registrati'}
-            </button>
+            <button
+                onClick={handleSubmit}
+                className={styles.signupButton}
+                disabled={isLoading}
+              >
+                {isLoading ? 'Caricamento...' : isLogin ? 'Login' : 'Registrati'}
+              </button>
 
             {message && ( <p className={
             message.toLowerCase().includes('esistente') ||
