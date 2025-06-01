@@ -48,3 +48,20 @@ export const verifyOtp = async (email: string, token: string) => {
 
   return { success: !error, data, error };
 };
+
+// Setup MFA - genera il QR Code (per app tipo Google Authenticator)
+export const setupTotp = async () => {
+  const { data, error } = await supabase.auth.mfa.enroll({
+    factorType: 'totp',
+  });
+  return { data, error }; // contiene: id (factorId), qr_code (URL immagine), secret
+};
+
+// Verifica il codice TOTP inserito dall’utente
+export const verifyTotp = async (code: string, factorId: string) => {
+  const { data, error } = await supabase.auth.mfa.challengeAndVerify({
+    factorId,
+    code,
+  });
+  return { data, error };
+};
