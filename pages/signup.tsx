@@ -5,6 +5,7 @@ import {
   setupTotp,
   verifyTotp,
   getTotpFactors,
+  isEmailRegistered,
 } from '../utils/auth';
 import styles from '../styles/SignUp.module.css';
 import { Eye, EyeOff } from 'lucide-react';
@@ -28,6 +29,7 @@ export default function SignUpPage() {
   const [passwordValid, setPasswordValid] = useState(true);
 
   const router = useRouter();
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   const validateInputs = () => {
     const emailOK = /\S+@\S+\.\S+/.test(email);
@@ -42,10 +44,19 @@ export default function SignUpPage() {
   };
 
   const handleSubmit = async () => {
-    if (!validateInputs()) return;
+  if (!validateInputs()) return;
 
-    const method = isLogin ? signIn : signUp;
-    const { data, error } = await method(email, password);
+  if (!isLogin) {
+    // 🔍 Verifica se email è già registrata PRIMA della registrazione
+    const exists = await isEmailRegistered(email);
+    if (exists) {
+      setMessage('❌ Account già esistente. Effettua il login.');
+      return;
+    }
+  }
+
+  const method = isLogin ? signIn : signUp;
+  const { data, error } = await method(email, password);
 
     if (error) {
       setMessage(`Errore: ${error.message}`);
@@ -151,7 +162,11 @@ export default function SignUpPage() {
               {isLogin ? 'Login' : 'Registrati'}
             </button>
 
-            {message && <p className={styles.message}>{message}</p>}
+            {message && ( <p className={
+            message.toLowerCase().includes('esistente') ||
+            message.toLowerCase().includes('errore')
+              ? styles.errorMessage
+              : styles.message}>{message}</p>)}
 
             <p className={styles.toggleText}>
               {isLogin ? 'Non hai un account?' : 'Hai già un account?'}{' '}
@@ -202,6 +217,28 @@ export default function SignUpPage() {
           </>
         )}
       </div>
+
+      <div className={styles.disclaimerWrapper}>
+  <button
+    onClick={() => setShowDisclaimer(!showDisclaimer)}
+    className={styles.disclaimerToggle}
+    aria-expanded={showDisclaimer}
+    aria-controls="disclaimerContent"
+  >
+    ⚠️ Termini & Privacy
+  </button>
+
+  <div
+    id="disclaimerContent"
+    className={`${styles.disclaimerContent} ${showDisclaimer ? styles.open : ''}`}
+  >
+    <p>
+      Accedendo o creando un account, accetti i nostri{' '}
+      <a href="/termini" target="_blank" rel="noopener noreferrer">Termini di Servizio</a>{' '}
+      e l' <a href="/privacy" target="_blank" rel="noopener noreferrer">Informativa sulla Privacy</a>.
+    </p>
+  </div>
+</div>
     </div>
   );
 }

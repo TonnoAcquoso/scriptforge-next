@@ -203,3 +203,70 @@
   font-weight: 600;
   color: #2563eb;
 }
+
+/* 🟥 Messaggio di errore visivo */
+.errorMessage {
+  color: #dc2626; /* rosso intenso */
+  font-weight: 600;
+  text-align: center;
+  margin-top: 1.2rem;
+  animation: shakeError 0.4s ease;
+}
+
+/* 🔄 Animazione leggera shake */
+@keyframes shakeError {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+/* DISCLAIMER */
+
+.disclaimerWrapper {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.disclaimerToggle {
+  background: none;
+  border: none;
+  font-size: 0.88rem;
+  color: #eab308;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.disclaimerToggle:hover {
+  color: #facc15;
+}
+
+.disclaimerContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+  font-size: 0.78rem;
+  color: #475569;
+  background-color: #f9fafb;
+  border-radius: 0.75rem;
+  margin-top: 0.5rem;
+  padding: 0 1rem;
+}
+
+.disclaimerContent.open {
+  max-height: 180px;
+  padding: 1rem;
+}
+
+.disclaimerContent a {
+  color: #3b82f6;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+.disclaimerContent a:hover {
+  color: #1d4ed8;
+}

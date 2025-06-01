@@ -69,3 +69,21 @@ export const getTotpFactors = async () => {
   const { data, error } = await supabase.auth.mfa.listFactors();
   return { data, error };
 };
+
+// ✅ Verifica se l'email è già registrata
+export const isEmailRegistered = async (email: string) => {
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password: 'password_fittizia_non_valida'
+  });
+
+  if (error?.message?.toLowerCase().includes('invalid login credentials')) {
+    return true; // Email esiste ma la password è sbagliata
+  }
+
+  if (error?.message?.toLowerCase().includes('user not found')) {
+    return false; // Email non registrata
+  }
+
+  return false; // Default fallback
+};
