@@ -31,7 +31,7 @@ export const sendOtp = async (email: string) => {
     email,
     options: {
       shouldCreateUser: false, // ❌ Non creare utente, è già registrato
-      emailRedirectTo: 'https://scriptforge.it.com/' // 🔁 Cambia in produzione
+      emailRedirectTo: 'https://scriptforge.it.com' // 🔁 Cambia in produzione
     }
   });
 
