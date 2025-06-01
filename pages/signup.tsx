@@ -30,66 +30,69 @@ export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
-  const router = useRouter();
   const [showDisclaimer, setShowDisclaimer] = useState(false);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const router = useRouter();
   const { redirect } = router.query;
   const [redirectPath, setRedirectPath] = useState('/');
 
   useEffect(() => {
-  if (typeof redirect === 'string') {
-    setRedirectPath(redirect);
-  }
-}, [redirect]);
+    if (typeof redirect === 'string') {
+      setRedirectPath(redirect);
+    }
+  }, [redirect]);
 
   const validateInputs = () => {
-    const emailOK = /\S+@\S+\.\S+/.test(email);
+    const emailOK = /\S+@\S+\.\S+/.test(email.trim());
     const passwordOK = password.length >= 8;
+
     setEmailValid(emailOK);
     setPasswordValid(passwordOK);
+
     if (!emailOK || !passwordOK) {
       setMessage("Inserisci un'email valida e una password di almeno 8 caratteri.");
       return false;
     }
+
     return true;
   };
 
   const handleSubmit = async () => {
-  if (!validateInputs()) return;
-  setIsLoading(true);
+    if (!validateInputs()) return;
 
-  if (!isLogin) {
-  setIsLoading(true);
+    setIsLoading(true);
 
-  try {
-    const exists = await isEmailRegistered(email.trim().toLowerCase());
+    if (!isLogin) {
+      try {
+        const exists = await isEmailRegistered(email.trim().toLowerCase());
 
-    if (exists) {
-      toast.error('❌ Account già esistente. Effettua il login.');
-      setIsLoading(false);
-      return;
-    }
+        if (exists) {
+          toast.error('❌ Account già esistente. Effettua il login.');
+          setIsLoading(false);
+          return;
+        }
 
-    if (recaptchaRef.current) {
-      const token = await recaptchaRef.current.executeAsync();
-      recaptchaRef.current.reset();
+        if (recaptchaRef.current) {
+          const token = await recaptchaRef.current.executeAsync();
+          recaptchaRef.current.reset();
 
-      if (!token) {
-        toast.error('⚠️ Verifica reCAPTCHA fallita. Riprova.');
+          if (!token) {
+            toast.error('⚠️ Verifica reCAPTCHA fallita. Riprova.');
+            setIsLoading(false);
+            return;
+          }
+
+          setRecaptchaToken(token);
+        }
+      } catch (error) {
+        console.error('Errore durante il controllo email:', error);
+        toast.error('⚠️ Errore durante la verifica. Riprova più tardi.');
         setIsLoading(false);
         return;
       }
-
-      setRecaptchaToken(token);
     }
-  } catch (error) {
-    console.error('Errore durante il controllo email:', error);
-    toast.error('⚠️ Errore durante la verifica. Riprova più tardi.');
-    setIsLoading(false);
-    return;
-  }
-}
 
   const method = isLogin ? signIn : signUp;
   const { data, error } = await method(email, password);
