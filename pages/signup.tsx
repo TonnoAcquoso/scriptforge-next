@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   signUp,
   signIn,
@@ -11,8 +11,10 @@ import styles from '../styles/SignUp.module.css';
 import { Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { supabase } from '../utils/supabaseClient';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 export default function SignUpPage() {
+  const [recaptchaToken, setRecaptchaToken] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [totpCode, setTotpCode] = useState('');
@@ -27,9 +29,9 @@ export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
-
   const router = useRouter();
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const validateInputs = () => {
     const emailOK = /\S+@\S+\.\S+/.test(email);
@@ -53,15 +55,27 @@ export default function SignUpPage() {
       setMessage('❌ Account già esistente. Effettua il login.');
       return;
     }
+
+    // ✅ Esegui reCAPTCHA invisibile solo in fase di registrazione
+    if (recaptchaRef.current) {
+      const token = await recaptchaRef.current.executeAsync();
+      recaptchaRef.current.reset();
+      setRecaptchaToken(token || '');
+
+      if (!token) {
+        setMessage('⚠️ Verifica reCAPTCHA fallita. Riprova.');
+        return;
+      }
+    }
   }
 
   const method = isLogin ? signIn : signUp;
   const { data, error } = await method(email, password);
 
-    if (error) {
-      setMessage(`Errore: ${error.message}`);
-      return;
-    }
+  if (error) {
+    setMessage(`Errore: ${error.message}`);
+    return;
+  }
 
     await supabase.auth.getSession();
 
@@ -170,7 +184,14 @@ export default function SignUpPage() {
                   </p>
                 </div>
               )}
-
+                {!isLogin && (
+                  <ReCAPTCHA
+                    sitekey="6LdwZ1IrAAAAALY0PKNRMAdFNUMBQ8mQGw3y2X-D"
+                    size="invisible"
+                    onChange={(token) => setRecaptchaToken(token || '')}
+                    ref={recaptchaRef}
+                  />
+                )}
             <button onClick={handleSubmit} className={styles.signupButton}>
               {isLogin ? 'Login' : 'Registrati'}
             </button>
