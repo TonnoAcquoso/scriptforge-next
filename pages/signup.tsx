@@ -9,6 +9,7 @@ import {
 import styles from '../styles/SignUp.module.css';
 import { Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/router';
+import { supabase } from '../utils/supabaseClient';
 
 export default function SignUpPage() {
   const [email, setEmail] = useState('');
@@ -44,6 +45,14 @@ export default function SignUpPage() {
 
     const method = isLogin ? signIn : signUp;
     const { data, error } = await method(email, password);
+
+if (error) {
+  setMessage(`Errore: ${error.message}`);
+  return;
+}
+
+// 🔁 Recupera sessione attiva
+await supabase.auth.getSession();
 
     if (error) {
       setMessage(`Errore: ${error.message}`);
