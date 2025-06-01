@@ -34,10 +34,10 @@ export function Hero() {
   const { user } = useUser(); // `loading` è opzionale se lo hai
   const router = useRouter();
   useEffect(() => {
-    if (!loading && !user) {
+    if (!user) {
       router.replace(`/signup?redirect=${encodeURIComponent(router.asPath)}`);
     }
-  }, [user, loading, router]);
+  }, [user]);
 
   if (!user) return null;
 

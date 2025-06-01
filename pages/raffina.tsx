@@ -16,11 +16,7 @@ import withAuth from '../utils/withAuth';
 const router = useRouter();
 const { user } = useUser();
 
-useEffect(() => {
-  if (!user) {
-    router.replace(`/signup?redirect=${encodeURIComponent(router.asPath)}`);
-  }
-}, [user, router]);
+
 
 function RaffinaPage() {
   return <div>Benvenuto nella pagina Raffina!</div>;
@@ -34,6 +30,14 @@ const MotionDiv = motion.div as React.FC<React.HTMLAttributes<HTMLDivElement> & 
 const MotionButton = motion.button as React.FC<React.HTMLAttributes<HTMLDivElement> & any>;
 
 export function RaffinaScriptPage() {
+
+  useEffect(() => {
+    if (!user) {
+      router.replace(`/signup?redirect=${encodeURIComponent(router.asPath)}`);
+    }
+  }, [user]);
+
+  if (!user) return null;
 
   type HistoryEntry = {
   note: string;

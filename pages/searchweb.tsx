@@ -27,10 +27,10 @@ export function SearchWeb() {
   const { user } = useUser(); // `loading` è opzionale se lo hai
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!user) {
       router.replace(`/signup?redirect=${encodeURIComponent(router.asPath)}`);
     }
-  }, [user, loading, router]);
+  }, [user]);
 
   if (!user) return null;
 
