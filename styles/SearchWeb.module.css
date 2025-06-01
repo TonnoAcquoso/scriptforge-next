@@ -1,0 +1,326 @@
+/* 🌐 Container principale */
+.container {
+  padding: 3rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--text-color);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* ✨ Effetto fade-in iniziale */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🖋️ Titolo con gradiente e ombra */
+.title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(90deg, var(--accent-color), #f50057);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+/* 🔍 Barra di ricerca sticky con design avanzato */
+.searchBarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(90deg, var(--background), var(--background-alt));
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  flex-wrap: wrap;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* 🧠 Campo input con effetto glow */
+.searchInput {
+  flex: 1;
+  padding: 0.9rem 1.2rem;
+  font-size: 1.05rem;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: var(--input-bg);
+  color: var(--text-color);
+  transition: box-shadow 0.3s ease;
+  min-width: 220px;
+  max-width: 600px;
+  box-shadow: inset 0 0 0 2px transparent;
+}
+
+.searchInput:focus {
+  box-shadow: 0 0 0 3px var(--accent-color-transparent);
+}
+
+/* 🔘 Bottone ricerca con effetto pulsazione */
+.searchButton {
+  background: var(--accent-color);
+  color: white;
+  padding: 0.75rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.searchButton:hover {
+  background: var(--accent-color-hover);
+  transform: scale(1.05);
+}
+
+/* 🕒 Testo di caricamento */
+.loading {
+  text-align: center;
+  font-style: italic;
+  margin-top: 1rem;
+  color: var(--text-color-muted);
+}
+
+/* 📦 Layout risultati + sidebar */
+.layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 2.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* 📄 Colonna principale */
+.mainColumn {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 🧾 Lista risultati */
+.results {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* 🪩 Card risultato con effetto 3D */
+.resultCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1.4rem 1.6rem;
+  border-radius: 16px;
+  background-color: var(--card-bg);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.resultCard:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* 📌 Titolo del risultato */
+.resultTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--link-color);
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.resultTitle:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* ✏️ Descrizione */
+.resultSnippet {
+  font-size: 0.96rem;
+  color: var(--text-color-muted);
+  line-height: 1.7;
+  margin-bottom: 0.6rem;
+  flex-grow: 1;
+}
+
+/* 🧭 Fonte e favicon */
+.resultSource {
+  font-size: 0.85rem;
+  color: var(--text-color-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* 🔖 Badge verificato */
+.trustedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+}
+
+/* 📎 Favicon */
+.favicon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.4rem;
+  object-fit: contain;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* 🧱 Sidebar */
+.sidebar {
+  width: 270px;
+  min-width: 200px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 100px;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* 🔁 Ricerche recenti */
+.recentSearches {
+  text-align: right;
+}
+
+.recentTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.recentList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.recentButton {
+  padding: 0.4rem 0.9rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.recentButton:hover {
+  background-color: var(--accent-color-transparent);
+  transform: scale(1.03);
+}
+
+/* 🔽 Anchor invisibile per infinite scroll */
+.scrollAnchor {
+  height: 1px;
+}
+
+/* 🌗 Temi */
+.html.light {
+  --text-color: #0e0e0e;
+  --text-color-muted: #666;
+  --link-color: #1e40af;
+  --border-color: #ccc;
+  --input-bg: #ffffff;
+  --card-bg: #f9f9f9;
+  --accent-color: #0056d2;
+  --accent-color-hover: #0041aa;
+  --accent-color-transparent: rgba(0, 86, 210, 0.2);
+  --background: #fcfcfc;
+  --background-alt: #f2f2f2;
+}
+
+.html.dark {
+  --text-color: #f5f5f5;
+  --text-color-muted: #a0a0a0;
+  --link-color: #90caf9;
+  --border-color: #444;
+  --input-bg: #1e1e1e;
+  --card-bg: #2a2a2a;
+  --accent-color: #4f8cff;
+  --accent-color-hover: #3b6ed1;
+  --accent-color-transparent: rgba(79, 140, 255, 0.2);
+  --background: #111111;
+  --background-alt: #1c1c1c;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .container {
+    padding: 2.5rem 1rem;
+  }
+
+  .searchBarContainer {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .searchInput {
+    width: 100%;
+    flex: 1;
+  }
+
+  .searchButton {
+    width: 100%;
+  }
+
+  .resultCard {
+    padding: 1rem;
+  }
+
+  .resultTitle {
+    font-size: 1.05rem;
+  }
+
+  .resultSnippet {
+    font-size: 0.92rem;
+  }
+}

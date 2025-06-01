@@ -1,0 +1,451 @@
+/* ========================= */
+/* 🎨 STILE RAFFINA SCRIPT   */
+/* ========================= */
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* 🖋️ Titolo */
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-color, #4fc3f7);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* 💬 Sottotitolo */
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text-color);
+  margin-top: -0.5rem;
+  opacity: 0.85;
+}
+
+/* 📝 Textarea per inserire script utente */
+.customEditorWrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 1.5rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.customEditor {
+  width: 100%;
+  min-height: 320px;
+  max-height: 65vh;
+  padding: 1.2rem;
+  font-size: 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08));
+  color: var(--text-color);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.05);
+  resize: vertical;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(3px);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.customEditor:focus {
+  box-shadow: 0 0 0 2px #00e0ff88, 0 0 16px rgba(0,224,255,0.3);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 768px) {
+  .customEditor {
+    font-size: 0.95rem;
+    min-height: 240px;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ✨ Bottone Raffinamento */
+.refineButton {
+  align-self: center;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 0.9rem 1.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 183, 255, 0.35);
+  transition: all 0.3s ease;
+}
+
+.refineButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 183, 255, 0.5);
+}
+
+.refineButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 📦 Box risultato raffinato */
+.resultBox {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 1rem;
+  color: var(--text-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+/* 📄 Titolo del risultato */
+.resultTitle {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--accent-color);
+}
+
+/* 📜 Testo raffinato */
+/* ✅ Box per il risultato con differenze evidenziate */
+.resultText {
+  font-family: 'Courier New', Courier, monospace; /* o quello che usi per il testo originale */
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* 🔘 Contenitore del pulsante di ritorno */
+.backButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+/* ✨ Pulsante con stile vetroso moderno */
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0, 183, 255, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 🎯 Icona Lucide */
+.backIcon {
+  transition: transform 0.3s ease;
+}
+
+.backButton:hover .backIcon {
+  transform: translateX(-2px);
+}
+
+/* 💬 Testo */
+.backText {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.backButton:hover .backText {
+  transform: translateX(2px);
+  opacity: 0.95;
+}
+
+/* 🔲 Contenitore con due colonne affiancate */
+.resultContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin-top: 2rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* 📄 Colonna singola (testo originale o raffinato) */
+.column {
+  flex: 1;
+  min-width: 280px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 📦 Stile per i pulsanti di esportazione */
+.exportButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* 🎯 Stile editor avanzato 
+.editorBox {
+  width: 100%;
+  height: 320px;
+  margin-top: 1rem;
+  border-radius: 12px;
+  font-family: monospace;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
+  overflow: hidden;
+  box-sizing: border-box;
+} */
+
+/* ✅ Evita overflow e forza il testo ad andare a capo */
+.ace_editor,
+.ace_content,
+.ace_text-layer {
+  overflow-wrap: break-word !important;
+  white-space: pre-wrap !important;
+}
+
+/* ✨ Glow on focus */
+.ace_editor:focus-within {
+  box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+}
+
+/* 💬 Editor testo raffinato */
+.editorContainer {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin-top: 2.5rem;
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.editorContainer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 60%);
+  animation: shine 6s linear infinite;
+  z-index: 0;
+}
+
+@keyframes shine {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.editableArea {
+  width: 100%;
+  min-height: 300px;
+  background: rgba(0,0,0,0.35);
+  color: var(--text-color);
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  resize: vertical;
+  border-radius: 14px;
+  padding: 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.7;
+  box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.editableArea:focus {
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 0 2px #00e0ff88, 0 0 16px rgba(0,224,255,0.25);
+  border-radius: 16px;
+}
+
+.editorToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  position: relative; /* 🔧 Assicurati che z-index funzioni */
+  z-index: 10; /* 🔝 Porta in primo piano */
+}
+
+.editorToggle input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #00e0ff;
+  cursor: pointer;
+}
+
+.editorAreaWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  animation: fadeIn 0.4s ease;
+}
+
+.editorButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+/* 🔘 Stile base dei pulsanti editor */
+.undoButton, .applyButton {
+  position: relative;
+  z-index: 10;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1));
+  color: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(0,224,255, 0.4),
+    0 0 16px rgba(0,224,255, 0.2),
+    inset 0 0 8px rgba(0,224,255, 0.2);
+  backdrop-filter: blur(6px);
+  transition: all 0.25s ease, transform 0.2s ease;
+  overflow: hidden;
+}
+
+.undoButton::before,
+.applyButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+  z-index: 0;
+}
+
+.undoButton:hover::before,
+.applyButton:hover::before {
+  width: 200%;
+  height: 500%;
+}
+
+.undoButton:hover,
+.applyButton:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 6px #00e0ffcc,
+    0 0 18px #00e0ff66,
+    inset 0 0 6px #00e0ff44;
+}
+
+.undoButton:active,
+.applyButton:active {
+  transform: scale(0.97);
+  box-shadow:
+    0 0 12px #00e0ff,
+    inset 0 0 8px #00e0ff;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow:
+      0 0 5px #00e0ff66,
+      0 0 15px #00e0ff33;
+  }
+  50% {
+    box-shadow:
+      0 0 7px #00e0ffaa,
+      0 0 12.5px #00e0ff66;
+  }
+  100% {
+    box-shadow:
+      0 0 5px #00e0ff66,
+      0 0 15px #00e0ff33;
+  }
+}
+
+.applyButton, .undoButton {
+  animation: pulseGlow 2.8s ease-in-out infinite;
+}
+
+.editableArea::-webkit-scrollbar {
+  width: 10px;
+}
+.editableArea::-webkit-scrollbar-thumb {
+  background-color: #00e0ff;
+  border-radius: 6px;
+}
+
+
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .refineButton {
+    font-size: 1rem;
+    padding: 0.8rem 1.4rem;
+  }
+
+  .resultBox {
+    padding: 1.2rem;
+  }
+
+  .resultTitle {
+    font-size: 1.1rem;
+  }
+
+  .resultContainer {
+    flex-direction: column;
+  }
+}
