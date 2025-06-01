@@ -5,6 +5,7 @@ import {
   sendOtp,
   setupTotp,
   verifyTotp,
+  getTotpFactors,
 } from '../utils/auth';
 import styles from '../styles/SignUp.module.css';
 import { Eye, EyeOff } from 'lucide-react';
@@ -52,16 +53,25 @@ export default function SignUpPage() {
       setMessage(`Errore: ${error.message}`);
     } else {
       if (isLogin) {
-        // MFA Step
-        const mfa = await setupTotp();
-        if (mfa.error) {
-          setMessage('✅ Login riuscito. Nessuna MFA configurata. Controlla la tua email.');
-          await sendOtp(email);
-        } else {
-          setQrUrl(mfa.data.totp.qr_code);
-          setFactorId(mfa.data.id);
+        // 🔐 Verifica se esiste già un TOTP configurato
+        const { data: factorData } = await getTotpFactors();
+        const totpFactor = factorData?.totp?.find(f => f.status === 'verified');
+
+        if (totpFactor) {
+          setFactorId(totpFactor.id);
           setMfaRequired(true);
-          setMessage('');
+        } else {
+          // Nessun TOTP esistente → creazione QR
+          const mfa = await setupTotp();
+          if (mfa.error || !mfa.data) {
+            setMessage('✅ Login riuscito. MFA non configurata, riceverai un link via email.');
+            await sendOtp(email);
+          } else {
+            setQrUrl(mfa.data.totp.qr_code);
+            setFactorId(mfa.data.id);
+            setMfaRequired(true);
+            setMessage('');
+          }
         }
       } else {
         setMessage('✅ Registrazione completata. Ora puoi effettuare il login.');

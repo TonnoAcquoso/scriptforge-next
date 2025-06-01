@@ -1,13 +1,13 @@
 // utils/auth.ts
 import { supabase } from './supabaseClient';
 
-// ✅ Signup con email e password (rimane valido)
+// ✅ Signup con email e password
 export const signUp = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signUp({ email, password });
   return { data, error };
 };
 
-// ✅ Login con email e password (rimane valido)
+// ✅ Login con email e password
 export const signIn = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   return { data, error };
@@ -21,47 +21,51 @@ export const signOut = async () => {
 
 // ✅ Recupera l'utente corrente
 export const getUser = async () => {
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
+  const { data: { user }, error } = await supabase.auth.getUser();
+  return { user, error };
 };
 
-// ✅ Invia un OTP via email
+// ✅ Invia OTP via email (non più usato se si usa TOTP)
 export const sendOtp = async (email: string) => {
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
-      shouldCreateUser: false, // ❌ Non creare utente, è già registrato
-      emailRedirectTo: 'https://scriptforge.it.com/verify' // 🔁 Cambia in produzione
+      shouldCreateUser: false,
+      emailRedirectTo: 'https://scriptforge.it.com/verify' // ✅ Dominio corretto
     }
   });
-
   return { success: !error, error };
 };
 
-// ✅ Verifica il codice OTP ricevuto via email
+// ✅ Verifica OTP via email
 export const verifyOtp = async (email: string, token: string) => {
   const { data, error } = await supabase.auth.verifyOtp({
     email,
     token,
-    type: 'email' // 🧾 Specifica che il token è arrivato via email
+    type: 'email'
   });
-
   return { success: !error, data, error };
 };
 
-// Setup MFA - genera il QR Code (per app tipo Google Authenticator)
+// ✅ Setup TOTP: genera QR code e secret per Google Authenticator
 export const setupTotp = async () => {
   const { data, error } = await supabase.auth.mfa.enroll({
     factorType: 'totp',
   });
-  return { data, error }; // contiene: id (factorId), qr_code (URL immagine), secret
+  return { data, error }; // data.totp.qr_code, data.id
 };
 
-// Verifica il codice TOTP inserito dall’utente
+// ✅ Verifica TOTP dopo che l’utente ha inserito il codice dall’app
 export const verifyTotp = async (code: string, factorId: string) => {
   const { data, error } = await supabase.auth.mfa.challengeAndVerify({
     factorId,
     code,
   });
+  return { data, error };
+};
+
+// ✅ Lista dei fattori MFA abilitati per l'utente (utile per sapere se è già registrato)
+export const getTotpFactors = async () => {
+  const { data, error } = await supabase.auth.mfa.listFactors();
   return { data, error };
 };
