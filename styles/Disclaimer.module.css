@@ -1,0 +1,64 @@
+/* 📃 Contenitore principale del documento legale */
+.disclaimerPage {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  font-family: 'Georgia', serif;
+  line-height: 1.8;
+  background-color: #f9fafb;
+  color: #1e293b;
+}
+
+/* 🏛️ Titolo principale */
+.title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #0f172a;
+}
+
+/* 📑 Sottotitoli (Articoli, Sezioni) */
+.subtitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: #1e293b;
+  border-left: 4px solid #3b82f6;
+  padding-left: 0.6rem;
+}
+
+/* 📘 Paragrafi regolari */
+.paragraph {
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  color: #334155;
+}
+
+/* 📌 Liste numerate o puntate */
+.list {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.list li {
+  margin-bottom: 0.5rem;
+}
+
+/* 🔗 Link esterni o normativi */
+.a {
+  color: #0f62fe;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+.a:hover {
+  color: #084cdf;
+}
+
+/* 🧾 Footer leggero */
+.footerNote {
+  font-size: 0.85rem;
+  margin-top: 3rem;
+  color: #64748b;
+  text-align: center;
+}

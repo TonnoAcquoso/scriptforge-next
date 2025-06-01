@@ -1,0 +1,317 @@
+/* 🌐 Contenitore principale */
+.signupContainer {
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    145deg,
+    #e5f2f9 0%,
+    #dbeafe 40%,
+    #f0f9ff 100%
+  );
+  backdrop-filter: blur(8px);
+}
+
+/* 🔠 Titolo superiore ScriptForge AI */
+.pageTitle {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+}
+
+.gradient {
+  background: linear-gradient(90deg, #0ea5e9, #2563eb, #9333ea);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientGlow 10s linear infinite;
+}
+
+@keyframes gradientGlow {
+  to {
+    background-position: -200% center;
+  }
+}
+
+/* 📦 Card del form */
+.signupCard {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(250, 250, 250, 0.8);
+  border: 1px solid rgba(180, 200, 240, 0.4);
+  border-radius: 1.25rem;
+  padding: 2.2rem;
+  backdrop-filter: blur(12px);
+}
+
+/* 🧾 Titolo interno card */
+.signupTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #1e293b;
+}
+
+/* 🧩 Input field */
+.inputField {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.6rem;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+.inputField:focus {
+  border-color: #0ea5e9;
+  outline: none;
+  background-color: #ffffff;
+}
+
+/* 🚀 Pulsante CTA */
+.signupButton {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(to right, #3b82f6, #9333ea);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.65rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.signupButton:hover {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+}
+
+/* ✅ Messaggi di feedback */
+.message {
+  margin-top: 1.2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #1e293b;
+}
+
+/* 🔁 Toggle login/signup */
+.toggleText {
+  margin-top: 1.6rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #334155;
+}
+.toggleLink {
+  color: #0ea5e9;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 0.25rem;
+  transition: color 0.2s ease;
+}
+.toggleLink:hover {
+  color: #0284c7;
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 1rem;
+  top: 40%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  padding: 0;
+}
+
+.invalid {
+  border: 1px solid #ff4d4f;
+}
+
+.otpText {
+  margin: 1rem 0 0.3rem;
+  font-size: 0.85rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.otpButton {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #f0f3f6;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.otpButton:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* 🔐 Istruzioni per QR code */
+.qrInstructions {
+  font-size: 0.95rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+/* 📷 Contenitore QR Code */
+.qrCode {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.qrCode img {
+  max-width: 180px;
+  border-radius: 0.75rem;
+  border: 2px solid rgba(14, 165, 233, 0.3);
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.1);
+}
+
+/* 🔢 Secret key per inserimento manuale */
+.secretKey {
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1.2rem;
+  background-color: #f1f5f9;
+  padding: 0.75rem 1rem;
+  border-radius: 0.65rem;
+  color: #0f172a;
+  word-break: break-all;
+  border: 1px dashed #38bdf8;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+.secretKey strong {
+  font-family: monospace;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* 🟥 Messaggio di errore visivo */
+.errorMessage {
+  color: #dc2626; /* rosso intenso */
+  font-weight: 600;
+  text-align: center;
+  margin-top: 1.2rem;
+  animation: shakeError 0.4s ease;
+}
+
+/* 🔄 Animazione leggera shake */
+@keyframes shakeError {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+/* DISCLAIMER */
+
+/* ⚠️ Contenitore disclaimer */
+.disclaimerWrapper {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* 🪧 Bottone toggle disclaimer */
+.disclaimerToggle {
+  background: none;
+  border: none;
+  color: #334155;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+.disclaimerToggle:hover {
+  color: #0ea5e9;
+}
+
+/* 📜 Contenuto disclaimer nascosto */
+.disclaimerContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding: 0 0rem;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+/* ✅ Quando visibile */
+.disclaimerContent.open {
+  max-height: 120px;
+  padding: 1rem 0.5rem;
+}
+
+/* 🔗 Stile link all’interno del disclaimer */
+.disclaimerContent a {
+  color: #0ea5e9;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.disclaimerContent a:hover {
+  color: #0284c7;
+}
+
+/* 🔐 Blocco criteri password */
+.passwordCriteria {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(180, 200, 240, 0.3);
+  padding: 0.8rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #334155;
+  margin-top: -0.4rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+/* ✅ Criterio soddisfatto */
+.valid::before {
+  content: "✔ ";
+  color: #10b981; /* verde */
+  font-weight: 600;
+}
+.valid {
+  color: #10b981;
+  transition: color 0.3s ease;
+}
+
+/* ❌ Criterio non soddisfatto */
+.invalid::before {
+  content: "✘ ";
+  color: #ef4444; /* rosso */
+  font-weight: 600;
+}
+.invalid {
+  color: #ef4444;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.signupButton:disabled {
+  background: linear-gradient(to right, #94a3b8, #64748b); /* grigio/blu sobrio */
+  cursor: not-allowed;
+  opacity: 0.8;
+}
