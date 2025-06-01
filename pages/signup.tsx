@@ -218,27 +218,29 @@ export default function SignUpPage() {
         )}
       </div>
 
-      <div className={styles.disclaimerWrapper}>
-  <button
-    onClick={() => setShowDisclaimer(!showDisclaimer)}
-    className={styles.disclaimerToggle}
-    aria-expanded={showDisclaimer}
-    aria-controls="disclaimerContent"
-  >
-    ⚠️ Termini & Privacy
-  </button>
+      {!mfaRequired && (
+  <div className={styles.disclaimerWrapper}>
+    <button
+      onClick={() => setShowDisclaimer(!showDisclaimer)}
+      className={styles.disclaimerToggle}
+      aria-expanded={showDisclaimer}
+      aria-controls="disclaimerContent"
+    >
+      ⚠️ Termini & Privacy
+    </button>
 
-  <div
-    id="disclaimerContent"
-    className={`${styles.disclaimerContent} ${showDisclaimer ? styles.open : ''}`}
-  >
-    <p>
-      Accedendo o creando un account, accetti i nostri{' '}
-      <a href="/termini" target="_blank" rel="noopener noreferrer">Termini di Servizio</a>{' '}
-      e l' <a href="/privacy" target="_blank" rel="noopener noreferrer">Informativa sulla Privacy</a>.
-    </p>
+    <div
+      id="disclaimerContent"
+      className={`${styles.disclaimerContent} ${showDisclaimer ? styles.open : ''}`}
+    >
+      <p>
+        Accedendo o creando un account, accetti i nostri{' '}
+        <a href="/termini" target="_blank" rel="noopener noreferrer">Termini di Servizio</a>{' '}
+        e l' <a href="/privacy" target="_blank" rel="noopener noreferrer">Informativa sulla Privacy</a>.
+      </p>
+    </div>
   </div>
-</div>
+)}
     </div>
   );
 }
