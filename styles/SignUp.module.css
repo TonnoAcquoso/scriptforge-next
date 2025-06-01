@@ -141,3 +141,24 @@
 .invalid {
   border: 1px solid #ff4d4f;
 }
+
+.otpText {
+  margin: 1rem 0 0.3rem;
+  font-size: 0.85rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.otpButton {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #f0f3f6;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.otpButton:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
