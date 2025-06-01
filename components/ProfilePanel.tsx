@@ -50,7 +50,7 @@ export default function ProfilePanel({ onClose }) {
 
           <h2 className={styles.title}>👤 Il tuo profilo</h2>
 
-          {user ? (
+              {user ? (
             <div className={styles.infoSection}>
               <p className={styles.email}>
                 Email: <strong>{user.email}</strong>
@@ -70,13 +70,31 @@ export default function ProfilePanel({ onClose }) {
                 <Clock size={16} />
                 <span>
                   Cronologia Script
-                  <span className={styles.badge}>In Arrivo</span> {/* ✅ Badge */}
+                  <span className={styles.badge}>In Arrivo</span>
                 </span>
               </button>
             </div>
           ) : (
-            <p>Utente non autenticato.</p>
+            <>
+              <p>Utente non autenticato.</p>
+              <button
+                className={styles.panelButton}
+                onClick={() => {
+                  router.push('/signup');
+                  onClose();
+                }}
+              >
+                Accedi o Registrati
+              </button>
+            </>
           )}
+
+          <button
+            className={styles.feedbackButton}
+            onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSfjxSGqw8n-eQd-8H3poRGD-s-7WfatYNUOzRu7TjC_iUL-Hg/viewform?usp=header', '_blank')}
+          >
+            💬 Feedback
+          </button>
         </MotionDiv>
       </AnimatePresence>
     </div>
