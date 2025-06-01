@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   signUp,
   signIn,
-  sendOtp,
   setupTotp,
   verifyTotp,
   getTotpFactors,
@@ -31,15 +30,12 @@ export default function SignUpPage() {
   const validateInputs = () => {
     const emailOK = /\S+@\S+\.\S+/.test(email);
     const passwordOK = password.length >= 8;
-
     setEmailValid(emailOK);
     setPasswordValid(passwordOK);
-
     if (!emailOK || !passwordOK) {
       setMessage("Inserisci un'email valida e una password di almeno 8 caratteri.");
       return false;
     }
-
     return true;
   };
 
@@ -53,25 +49,30 @@ export default function SignUpPage() {
       setMessage(`Errore: ${error.message}`);
     } else {
       if (isLogin) {
-        // 🔐 Verifica se esiste già un TOTP configurato
-        const { data: factorData } = await getTotpFactors();
-        const totpFactor = factorData?.totp?.find(f => f.status === 'verified');
+        // Dopo login → controlla se utente ha già MFA attiva
+        const { data: factors, error: factorError } = await getTotpFactors();
+        if (factorError) {
+          setMessage('Errore nel recupero dei fattori MFA.');
+          return;
+        }
 
-        if (totpFactor) {
-          setFactorId(totpFactor.id);
+        const verifiedTotp = factors?.totp?.find(f => f.status === 'verified');
+
+        if (verifiedTotp) {
+          // Utente già configurato → chiedi solo codice
+          setFactorId(verifiedTotp.id);
           setMfaRequired(true);
         } else {
-          // Nessun TOTP esistente → creazione QR
-          const mfa = await setupTotp();
-          if (mfa.error || !mfa.data) {
-            setMessage('✅ Login riuscito. MFA non configurata, riceverai un link via email.');
-            await sendOtp(email);
-          } else {
-            setQrUrl(mfa.data.totp.qr_code);
-            setFactorId(mfa.data.id);
-            setMfaRequired(true);
-            setMessage('');
+          // Nessun TOTP → crea nuovo QR
+          const { data: mfaData, error: mfaError } = await setupTotp();
+          if (mfaError || !mfaData?.totp?.qr_code) {
+            setMessage('❌ Impossibile configurare MFA. Riprova.');
+            return;
           }
+
+          setQrUrl(mfaData.totp.qr_code);
+          setFactorId(mfaData.id);
+          setMfaRequired(true);
         }
       } else {
         setMessage('✅ Registrazione completata. Ora puoi effettuare il login.');
@@ -163,13 +164,16 @@ export default function SignUpPage() {
           </>
         ) : (
           <>
-            <p className={styles.qrInstructions}>
-              Scansiona il codice QR con Google Authenticator, poi inserisci il codice a 6 cifre:
-            </p>
-
-            <div className={styles.qrCode}>
-              <img src={qrUrl} alt="QR Code" />
-            </div>
+            {qrUrl && (
+              <>
+                <p className={styles.qrInstructions}>
+                  Scansiona questo codice QR con Google Authenticator:
+                </p>
+                <div className={styles.qrCode}>
+                  <img src={qrUrl} alt="QR Code MFA" />
+                </div>
+              </>
+            )}
 
             <input
               type="text"
