@@ -32,6 +32,7 @@ export default function SignUpPage() {
   const router = useRouter();
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateInputs = () => {
     const emailOK = /\S+@\S+\.\S+/.test(email);
@@ -47,16 +48,16 @@ export default function SignUpPage() {
 
   const handleSubmit = async () => {
   if (!validateInputs()) return;
+  setIsLoading(true);
 
   if (!isLogin) {
-    // 🔍 Verifica se email è già registrata PRIMA della registrazione
     const exists = await isEmailRegistered(email);
     if (exists) {
       setMessage('❌ Account già esistente. Effettua il login.');
+      setIsLoading(false);
       return;
     }
 
-    // ✅ Esegui reCAPTCHA invisibile solo in fase di registrazione
     if (recaptchaRef.current) {
       const token = await recaptchaRef.current.executeAsync();
       recaptchaRef.current.reset();
@@ -64,6 +65,7 @@ export default function SignUpPage() {
 
       if (!token) {
         setMessage('⚠️ Verifica reCAPTCHA fallita. Riprova.');
+        setIsLoading(false);
         return;
       }
     }
@@ -71,6 +73,7 @@ export default function SignUpPage() {
 
   const method = isLogin ? signIn : signUp;
   const { data, error } = await method(email, password);
+  setIsLoading(false);
 
   if (error) {
     setMessage(`Errore: ${error.message}`);
