@@ -1,18 +1,26 @@
 
 // ✅ Import dei moduli necessari
 import React, { useState, useEffect } from 'react';
+import { useUser } from '../components/UserContext';
+import { useRouter } from 'next/router';
 import styles from '../styles/Raffina.module.css';
 import { motion } from 'framer-motion';
 import { Wand2, FileText, ArrowLeftCircle, AlignLeft } from 'lucide-react';
 import { saveAs } from 'file-saver';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import dynamic from 'next/dynamic';
-
 import highlightDiff from '../utils/highlightDiff'; // 🔍 Per evidenziare differenze
 import useThemeAndDraft from '../utils/useThemeAndDraft'; // 🌓 Tema + salvataggio automatico
-
-
 import withAuth from '../utils/withAuth';
+
+const router = useRouter();
+const { user } = useUser();
+
+useEffect(() => {
+  if (!user) {
+    router.replace(`/signup?redirect=${encodeURIComponent(router.asPath)}`);
+  }
+}, [user, router]);
 
 function RaffinaPage() {
   return <div>Benvenuto nella pagina Raffina!</div>;

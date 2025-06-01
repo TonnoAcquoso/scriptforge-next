@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   signUp,
   signIn,
@@ -12,6 +12,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { supabase } from '../utils/supabaseClient';
 import ReCAPTCHA from 'react-google-recaptcha';
+import toast from 'react-hot-toast';
 
 export default function SignUpPage() {
   const [recaptchaToken, setRecaptchaToken] = useState('');
@@ -33,6 +34,14 @@ export default function SignUpPage() {
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { redirect } = router.query;
+  const [redirectPath, setRedirectPath] = useState('/');
+
+  useEffect(() => {
+  if (typeof redirect === 'string') {
+    setRedirectPath(redirect);
+  }
+}, [redirect]);
 
   const validateInputs = () => {
     const emailOK = /\S+@\S+\.\S+/.test(email);
@@ -53,7 +62,7 @@ export default function SignUpPage() {
   if (!isLogin) {
     const exists = await isEmailRegistered(email);
     if (exists) {
-      setMessage('❌ Account già esistente. Effettua il login.');
+      toast.error('❌ Account già esistente. Effettua il login.');
       setIsLoading(false);
       return;
     }
@@ -108,7 +117,7 @@ export default function SignUpPage() {
         setMessage('');
       }
     } else {
-      setMessage('✅ Registrazione completata. Ora puoi effettuare il login.');
+      toast.success('✅ Registrazione completata. Ora puoi effettuare il login.');
     }
   };
 
@@ -117,11 +126,11 @@ export default function SignUpPage() {
 
     const { data, error } = await verifyTotp(totpCode, factorId);
     if (error) {
-      setTotpMessage(`❌ Codice non valido: ${error.message}`);
-    } else {
-      setTotpMessage('✅ Verifica MFA riuscita. Reindirizzamento...');
-      setTimeout(() => router.push('/'), 1500);
-    }
+        toast.error(`❌ Codice non valido: ${error.message}`);
+      } else {
+        toast.success('✅ Verifica MFA riuscita! Reindirizzamento...');
+        setTimeout(() => router.push(redirectPath), 1500);
+      }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

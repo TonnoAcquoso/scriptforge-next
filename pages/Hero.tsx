@@ -4,14 +4,15 @@ import styles from '../styles/Hero.module.css';
 import { saveAs } from 'file-saver';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/router';
 import { ClipboardCopy, BarChart4, Search, BookOpenCheck, HeartPulse, PenLine, Compass,
          Sun, Moon, Info, X, Wand2, ChevronUp, ChevronDown} from 'lucide-react';
 import { useSwipeable } from 'react-swipeable';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
-import { supabase } from '../utils/supabaseClient';
 import withAuth from '../utils/withAuth';
+import { useRouter } from 'next/router';
+import { useUser } from '../components/UserContext';
+
 
 
 export function Hero() {
@@ -30,12 +31,20 @@ export function Hero() {
   const [copied, setCopied] = useState(false);
   const [isOutputVisible, setIsOutputVisible] = useState(true);
   const MotionDiv = motion.div as React.FC<React.HTMLAttributes<HTMLDivElement> & any>;
+  const { user } = useUser(); // `loading` è opzionale se lo hai
+  const router = useRouter();
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace(`/signup?redirect=${encodeURIComponent(router.asPath)}`);
+    }
+  }, [user, loading, router]);
+
+  if (!user) return null;
 
 
 
   
 // AGGIUNTA LINK
-const router = useRouter();
 const goToAnalysis = () => {
   router.push(`/analisiscript?script=${encodeURIComponent(scriptResult)}`);
 };

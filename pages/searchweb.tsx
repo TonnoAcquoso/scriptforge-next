@@ -3,6 +3,8 @@ import styles from '../styles/SearchWeb.module.css';
 import { Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import withAuth from '../utils/withAuth';
+import { useRouter } from 'next/router';
+import { useUser } from '../components/UserContext';
 
 interface SearchResult {
   title: string;
@@ -20,8 +22,18 @@ export function SearchWeb() {
   const [recentQueries, setRecentQueries] = useState<string[]>([]);
   const observerRef = useRef<HTMLDivElement>(null);
   const MotionDiv = motion.div as React.FC<React.HTMLAttributes<HTMLDivElement> & any>;
-
   const resultsPerPage = 10;
+  const router = useRouter();
+  const { user } = useUser(); // `loading` è opzionale se lo hai
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace(`/signup?redirect=${encodeURIComponent(router.asPath)}`);
+    }
+  }, [user, loading, router]);
+
+  if (!user) return null;
+
 
   useEffect(() => {
     const stored = localStorage.getItem('recentQueries');
