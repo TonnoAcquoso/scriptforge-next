@@ -86,16 +86,18 @@ export default function SignUpPage() {
 
         const { data, error } = await signUp(email.trim().toLowerCase(), password);
 
-        if (error || !data?.user) {
-          toast.error('❌ Errore durante la registrazione.');
-          setIsLoading(false);
-          return;
-        }
+if (error || !data?.user) {
+  console.error('❌ Errore durante la registrazione:', error, data);
+  toast.error('❌ Errore durante la registrazione.');
+  setIsLoading(false);
+  return;
+}
 
         const { error: profileError } = await supabase.from('profiles').insert([
           {
             id: data.user.id,
             email: email.trim().toLowerCase(),
+            role: 'user'
           }
         ]);
 
