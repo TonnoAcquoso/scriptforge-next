@@ -84,7 +84,10 @@ export default function SignUpPage() {
           setRecaptchaToken(token);
         }
 
-        const { data, error } = await signUp(email.trim().toLowerCase(), password);
+          // Prima del signUp
+console.log('🟢 Tentativo registrazione:', email.trim().toLowerCase());
+
+    const { data, error } = await signUp(email.trim().toLowerCase(), password);
 
 if (error || !data?.user) {
   console.error('❌ Errore durante la registrazione:', error, data);
@@ -92,6 +95,8 @@ if (error || !data?.user) {
   setIsLoading(false);
   return;
 }
+
+  console.log('✅ Registrazione riuscita:', data.user);
 
         const { error: profileError } = await supabase.from('profiles').insert([
           {
