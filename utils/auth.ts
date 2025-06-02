@@ -3,7 +3,22 @@ import { supabase } from './supabaseClient';
 
 // ✅ Signup con email e password
 export const signUp = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    console.error('🛑 Errore signUp Supabase:', error.message);
+    return { data: null, error };
+  }
+
+  // ❗ Controllo se l’utente è nullo o ha ID non valido
+  if (!data?.user || data.user.id === '00000000-0000-0000-0000-000000000000') {
+    console.error('❌ ID utente non valido o mancante:', data);
+    return { data: null, error: new Error('ID utente non valido') };
+  }
+
   return { data, error };
 };
 

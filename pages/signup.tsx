@@ -58,118 +58,143 @@ export default function SignUpPage() {
   };
 
   const handleSubmit = async () => {
-    if (!validateInputs()) return;
-    setIsLoading(true);
+  if (!validateInputs()) return;
+  setIsLoading(true);
 
-    if (!isLogin) {
-      try {
-        const exists = await isEmailRegistered(email.trim().toLowerCase());
+  // 🟢 REGISTRAZIONE
+  if (!isLogin) {
+    try {
+      const exists = await isEmailRegistered(email.trim().toLowerCase());
+      if (exists) {
+        toast.error('❌ Account già esistente. Effettua il login.');
+        setIsLoading(false);
+        return;
+      }
 
-        if (exists) {
-          toast.error('❌ Account già esistente. Effettua il login.');
+      // ✅ reCAPTCHA
+      if (recaptchaRef.current) {
+        const token = await recaptchaRef.current.executeAsync();
+        recaptchaRef.current.reset();
+
+        if (!token) {
+          toast.error('⚠️ Verifica reCAPTCHA fallita. Riprova.');
           setIsLoading(false);
           return;
         }
 
-        if (recaptchaRef.current) {
-          const token = await recaptchaRef.current.executeAsync();
-          recaptchaRef.current.reset();
+        setRecaptchaToken(token);
+      }
 
-          if (!token) {
-            toast.error('⚠️ Verifica reCAPTCHA fallita. Riprova.');
-            setIsLoading(false);
-            return;
-          }
+      // 🔐 Signup
+      console.log('🟢 Tentativo registrazione:', email.trim().toLowerCase());
+      const { data, error } = await signUp(email.trim().toLowerCase(), password);
 
-          setRecaptchaToken(token);
-        }
+      if (error || !data?.user) {
+        console.error('🛑 Signup fallita:', { error, user: data?.user });
+        toast.error('❌ Errore durante la registrazione.');
+        setIsLoading(false);
+        return;
+      }
 
-          // Prima del signUp
-console.log('🟢 Tentativo registrazione:', email.trim().toLowerCase());
+      console.log('✅ Registrazione riuscita:', data.user);
+      console.log('👤 ID utente ricevuto dopo signup:', data.user.id);
 
-    const { data, error } = await signUp(email.trim().toLowerCase(), password);
+      // ⚠️ Non tentare inserimento profilo ora, la sessione non è attiva
+      toast.success("✅ Registrazione completata. Controlla l’email per confermare l’account.");
+      setIsLoading(false);
+      return;
 
-if (error || !data?.user) {
-  console.error('❌ Errore durante la registrazione:', error, data);
-  toast.error('❌ Errore durante la registrazione.');
-  setIsLoading(false);
-  return;
-}
+    } catch (error) {
+      console.error('❌ Errore inatteso durante la registrazione:', error);
+      toast.error('⚠️ Errore imprevisto. Riprova più tardi.');
+      setIsLoading(false);
+      return;
+    }
+  }
 
-  console.log('✅ Registrazione riuscita:', data.user);
+  // 🔑 LOGIN
+  try {
+    const { data, error } = await signIn(email, password);
+    if (error) {
+      toast.error('❌ Login fallito.');
+      setIsLoading(false);
+      return;
+    }
 
-        const { error: profileError } = await supabase.from('profiles').insert([
+    const session = await supabase.auth.getSession();
+    const access_token = session?.data?.session?.access_token;
+
+    if (!access_token) {
+      toast.error("⚠️ Sessione non valida. Conferma l’email e riprova.");
+      setIsLoading(false);
+      return;
+    }
+
+    // 📥 Inserisci il profilo solo al primo login se non esiste
+    const userId = session.data.session.user.id;
+
+    const { data: existingProfile } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+
+    if (!existingProfile) {
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert([
           {
-            id: data.user.id,
+            id: userId,
             email: email.trim().toLowerCase(),
-            role: 'user'
+            role: 'user',
           }
         ]);
 
-        if (profileError) {
-          console.error('Errore inserimento profilo:', profileError);
-          toast.error('⚠️ Errore durante il salvataggio del profilo.');
-        }
-
-        toast.success('✅ Registrazione completata. Ora puoi effettuare il login.');
-        setIsLoading(false);
-        setIsLogin(true); // Switch automatico alla modalità login
-        return;
-
-      } catch (error) {
-        console.error('Errore durante la registrazione:', error);
-        toast.error('⚠️ Errore inatteso. Riprova più tardi.');
+      if (profileError) {
+        console.error('❌ Errore inserimento profilo:', profileError.message || profileError);
+        toast.error('⚠️ Errore durante il salvataggio del profilo.');
         setIsLoading(false);
         return;
       }
+
+      console.log('✅ Profilo creato correttamente al login.');
     }
 
-    // Modalità Login
-    try {
-      const { data, error } = await signIn(email, password);
-      if (error) {
-        toast.error('❌ Login fallito.');
-        setIsLoading(false);
-        return;
-      }
-
-      const { data: sessionData } = await supabase.auth.getSession();
-
-      const { data: factors, error: factorError } = await getTotpFactors();
-      if (factorError) {
-        toast.error('Errore nel recupero dei fattori MFA.');
-        setIsLoading(false);
-        return;
-      }
-
-      const verifiedTotp = factors?.totp?.find(f => f.status === 'verified');
-
-      if (verifiedTotp) {
-        setFactorId(verifiedTotp.id);
-        setMfaRequired(true);
-      } else {
-        const { data: mfaData, error: mfaError } = await setupTotp();
-        if (mfaError || !mfaData?.totp?.qr_code || !mfaData?.totp?.secret) {
-          toast.error('❌ Impossibile configurare MFA. Riprova.');
-          setIsLoading(false);
-          return;
-        }
-
-        setQrUrl(mfaData.totp.qr_code);
-        setManualSecret(mfaData.totp.secret);
-        setFactorId(mfaData.id);
-        setMfaRequired(true);
-        setMessage('');
-      }
-
-      toast.success('✅ Login riuscito!');
-    } catch (err) {
-      console.error('Errore login:', err);
-      toast.error('❌ Errore imprevisto durante il login.');
-    } finally {
+    // 🔍 MFA
+    const { data: factors, error: factorError } = await getTotpFactors();
+    if (factorError) {
+      toast.error('Errore nel recupero dei fattori MFA.');
       setIsLoading(false);
+      return;
     }
-  };
+
+    const verifiedTotp = factors?.totp?.find(f => f.status === 'verified');
+    if (verifiedTotp) {
+      setFactorId(verifiedTotp.id);
+      setMfaRequired(true);
+    } else {
+      const { data: mfaData, error: mfaError } = await setupTotp();
+      if (mfaError || !mfaData?.totp?.qr_code || !mfaData?.totp?.secret) {
+        toast.error('❌ Impossibile configurare MFA. Riprova.');
+        setIsLoading(false);
+        return;
+      }
+
+      setQrUrl(mfaData.totp.qr_code);
+      setManualSecret(mfaData.totp.secret);
+      setFactorId(mfaData.id);
+      setMfaRequired(true);
+      setMessage('');
+    }
+
+    toast.success('✅ Login riuscito!');
+  } catch (err) {
+    console.error('❌ Errore imprevisto durante il login:', err);
+    toast.error('❌ Errore imprevisto durante il login.');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const handleVerifyTotp = async () => {
   console.log('🧪 Verifica TOTP con', { factorId, totpCode });
