@@ -229,6 +229,62 @@
   cursor: not-allowed;
 }
 
+/* 🌀 Pulsante fluttuante */
+.floatingButton {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  background: linear-gradient(90deg, #00ffe7, #8f00ff);
+  color: black;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.floatingButton:hover {
+  transform: scale(1.1);
+}
+
+/* ⚡ Pannello azioni rapide */
+.quickActionsPanel {
+  position: fixed;
+  bottom: 6.5rem;
+  right: 1.5rem;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.3);
+  z-index: 998;
+}
+
+.quickActionsPanel button {
+  background: linear-gradient(90deg, #8f00ff, #00ffe7);
+  color: black;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.3s ease;
+}
+
+.quickActionsPanel button:hover {
+  background: linear-gradient(90deg, #00ffe7, #8f00ff);
+}
+
+
 /* 📱 Responsive layout */
 @media (max-width: 768px) {
   .dashboardHeader {

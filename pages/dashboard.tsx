@@ -25,6 +25,8 @@ export default function Dashboard() {
   const [passwordStep, setPasswordStep] = useState<'verify' | 'change'>('verify');
   const [isLoading, setIsLoading] = useState(false);
 
+  const [showQuickActions, setShowQuickActions] = useState(false);
+
   useEffect(() => {
     const getUser = async () => {
       const { data, error } = await supabase.auth.getUser();
@@ -93,6 +95,7 @@ export default function Dashboard() {
           Benvenuto, {user?.email?.split('@')[0]} 👋
         </h1>
 
+        {/* 🧠 Informazioni utente */}
         <div className={styles.card}>
           <h2 className={styles.cardTitle}>Informazioni Utente</h2>
           <div className={styles.cardList}>
@@ -249,6 +252,25 @@ export default function Dashboard() {
             <div>💬 HookMind</div>
             <div>💬 ScriptForge Core</div>
           </div>
+        </div>
+
+        {/* ⚡ Quick Actions Panel */}
+        <div className={styles.quickActionsWrapper}>
+          <button
+            className={styles.floatingButton}
+            onClick={() => setShowQuickActions(prev => !prev)}
+          >
+            ⚡
+          </button>
+
+          {showQuickActions && (
+            <div className={styles.quickActionsPanel}>
+              <button onClick={() => router.push('/generatore')}>✨ Nuovo Script</button>
+              <button onClick={() => router.push('/analisiscript')}>📊 Analizza Script</button>
+              <button onClick={() => router.push('/raffina')}>🛠 Raffina</button>
+              <button onClick={() => router.push('/script-salvati')}>📁 Script Salvati</button>
+            </div>
+          )}
         </div>
       </div>
     </>
