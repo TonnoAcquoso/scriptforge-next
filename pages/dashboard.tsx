@@ -1,26 +1,35 @@
 // pages/dashboard.tsx
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { supabase } from '../utils/supabaseClient'; // ✅ Assicurati che il path sia corretto
+import { supabase } from '../utils/supabaseClient';
 import Head from 'next/head';
+import styles from '../styles/Dashboard.module.css';
+import {
+  ShieldCheck,
+  FileText,
+  Plus,
+  Gavel,
+  Search,
+  Settings,
+  LogOut,
+  User,
+} from 'lucide-react';
 
 export default function Dashboard() {
   const router = useRouter();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 🔐 Verifica se l'utente è autenticato
     const getUser = async () => {
       const { data, error } = await supabase.auth.getUser();
       if (error || !data?.user) {
-        router.push('/login'); // 🔄 Reindirizza al login se non autenticato
+        router.push('/login');
       } else {
         setUser(data.user);
       }
       setLoading(false);
     };
-
     getUser();
   }, [router]);
 
@@ -31,32 +40,74 @@ export default function Dashboard() {
       <Head>
         <title>Dashboard Utente</title>
       </Head>
-      <main style={{ padding: '2rem' }}>
-        <h1>👋 Benvenuto, {user?.email}</h1>
 
-        <section>
-          <h2>⚙️ Impostazioni Account</h2>
-          <ul>
-            <li>📧 Modifica email</li>
-            <li>🔒 Modifica password</li>
-            <li>🖼️ Carica foto profilo</li>
-          </ul>
-        </section>
+      <div className={styles.dashboardContainer}>
+        {/* 👋 Header */}
+        <h1 className={styles.dashboardHeader}>Welcome, {user?.email?.split('@')[0]} 👋</h1>
 
-        <section>
-          <h2>🧾 Storico Lavori</h2>
-          <p>(Qui verranno mostrati gli script generati, salvati ecc.)</p>
-        </section>
+        {/* 📧 Info Utente */}
+        <div className={styles.card}>
+          <h2 className={styles.cardTitle}>User Info</h2>
+          <div className={styles.cardList}>
+            <div><ShieldCheck size={16} /> Email: {user?.email}</div>
+            <div><ShieldCheck size={16} /> MFA Enabled</div>
+          </div>
+        </div>
 
-        <section>
-          <h2>🚀 Accesso rapido</h2>
-          <ul>
-            <li><a href="/generatore">🧠 Genera nuovo script</a></li>
-            <li><a href="/analisiscript">📊 Analisi script</a></li>
-            <li><a href="/raffina">🛠️ Raffina uno script</a></li>
-          </ul>
-        </section>
-      </main>
+        {/* 🚀 Accesso rapido */}
+        <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Quick Access</h2>
+          <button className={styles.actionButton} onClick={() => router.push('/generatore')}>
+            <Plus size={16} /> New Script
+          </button>
+          <button className={styles.actionButton} onClick={() => router.push('/raffina')}>
+            <Gavel size={16} /> Enhance
+          </button>
+          <button className={styles.actionButton} onClick={() => router.push('/analisiscript')}>
+            <Search size={16} /> Analyze
+          </button>
+        </div>
+
+        {/* 🧾 Script salvati */}
+        <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Saved Scripts</h2>
+          <div className={styles.cardList}>
+            <div><FileText size={16} /> Esempio 1</div>
+            <div><FileText size={16} /> Esempio 2</div>
+            <div><FileText size={16} /> Esempio 3</div>
+          </div>
+          <button className={styles.actionButton}>View All</button>
+        </div>
+
+        {/* 📊 Statistiche */}
+        <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Usage Analytics</h2>
+          <div className={styles.statsGrid}>
+            <div className={styles.statBlock}>
+              <div className={styles.statNumber}>35</div>
+              <span>Total Scripts</span>
+            </div>
+            <div className={styles.statBlock}>
+              <div className={styles.statNumber}>15</div>
+              <span>Enhanced</span>
+            </div>
+            <div className={styles.statBlock}>
+              <div className={styles.statNumber}>12</div>
+              <span>Last 7 Days</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 🧠 GPT personalizzati */}
+        <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Custom GPTs</h2>
+          <div className={styles.cardList}>
+            <div>💬 AnimeTube</div>
+            <div>💬 HookMind</div>
+            <div>💬 ScriptForge Core</div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
