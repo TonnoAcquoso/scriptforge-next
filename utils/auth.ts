@@ -109,3 +109,4 @@ export const isEmailRegistered = async (email: string): Promise<boolean> => {
 
   return !!data;
 };
+
