@@ -115,10 +115,7 @@ export default function Dashboard() {
         return (
           <div className={styles.card}>
             <h2 className={styles.cardTitle}><KeyRound size={18} /> Modifica Profilo</h2>
-            <p
-              className={styles.toggleQuestion}
-              onClick={() => setShowEditOptions(!showEditOptions)}
-            >
+            <p className={styles.toggleQuestion} onClick={() => setShowEditOptions(!showEditOptions)}>
               Vuoi modificare i tuoi dati?
             </p>
             {showEditOptions && (
@@ -145,7 +142,7 @@ export default function Dashboard() {
               <div><FileText size={16} /> SM Data Scraper</div>
               <div><FileText size={16} /> Convertitore Video</div>
             </div>
-            <button className={styles.actionButton}>Vedi Tutti</button>
+            <button className={styles.editButton}>Vedi Tutti</button>
           </div>
         );
 
@@ -193,7 +190,7 @@ export default function Dashboard() {
         <title>Dashboard Utente</title>
       </Head>
 
-      <div className={styles.dashboardWrapper}>
+      <div className={styles.fullDashboard}>
         {/* Sidebar */}
         <aside className={styles.sidebar}>
           {navItems.map((item) => (
@@ -210,7 +207,7 @@ export default function Dashboard() {
         </aside>
 
         {/* Contenuto */}
-        <main className={styles.dashboardContent}>
+        <main className={styles.mainContent}>
           <div className={styles.sectionContent}>
             <h1 className={styles.dashboardHeader}>
               <Sparkles size={22} /> Benvenuto, {user?.email?.split('@')[0]}
