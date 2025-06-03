@@ -1,7 +1,8 @@
 .fullDashboard {
   display: flex;
   flex-direction: row;
-  min-height: 100vh; /* ✅ meglio di height: 100vh */
+  height: 100vh;
+  overflow: hidden;
   background: linear-gradient(145deg, #0f0f1a, #1a1b2f);
   color: #ffffff;
 }
@@ -59,6 +60,8 @@
 .mainContent {
   margin-left: 80px;
   flex: 1;
+  height: 100vh;
+  overflow-y: auto;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -67,10 +70,7 @@
   background: rgba(255, 255, 255, 0.015);
   border-left: 1px solid rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  overflow-y: auto;
-  height: auto; /* ✅ rimuove limiti verticali */
-  min-height: 100vh; /* ✅ forza espansione */
-} 
+}
 
 /* 🧊 Card contenuto */
 .card {
@@ -180,6 +180,7 @@
   border-radius: 10px;
 }
 
+/* 🔀 Responsive mobile aggiornato */
 @media (max-width: 768px) {
   .sidebar {
     width: 64px;
@@ -201,8 +202,8 @@
     margin-left: 64px;
     padding: 1.2rem 1rem;
     min-height: 100vh;
-    height: auto;
-    overflow-y: visible;
+    height: auto; /* ✅ lascia che il contenuto si estenda in verticale */
+    overflow-y: visible; /* ✅ permette lo scroll se necessario */
   }
 
   .dashboardHeader {
