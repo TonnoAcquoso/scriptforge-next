@@ -1,4 +1,3 @@
-// pages/dashboard.tsx
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../utils/supabaseClient';
@@ -90,6 +89,7 @@ export default function Dashboard() {
         <title>Dashboard Utente</title>
       </Head>
 
+      {/* 🧱 Contenitore principale */}
       <div className={styles.dashboardContainer}>
         <h1 className={styles.dashboardHeader}>
           Benvenuto, {user?.email?.split('@')[0]} 👋
@@ -253,25 +253,25 @@ export default function Dashboard() {
             <div>💬 ScriptForge Core</div>
           </div>
         </div>
+      </div>
 
-        {/* ⚡ Quick Actions Panel */}
-        <div className={styles.quickActionsWrapper}>
-          <button
-            className={styles.floatingButton}
-            onClick={() => setShowQuickActions(prev => !prev)}
-          >
-            ⚡
-          </button>
+      {/* ⚡ Quick Actions Panel FISSO fuori dal container */}
+      <div className={styles.quickActionsWrapper}>
+        <button
+          className={styles.floatingButton}
+          onClick={() => setShowQuickActions(prev => !prev)}
+        >
+          ⚡
+        </button>
 
-          {showQuickActions && (
-            <div className={styles.quickActionsPanel}>
-              <button onClick={() => router.push('/Hero')}>✨ Nuovo Script</button>
-              <button onClick={() => router.push('/analisiscript')}>📊 Analizza Script</button>
-              <button onClick={() => router.push('/raffina')}>🛠 Raffina</button>
-              <button onClick={() => router.push('/script-salvati')}>📁 Script Salvati</button>
-            </div>
-          )}
-        </div>
+        {showQuickActions && (
+          <div className={styles.quickActionsPanel}>
+            <button onClick={() => router.push('/generatore')}>✨ Nuovo Script</button>
+            <button onClick={() => router.push('/analisiscript')}>📊 Analizza Script</button>
+            <button onClick={() => router.push('/raffina')}>🛠 Raffina</button>
+            <button onClick={() => router.push('/script-salvati')}>📁 Script Salvati</button>
+          </div>
+        )}
       </div>
     </>
   );
