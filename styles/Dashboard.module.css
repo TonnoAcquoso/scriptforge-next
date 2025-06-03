@@ -25,7 +25,6 @@
   z-index: 20;
 }
 
-/* Icone navigazione */
 .sidebarNav {
   display: flex;
   flex-direction: column;
@@ -57,9 +56,9 @@
   text-align: center;
 }
 
-/* Contenuto principale a destra della sidebar */
+/* 🔵 Contenuto principale */
 .mainContent {
-  margin-left: 80px; /* stessa larghezza della sidebar */
+  margin-left: 80px;
   flex: 1;
   height: 100vh;
   overflow-y: auto;
@@ -68,9 +67,92 @@
   flex-direction: column;
   gap: 2rem;
   position: relative;
+  background: rgba(255, 255, 255, 0.015);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
 }
 
-/* Header e dashboard vuota */
+/* 🧊 Card contenuto */
+.card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.2rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: inset 0 0 0.8px rgba(255, 255, 255, 0.05);
+}
+
+/* 🧠 Titolo card */
+.cardTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+}
+
+/* 📋 Lista */
+.cardList {
+  font-size: 0.95rem;
+  color: #dddddd;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+/* 🎯 Pulsanti azione */
+.editButton,
+.confirmButton,
+.cancelButton,
+.actionButton {
+  padding: 0.75rem 1.2rem;
+  border-radius: 0.75rem;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.editButton {
+  background: linear-gradient(90deg, #8f00ff, #00ffe7);
+  color: #000;
+}
+
+.confirmButton {
+  background: linear-gradient(90deg, #00ffe7, #8f00ff);
+  color: #000;
+}
+
+.cancelButton {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.editButton:hover,
+.confirmButton:hover,
+.cancelButton:hover {
+  transform: scale(1.03);
+}
+
+/* 🧩 Input */
+.inputField {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+}
+
+/* 📍 Intestazione */
 .dashboardHeader {
   font-size: 1.7rem;
   font-weight: bold;
@@ -80,6 +162,7 @@
   color: white;
 }
 
+/* 💤 Stato vuoto */
 .emptyState {
   color: #777;
   opacity: 0.25;
@@ -97,7 +180,7 @@
   border-radius: 10px;
 }
 
-/* Responsive */
+/* 🔀 Responsive mobile */
 @media (max-width: 768px) {
   .sidebar {
     width: 64px;
@@ -111,12 +194,37 @@
   }
 
   .mainContent {
-    margin-left: 64px; /* anche su mobile */
+    margin-left: 64px;
     padding: 1.2rem 1rem;
     height: 100vh;
   }
 
   .dashboardHeader {
     font-size: 1.4rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+
+  .cardList {
+    font-size: 0.95rem;
+  }
+
+  .editButton,
+  .confirmButton,
+  .cancelButton {
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .inputField {
+    font-size: 1rem;
   }
 }
