@@ -16,9 +16,19 @@
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.dashboardHeader::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: url('/icons/user.svg') no-repeat center;
+  background-size: contain;
+  top: 3px;
 }
 
 /* 🧊 Card dashboard */
@@ -48,30 +58,32 @@
   transform: rotate(5deg);
 }
 
-/* 🧾 Sezione intestazioni interne */
+/* 🧾 Titoli sezioni card */
 .cardTitle {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #ffffffcc;
-  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffffee;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  letter-spacing: 0.3px;
 }
 
 /* 📋 Lista elementi */
 .cardList {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  color: #cccccc;
-  font-size: 0.95rem;
+  gap: 0.75rem;
+  color: #e5e5e5;
+  font-size: 1.05rem;
+  line-height: 1.4;
   padding-left: 0.5rem;
 }
 
 /* ➕ Pulsanti azione */
 .actionButton {
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.2rem;
   border-radius: 0.75rem;
   background: linear-gradient(90deg, #8f00ff, #00ffe7);
   border: none;
@@ -81,9 +93,7 @@
   text-align: center;
   transition: transform 0.2s ease;
   margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  font-size: 1rem;
 }
 
 .actionButton:hover {
@@ -102,20 +112,32 @@
 }
 
 .statBlock {
+  flex: 1;
+  min-width: 100px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 1rem;
+  padding: 1.2rem 0.8rem;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 1rem;
-  border-radius: 1rem;
-  width: 100px;
-  text-align: center;
+  gap: 0.4rem;
+  transition: background 0.3s ease;
+}
+
+.statBlock:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .statNumber {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
+  font-weight: 700;
   color: #ffffff;
+}
+
+.statBlock span {
+  font-size: 0.95rem;
+  color: #bbbbbb;
+  font-weight: 500;
 }
 
 /* 🧩 Profilo interattivo */
@@ -173,7 +195,6 @@
   box-sizing: border-box;
 }
 
-/* 💬 Popup contenitore */
 .popup {
   background: #111827;
   padding: 2rem 1.5rem;
@@ -183,7 +204,6 @@
   animation: popupFade 0.3s ease-out;
 }
 
-/* ✨ Animazione popup */
 @keyframes popupFade {
   from {
     opacity: 0;
@@ -195,7 +215,6 @@
   }
 }
 
-/* 🧠 Titolo del popup */
 .popupTitle {
   font-size: 1.2rem;
   font-weight: 600;
@@ -204,7 +223,6 @@
   margin-bottom: 1rem;
 }
 
-/* 🧾 Campo input */
 .popup input.inputField {
   width: 100%;
   padding: 0.8rem 1rem;
@@ -217,7 +235,6 @@
   outline: none;
 }
 
-/* 🎯 Azioni del popup */
 .popupActions {
   display: flex;
   flex-direction: column;
@@ -247,7 +264,7 @@
   cursor: pointer;
 }
 
-/* 🌀 Floating button */
+/* 🌀 Floating Button */
 .floatingButton {
   position: fixed;
   bottom: 1.5rem;
@@ -301,7 +318,7 @@
   background: linear-gradient(90deg, #00ffe7, #8f00ff);
 }
 
-/* 📱 Mobile Optimization */
+/* 📱 Responsive Mobile Ultra Ottimizzato */
 @media (max-width: 768px) {
   .dashboardContainer {
     padding: 1.5rem 1rem;
@@ -313,44 +330,42 @@
   .dashboardHeader {
     font-size: 1.6rem;
     text-align: center;
+    line-height: 1.4;
+    color: #ffffffee;
+    padding: 0.5rem 1rem;
+    border-left: 3px solid #00ffe7;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .card {
     padding: 1.4rem 1rem;
     border-radius: 1rem;
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.035);
   }
 
   .cardTitle {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+    font-size: 1.2rem;
   }
 
   .cardList {
-    font-size: 0.95rem;
-    gap: 0.5rem;
+    font-size: 1rem;
   }
 
   .editItem {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.7rem;
-  }
-
-  .editButton {
-    width: 100%;
-    text-align: center;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.8rem 1rem;
+    border-radius: 0.75rem;
   }
 
   .popup {
     padding: 1.5rem 1rem;
     font-size: 1rem;
     width: 90vw;
-  }
-
-  .popupActions {
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1rem;
   }
 
   .floatingButton {
@@ -365,5 +380,16 @@
     bottom: 5.5rem;
     left: 1rem;
     width: calc(100vw - 2rem);
+    border-radius: 1rem;
+    gap: 0.6rem;
+  }
+
+  .statBlock {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .statNumber {
+    font-size: 1.4rem;
   }
 }
