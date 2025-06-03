@@ -233,7 +233,7 @@
 .floatingButton {
   position: fixed;
   bottom: 1.5rem;
-  right: 1.5rem;
+  left: 1.5rem;
   z-index: 999;
   background: linear-gradient(90deg, #00ffe7, #8f00ff);
   color: black;
@@ -256,7 +256,7 @@
 .quickActionsPanel {
   position: fixed;
   bottom: 6.5rem;
-  right: 1.5rem;
+  left: 1.5rem;
   background: rgba(17, 24, 39, 0.95);
   backdrop-filter: blur(10px);
   padding: 1rem;
