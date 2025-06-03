@@ -1,78 +1,100 @@
-/* 🌌 Layout generale con Sidebar */
+/* 🌌 Contenitore principale con sidebar e contenuto */
 .dashboardWrapper {
   display: flex;
   height: 100vh;
   background: linear-gradient(145deg, #0f0f1a, #1a1b2f);
-  color: white;
+  color: #ffffff;
+  overflow: hidden;
 }
 
-/* 📚 Sidebar */
+/* 🧭 Sidebar laterale */
 .sidebar {
-  width: 60px;
-  background-color: #1b1d2e;
+  width: 72px;
+  background-color: #161722;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0;
-  gap: 1.5rem;
+  padding: 1rem 0.5rem;
+  gap: 1.2rem;
   border-right: 1px solid rgba(255, 255, 255, 0.08);
-  transition: width 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .sidebarIcon {
-  color: #bbb;
+  color: #bbbbbb;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  font-size: 1.4rem;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .sidebarIcon:hover {
   color: #00ffe7;
-  transform: scale(1.1);
+  transform: scale(1.12);
+}
+
+.sidebarItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .sidebarLabel {
-  font-size: 0.65rem;
-  color: #888;
-  margin-top: 0.2rem;
+  font-size: 0.6rem;
+  color: #888888;
   text-align: center;
-  line-height: 1;
+  letter-spacing: 0.3px;
 }
 
-/* 🖥️ Contenuto a destra */
+/* 🖥️ Contenuto principale */
 .dashboardContent {
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
-  position: relative;
-}
-
-/* 🪟 Sezione inattiva con scritta opaca */
-.emptyState {
-  width: 100%;
-  height: 100%;
-  color: #666;
-  font-size: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.3;
-  user-select: none;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-/* 📋 Sezione attiva */
+/* 💤 Sezione inattiva */
+.emptyState {
+  color: #666666;
+  font-size: 2.2rem;
+  font-weight: 600;
+  opacity: 0.25;
+  text-align: center;
+  letter-spacing: 1px;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 🧩 Contenuto della sezione cliccata */
 .sectionContent {
+  width: 100%;
+  max-width: 960px;
   animation: fadeIn 0.4s ease;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* 🪶 Scroll invisibile elegante */
+.dashboardContent::-webkit-scrollbar {
+  width: 8px;
+}
+.dashboardContent::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
 }
 
 /* 📱 Mobile Responsive */
@@ -83,23 +105,35 @@
 
   .sidebar {
     flex-direction: row;
+    justify-content: space-around;
     width: 100%;
     height: 60px;
+    padding: 0.5rem 1rem;
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    justify-content: space-around;
-    padding: 0.5rem 0;
+  }
+
+  .sidebarItem {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
   }
 
   .sidebarLabel {
-    display: none;
+    font-size: 0.55rem;
   }
 
   .dashboardContent {
-    padding: 1rem;
+    padding: 1.25rem 1rem;
   }
 
   .emptyState {
     font-size: 1.4rem;
+    padding: 1rem;
+  }
+
+  .sectionContent {
+    padding: 1rem 0.5rem;
+    width: 100%;
   }
 }
