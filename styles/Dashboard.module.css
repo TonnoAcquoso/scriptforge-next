@@ -111,39 +111,63 @@
   border-radius: 10px;
 }
 
-/* 📱 Responsive */
+/* 📱 Mobile migliorato per contenuto attivo */
 @media (max-width: 768px) {
-  .dashboardWrapper {
-    flex-direction: row; /* ✅ Mantieni row su mobile */
+  .mainContent {
+    padding: 1.2rem 1.2rem 2rem 1.2rem;
+    margin-left: 72px; /* spazio per la sidebar */
+    width: calc(100% - 72px);
   }
 
-  .sidebar {
-    flex-direction: column;
-    width: 64px;
-    height: 100vh;
-    padding: 1rem 0.3rem;
-    gap: 1rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  .dashboardHeader {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ffffffee;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: 0.5rem;
   }
 
-  .sidebarItem {
-    padding: 0.4rem;
+  .card {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  .sidebarLabel {
-    display: none;
+  .cardList {
+    padding-left: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #e0e0e0;
   }
 
-  .dashboardContent {
-    padding: 1.2rem 1rem;
+  .cardTitle {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  .sectionContent {
-    padding-top: 1rem;
+  .statBlock {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    margin-bottom: 1rem;
   }
 
-  .emptyState {
-    font-size: 1.8rem;
-    opacity: 0.2;
+  .actionButton {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
   }
 }
