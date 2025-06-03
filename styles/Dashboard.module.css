@@ -180,13 +180,18 @@
   border-radius: 10px;
 }
 
-/* 🔀 Responsive mobile */
+/* 🔀 Responsive mobile aggiornato */
 @media (max-width: 768px) {
   .sidebar {
     width: 64px;
     min-width: 64px;
     padding: 1rem 0.3rem;
     gap: 1.2rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1000;
   }
 
   .sidebarLabel {
@@ -196,7 +201,9 @@
   .mainContent {
     margin-left: 64px;
     padding: 1.2rem 1rem;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto; /* ✅ lascia che il contenuto si estenda in verticale */
+    overflow-y: visible; /* ✅ permette lo scroll se necessario */
   }
 
   .dashboardHeader {
