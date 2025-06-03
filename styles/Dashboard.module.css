@@ -1,235 +1,249 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { supabase } from '../utils/supabaseClient';
-import Head from 'next/head';
-import styles from '../styles/Dashboard.module.css';
-import {
-  ShieldCheck,
-  FileText,
-  Plus,
-  Gavel,
-  Search
-} from 'lucide-react';
+/* 🌌 Contenitore principale della dashboard */
+.dashboardContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(145deg, #0f0f1a, #1a1b2f);
+  backdrop-filter: blur(10px);
+}
 
-export default function Dashboard() {
-  const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+/* 👋 Titolo di benvenuto */
+.dashboardHeader {
+  grid-column: 1 / -1;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
 
-  // stati per modifica profilo
-  const [showEditOptions, setShowEditOptions] = useState(false);
-  const [pendingEdit, setPendingEdit] = useState<null | 'email' | 'password'>(null);
-  const [inputValue, setInputValue] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [passwordStep, setPasswordStep] = useState<'verify' | 'change'>('verify');
+/* 🧊 Card dashboard */
+.card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+}
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (error || !data?.user) {
-        router.push('/login');
-      } else {
-        setUser(data.user);
-      }
-      setLoading(false);
-    };
-    getUser();
-  }, [router]);
+.card:hover {
+  transform: translateY(-4px);
+}
 
-  if (loading) return <p>Caricamento...</p>;
+/* 🧾 Sezione intestazioni interne */
+.cardTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffffcc;
+  margin-bottom: 0.75rem;
+}
 
-  return (
-    <>
-      <Head>
-        <title>Dashboard Utente</title>
-      </Head>
+/* 📋 Lista elementi (script salvati, GPT ecc.) */
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: #cccccc;
+  font-size: 0.95rem;
+}
 
-      <div className={styles.dashboardContainer}>
-        <h1 className={styles.dashboardHeader}>
-          Benvenuto, {user?.email?.split('@')[0]} 👋
-        </h1>
+/* ➕ Pulsanti azione */
+.actionButton {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(90deg, #8f00ff, #00ffe7);
+  border: none;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s ease;
+  margin-top: 1rem;
+}
 
-        {/* ✅ Info utente */}
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Informazioni Utente</h2>
-          <div className={styles.cardList}>
-            <div><ShieldCheck size={16} /> Email: {user?.email}</div>
-            <div><ShieldCheck size={16} /> Autenticazione MFA attiva</div>
-          </div>
-        </div>
+.actionButton:hover {
+  background: linear-gradient(90deg, #00ffe7, #8f00ff);
+}
 
-        {/* ✅ Modifica profilo */}
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Modifica Profilo</h2>
-          <p
-            className={styles.toggleQuestion}
-            onClick={() => setShowEditOptions(!showEditOptions)}
-          >
-            Vuoi modificare i tuoi dati?
-          </p>
+/* 📊 Statistiche (numeri) */
+.statsGrid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #dddddd;
+  font-size: 1rem;
+}
 
-          {showEditOptions && (
-            <div className={styles.editList}>
-              <div className={styles.editItem}>
-                <span>Email: {user?.email}</span>
-                <button onClick={() => setPendingEdit('email')} className={styles.editButton}>Modifica</button>
-              </div>
-              <div className={styles.editItem}>
-                <span>Password: *******</span>
-                <button onClick={() => setPendingEdit('password')} className={styles.editButton}>Modifica</button>
-              </div>
-            </div>
-          )}
-        </div>
+.statBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+}
 
-        {/* ✅ Accesso rapido */}
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Accesso Rapido</h2>
-          <button className={styles.actionButton} onClick={() => router.push('/generatore')}>
-            <Plus size={16} /> Nuovo Script
-          </button>
-          <button className={styles.actionButton} onClick={() => router.push('/raffina')}>
-            <Gavel size={16} /> Raffina
-          </button>
-          <button className={styles.actionButton} onClick={() => router.push('/analisiscript')}>
-            <Search size={16} /> Analizza
-          </button>
-        </div>
+.statNumber {
+  font-size: 1.6rem;
+  color: #ffffff;
+}
 
-        {/* ✅ Popup Modifica Email */}
-        {pendingEdit === 'email' && (
-          <div className={styles.popupOverlay}>
-            <div className={styles.popup}>
-              <h3 className={styles.popupTitle}>Modifica Email</h3>
-              <input
-                type="email"
-                placeholder="Inserisci nuova email"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                className={styles.inputField}
-              />
-              <div className={styles.popupActions}>
-                <button
-                  onClick={async () => {
-                    if (!inputValue) return alert('Inserisci una nuova email.');
-                    setLoading(true);
-                    const { error } = await supabase.auth.updateUser({ email: inputValue });
-                    setLoading(false);
-                    setPendingEdit(null);
-                    setInputValue('');
-                    if (error) alert('Errore durante aggiornamento email.');
-                    else alert('Email aggiornata con successo!');
-                  }}
-                  className={styles.confirmButton}
-                >
-                  Conferma
-                </button>
-                <button
-                  onClick={() => {
-                    setPendingEdit(null);
-                    setInputValue('');
-                  }}
-                  className={styles.cancelButton}
-                >
-                  Annulla
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+.toggleQuestion {
+  color: #00ffe7;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
 
-        {/* ✅ Popup Modifica Password (2 step) */}
-        {pendingEdit === 'password' && (
-          <div className={styles.popupOverlay}>
-            <div className={styles.popup}>
-              <h3 className={styles.popupTitle}>
-                {passwordStep === 'verify' ? 'Verifica Password Attuale' : 'Inserisci Nuova Password'}
-              </h3>
+.editList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-              {passwordStep === 'verify' ? (
-                <>
-                  <input
-                    type="password"
-                    placeholder="Password attuale"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    className={styles.inputField}
-                  />
-                  <div className={styles.popupActions}>
-                    <button
-                      onClick={async () => {
-                        setLoading(true);
-                        const { error } = await supabase.auth.signInWithPassword({
-                          email: user?.email,
-                          password: currentPassword,
-                        });
-                        setLoading(false);
-                        if (error) alert('Password non corretta.');
-                        else setPasswordStep('change');
-                      }}
-                      className={styles.confirmButton}
-                    >
-                      Verifica
-                    </button>
-                    <button
-                      className={styles.cancelButton}
-                      onClick={() => {
-                        setPendingEdit(null);
-                        setCurrentPassword('');
-                        setNewPassword('');
-                        setPasswordStep('verify');
-                      }}
-                    >
-                      Annulla
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <input
-                    type="password"
-                    placeholder="Nuova password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    className={styles.inputField}
-                  />
-                  <div className={styles.popupActions}>
-                    <button
-                      onClick={async () => {
-                        if (!newPassword) return alert('Inserisci una nuova password.');
-                        setLoading(true);
-                        const { error } = await supabase.auth.updateUser({ password: newPassword });
-                        setLoading(false);
-                        setPendingEdit(null);
-                        setCurrentPassword('');
-                        setNewPassword('');
-                        setPasswordStep('verify');
-                        if (error) alert('Errore durante aggiornamento.');
-                        else alert('Password aggiornata con successo!');
-                      }}
-                      className={styles.confirmButton}
-                    >
-                      Conferma
-                    </button>
-                    <button
-                      onClick={() => {
-                        setPendingEdit(null);
-                        setCurrentPassword('');
-                        setNewPassword('');
-                        setPasswordStep('verify');
-                      }}
-                      className={styles.cancelButton}
-                    >
-                      Annulla
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-    </>
-  );
+.editItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.editButton {
+  background: linear-gradient(90deg, #00ffe7, #8f00ff);
+  border: none;
+  color: black;
+  padding: 0.4rem 1rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: #111827;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.popupActions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5rem;
+}
+
+.confirmButton {
+  background: #00ffe7;
+  color: black;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #aaa;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+/* 📱 Responsive layout */
+@media (max-width: 768px) {
+  .dashboardHeader {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+
+  .cardList {
+    font-size: 0.9rem;
+  }
+  
+  .card {
+    padding: 1.2rem;
+    border-radius: 1rem;
+  }
+
+  .editItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .editButton {
+    align-self: stretch;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(90deg, #00ffe7, #8f00ff);
+    border: none;
+    color: black;
+    font-weight: 600;
+    width: 100%;
+  }
+
+  .toggleQuestion {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .popup {
+    width: 90%;
+    padding: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .popupActions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .confirmButton, .cancelButton {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 1rem;
+  }
+
+  .saveButton {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.6rem;
+  }
+
+  .inputField {
+    width: 100%;
+    font-size: 0.95rem;
+  }
 }
