@@ -10,9 +10,6 @@ import {
   Plus,
   Gavel,
   Search,
-  Settings,
-  LogOut,
-  User,
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -33,7 +30,7 @@ export default function Dashboard() {
     getUser();
   }, [router]);
 
-  if (loading) return <p>Caricamento...</p>;
+  if (loading) return <p>Caricamento in corso...</p>;
 
   return (
     <>
@@ -42,65 +39,67 @@ export default function Dashboard() {
       </Head>
 
       <div className={styles.dashboardContainer}>
-        {/* 👋 Header */}
-        <h1 className={styles.dashboardHeader}>Welcome, {user?.email?.split('@')[0]} 👋</h1>
+        {/* 👋 Benvenuto */}
+        <h1 className={styles.dashboardHeader}>
+          Benvenuto, {user?.email?.split('@')[0]} 👋
+        </h1>
 
         {/* 📧 Info Utente */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>User Info</h2>
+          <h2 className={styles.cardTitle}>Informazioni Utente</h2>
           <div className={styles.cardList}>
             <div><ShieldCheck size={16} /> Email: {user?.email}</div>
-            <div><ShieldCheck size={16} /> MFA Enabled</div>
+            <div><ShieldCheck size={16} /> Autenticazione MFA attiva</div>
           </div>
         </div>
 
-        {/* 🚀 Accesso rapido */}
+        {/* 🚀 Accesso Rapido */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Quick Access</h2>
+          <h2 className={styles.cardTitle}>Accesso Rapido</h2>
           <button className={styles.actionButton} onClick={() => router.push('/generatore')}>
-            <Plus size={16} /> New Script
+            <Plus size={16} /> Nuovo Script
           </button>
           <button className={styles.actionButton} onClick={() => router.push('/raffina')}>
-            <Gavel size={16} /> Enhance
+            <Gavel size={16} /> Raffina
           </button>
           <button className={styles.actionButton} onClick={() => router.push('/analisiscript')}>
-            <Search size={16} /> Analyze
+            <Search size={16} /> Analizza
           </button>
         </div>
 
         {/* 🧾 Script salvati */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Saved Scripts</h2>
+          <h2 className={styles.cardTitle}>Script Salvati</h2>
           <div className={styles.cardList}>
-            <div><FileText size={16} /> Esempio 1</div>
-            <div><FileText size={16} /> Esempio 2</div>
-            <div><FileText size={16} /> Esempio 3</div>
+            <div><FileText size={16} /> Script Elaborazione Dati</div>
+            <div><FileText size={16} /> SM Data Scraper</div>
+            <div><FileText size={16} /> Convertitore Video</div>
           </div>
-          <button className={styles.actionButton}>View All</button>
+          <button className={styles.actionButton}>Vedi Tutti</button>
         </div>
 
         {/* 📊 Statistiche */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Usage Analytics</h2>
+          <h2 className={styles.cardTitle}>Statistiche d'Uso</h2>
           <div className={styles.statsGrid}>
             <div className={styles.statBlock}>
               <div className={styles.statNumber}>35</div>
-              <span>Total Scripts</span>
+              <span>Script Totali</span>
             </div>
             <div className={styles.statBlock}>
               <div className={styles.statNumber}>15</div>
-              <span>Enhanced</span>
+              <span>Raffinati</span>
             </div>
             <div className={styles.statBlock}>
               <div className={styles.statNumber}>12</div>
-              <span>Last 7 Days</span>
+              <span>Ultimi 7 giorni</span>
             </div>
           </div>
         </div>
 
-        {/* 🧠 GPT personalizzati */}
+        {/* 🧠 GPT Personalizzati */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Custom GPTs</h2>
+          <h2 className={styles.cardTitle}>GPT Personalizzati</h2>
           <div className={styles.cardList}>
             <div>💬 AnimeTube</div>
             <div>💬 HookMind</div>
