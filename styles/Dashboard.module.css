@@ -1,4 +1,3 @@
-/* 🌌 Contenitore principale con sidebar */
 .fullDashboard {
   display: flex;
   flex-direction: row;
@@ -6,10 +5,9 @@
   overflow: hidden;
   background: linear-gradient(145deg, #0f0f1a, #1a1b2f);
   color: #ffffff;
-  flex-wrap: nowrap; /* ✅ evita il wrapping */
 }
 
-/* 🧭 Sidebar laterale */
+/* Sidebar fissa a sinistra */
 .sidebar {
   width: 80px;
   min-width: 80px;
@@ -21,12 +19,13 @@
   padding: 1rem 0.5rem;
   gap: 2rem;
   border-right: 1px solid rgba(255, 255, 255, 0.07);
-  position: relative; /* ✅ sticky mobile può causare overflow */
-  z-index: 10;
-  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
 }
 
-/* 📁 Navigazione icone */
+/* Icone navigazione */
 .sidebarNav {
   display: flex;
   flex-direction: column;
@@ -58,10 +57,10 @@
   text-align: center;
 }
 
-/* 🖥️ Contenuto a fianco della sidebar */
+/* Contenuto principale a destra della sidebar */
 .mainContent {
+  margin-left: 80px; /* stessa larghezza della sidebar */
   flex: 1;
-  min-width: 0; /* ✅ evita overflow */
   height: 100vh;
   overflow-y: auto;
   padding: 2rem;
@@ -71,7 +70,7 @@
   position: relative;
 }
 
-/* 🧠 Titolo dashboard */
+/* Header e dashboard vuota */
 .dashboardHeader {
   font-size: 1.7rem;
   font-weight: bold;
@@ -81,7 +80,6 @@
   color: white;
 }
 
-/* 💤 Stato vuoto */
 .emptyState {
   color: #777;
   opacity: 0.25;
@@ -90,7 +88,7 @@
   text-align: center;
 }
 
-/* 🪶 Scroll */
+/* Scroll elegante */
 .mainContent::-webkit-scrollbar {
   width: 6px;
 }
@@ -99,13 +97,8 @@
   border-radius: 10px;
 }
 
-/* 📱 Responsive */
+/* Responsive */
 @media (max-width: 768px) {
-  .fullDashboard {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-
   .sidebar {
     width: 64px;
     min-width: 64px;
@@ -118,6 +111,7 @@
   }
 
   .mainContent {
+    margin-left: 64px; /* anche su mobile */
     padding: 1.2rem 1rem;
     height: 100vh;
   }
