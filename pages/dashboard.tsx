@@ -9,6 +9,13 @@ import {
   Plus,
   Gavel,
   Search,
+  Wand2,
+  BarChart3,
+  FolderOpenDot,
+  Sparkles,
+  Mail,
+  KeyRound,
+  Bot
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -89,24 +96,21 @@ export default function Dashboard() {
         <title>Dashboard Utente</title>
       </Head>
 
-      {/* 🧱 Contenitore principale */}
       <div className={styles.dashboardContainer}>
         <h1 className={styles.dashboardHeader}>
-          Benvenuto, {user?.email?.split('@')[0]} 👋
+          <Sparkles size={24} /> Benvenuto, {user?.email?.split('@')[0]}
         </h1>
 
-        {/* 🧠 Informazioni utente */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Informazioni Utente</h2>
+          <h2 className={styles.cardTitle}><ShieldCheck size={18} /> Informazioni Utente</h2>
           <div className={styles.cardList}>
-            <div><ShieldCheck size={16} /> Email: {user?.email}</div>
+            <div><Mail size={16} /> Email: {user?.email}</div>
             <div><ShieldCheck size={16} /> Autenticazione MFA attiva</div>
           </div>
         </div>
 
-        {/* 🧩 Modifica Profilo */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Modifica Profilo</h2>
+          <h2 className={styles.cardTitle}><KeyRound size={18} /> Modifica Profilo</h2>
           <p
             className={styles.toggleQuestion}
             onClick={() => setShowEditOptions(!showEditOptions)}
@@ -128,7 +132,6 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* 🔐 Popup Email/Password */}
         {pendingEdit && (
           <div className={styles.popupOverlay}>
             <div className={styles.popup}>
@@ -200,9 +203,8 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* 🚀 Accesso Rapido */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Accesso Rapido</h2>
+          <h2 className={styles.cardTitle}><Wand2 size={18} /> Accesso Rapido</h2>
           <button className={styles.actionButton} onClick={() => router.push('/generatore')}>
             <Plus size={16} /> Nuovo Script
           </button>
@@ -214,9 +216,8 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* 🧾 Script salvati */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Script Salvati</h2>
+          <h2 className={styles.cardTitle}><FolderOpenDot size={18} /> Script Salvati</h2>
           <div className={styles.cardList}>
             <div><FileText size={16} /> Script Elaborazione Dati</div>
             <div><FileText size={16} /> SM Data Scraper</div>
@@ -225,9 +226,8 @@ export default function Dashboard() {
           <button className={styles.actionButton}>Vedi Tutti</button>
         </div>
 
-        {/* 📊 Statistiche */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Statistiche d'Uso</h2>
+          <h2 className={styles.cardTitle}><BarChart3 size={18} /> Statistiche d'Uso</h2>
           <div className={styles.statsGrid}>
             <div className={styles.statBlock}>
               <div className={styles.statNumber}>35</div>
@@ -244,32 +244,31 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* 🧠 GPT Personalizzati */}
         <div className={styles.card}>
-          <h2 className={styles.cardTitle}>GPT Personalizzati</h2>
+          <h2 className={styles.cardTitle}><Bot size={18} /> GPT Personalizzati</h2>
           <div className={styles.cardList}>
-            <div>💬 AnimeTube</div>
-            <div>💬 HookMind</div>
-            <div>💬 ScriptForge Core</div>
+            <div><Bot size={16} /> AnimeTube</div>
+            <div><Bot size={16} /> HookMind</div>
+            <div><Bot size={16} /> ScriptForge Core</div>
           </div>
         </div>
       </div>
 
-      {/* ⚡ Quick Actions Panel FISSO fuori dal container */}
+      {/* ⚡ Pulsante Flottante Quick Actions */}
       <div className={styles.quickActionsWrapper}>
         <button
           className={styles.floatingButton}
           onClick={() => setShowQuickActions(prev => !prev)}
         >
-          ⚡
+          <Sparkles size={24} />
         </button>
 
         {showQuickActions && (
           <div className={styles.quickActionsPanel}>
-            <button onClick={() => router.push('/Hero')}>✨ Nuovo Script</button>
-            <button onClick={() => router.push('/analisiscript')}>📊 Analizza Script</button>
-            <button onClick={() => router.push('/raffina')}>🛠 Raffina</button>
-            <button onClick={() => router.push('/script-salvati')}>📁 Script Salvati</button>
+            <button onClick={() => router.push('/Hero')}><Wand2 size={16} /> Nuovo Script</button>
+            <button onClick={() => router.push('/analisiscript')}><BarChart3 size={16} /> Analizza Script</button>
+            <button onClick={() => router.push('/raffina')}><Gavel size={16} /> Raffina</button>
+            <button onClick={() => router.push('/script-salvati')}><FolderOpenDot size={16} /> Script Salvati</button>
           </div>
         )}
       </div>
