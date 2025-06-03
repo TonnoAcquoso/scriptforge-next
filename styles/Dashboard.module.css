@@ -58,9 +58,10 @@
 
 /* Contenuto principale */
 .dashboardContent {
-  margin-left: 80px;
-  padding: 2rem 1.5rem;
+  margin-left: 0;
+  padding: 1.2rem 1rem;
   flex: 1;
+  width: 100%;
   min-height: 100vh;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -70,6 +71,11 @@
   flex-direction: column;
   gap: 2rem;
 }
+
+.sectionContent {
+    width: 100%;
+  }
+
 
 
 /* Titolo */
