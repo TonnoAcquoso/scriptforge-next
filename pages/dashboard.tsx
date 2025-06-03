@@ -265,7 +265,7 @@ export default function Dashboard() {
 
           {showQuickActions && (
             <div className={styles.quickActionsPanel}>
-              <button onClick={() => router.push('/generatore')}>✨ Nuovo Script</button>
+              <button onClick={() => router.push('/Hero')}>✨ Nuovo Script</button>
               <button onClick={() => router.push('/analisiscript')}>📊 Analizza Script</button>
               <button onClick={() => router.push('/raffina')}>🛠 Raffina</button>
               <button onClick={() => router.push('/script-salvati')}>📁 Script Salvati</button>
