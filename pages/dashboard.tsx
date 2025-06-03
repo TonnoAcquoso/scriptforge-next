@@ -1,23 +1,21 @@
-// Inserisci questo contenuto nel file pages/dashboard.tsx
-
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { supabase } from '../utils/supabaseClient';
 import Head from 'next/head';
+import { supabase } from '../utils/supabaseClient';
 import styles from '../styles/Dashboard.module.css';
 import {
-  ShieldCheck,
-  FileText,
-  BarChart3,
-  FolderOpenDot,
-  Sparkles,
-  Mail,
-  KeyRound,
-  Bot,
   LayoutDashboard,
   UserCog,
   Files,
+  BarChart3,
+  Bot,
   Settings,
+  ShieldCheck,
+  Mail,
+  KeyRound,
+  FileText,
+  FolderOpenDot,
+  Sparkles
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -117,7 +115,10 @@ export default function Dashboard() {
         return (
           <div className={styles.card}>
             <h2 className={styles.cardTitle}><KeyRound size={18} /> Modifica Profilo</h2>
-            <p className={styles.toggleQuestion} onClick={() => setShowEditOptions(!showEditOptions)}>
+            <p
+              className={styles.toggleQuestion}
+              onClick={() => setShowEditOptions(!showEditOptions)}
+            >
               Vuoi modificare i tuoi dati?
             </p>
             {showEditOptions && (
@@ -144,6 +145,7 @@ export default function Dashboard() {
               <div><FileText size={16} /> SM Data Scraper</div>
               <div><FileText size={16} /> Convertitore Video</div>
             </div>
+            <button className={styles.actionButton}>Vedi Tutti</button>
           </div>
         );
 
@@ -187,27 +189,32 @@ export default function Dashboard() {
 
   return (
     <>
-      <Head><title>Dashboard Utente</title></Head>
+      <Head>
+        <title>Dashboard Utente</title>
+      </Head>
 
       <div className={styles.dashboardWrapper}>
         {/* Sidebar */}
         <aside className={styles.sidebar}>
           {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveSection(item.id)}
-              className={`${styles.sidebarItem} ${activeSection === item.id ? styles.active : ''}`}
-            >
-              <span className={styles.sidebarIcon}>{item.icon}</span>
+            <div key={item.id} className={styles.sidebarItem}>
+              <button
+                onClick={() => setActiveSection(item.id)}
+                className={`${styles.sidebarIcon} ${activeSection === item.id ? styles.active : ''}`}
+              >
+                {item.icon}
+              </button>
               <span className={styles.sidebarLabel}>{item.label}</span>
-            </button>
+            </div>
           ))}
         </aside>
 
-        {/* Contenuto dinamico */}
+        {/* Contenuto */}
         <main className={styles.dashboardContent}>
           <div className={styles.sectionContent}>
-            <h1 className={styles.dashboardHeader}><Sparkles size={24} /> Benvenuto, {user?.email?.split('@')[0]}</h1>
+            <h1 className={styles.dashboardHeader}>
+              <Sparkles size={22} /> Benvenuto, {user?.email?.split('@')[0]}
+            </h1>
             {renderContent()}
           </div>
         </main>
