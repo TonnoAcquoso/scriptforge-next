@@ -1,3 +1,5 @@
+// Inserisci questo contenuto nel file pages/dashboard.tsx
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../utils/supabaseClient';
@@ -6,10 +8,6 @@ import styles from '../styles/Dashboard.module.css';
 import {
   ShieldCheck,
   FileText,
-  Plus,
-  Gavel,
-  Search,
-  Wand2,
   BarChart3,
   FolderOpenDot,
   Sparkles,
@@ -18,7 +16,6 @@ import {
   Bot,
   LayoutDashboard,
   UserCog,
-  Activity,
   Files,
   Settings,
 } from 'lucide-react';
@@ -95,12 +92,12 @@ export default function Dashboard() {
   if (loading) return <p>Caricamento in corso...</p>;
 
   const navItems = [
-    { id: 'overview', label: 'Panoramica', icon: <LayoutDashboard size={18} /> },
-    { id: 'userinfo', label: 'Profilo', icon: <UserCog size={18} /> },
-    { id: 'scripts', label: 'Script Salvati', icon: <Files size={18} /> },
-    { id: 'analytics', label: 'Statistiche', icon: <BarChart3 size={18} /> },
-    { id: 'gpt', label: 'GPT', icon: <Bot size={18} /> },
-    { id: 'settings', label: 'Modifica', icon: <Settings size={18} /> },
+    { id: 'overview', label: 'Panoramica', icon: <LayoutDashboard size={20} /> },
+    { id: 'userinfo', label: 'Profilo', icon: <UserCog size={20} /> },
+    { id: 'scripts', label: 'Script', icon: <Files size={20} /> },
+    { id: 'analytics', label: 'Statistiche', icon: <BarChart3 size={20} /> },
+    { id: 'gpt', label: 'GPT', icon: <Bot size={20} /> },
+    { id: 'settings', label: 'Modifica', icon: <Settings size={20} /> },
   ];
 
   const renderContent = () => {
@@ -120,13 +117,9 @@ export default function Dashboard() {
         return (
           <div className={styles.card}>
             <h2 className={styles.cardTitle}><KeyRound size={18} /> Modifica Profilo</h2>
-            <p
-              className={styles.toggleQuestion}
-              onClick={() => setShowEditOptions(!showEditOptions)}
-            >
+            <p className={styles.toggleQuestion} onClick={() => setShowEditOptions(!showEditOptions)}>
               Vuoi modificare i tuoi dati?
             </p>
-
             {showEditOptions && (
               <div className={styles.editList}>
                 <div className={styles.editItem}>
@@ -151,7 +144,6 @@ export default function Dashboard() {
               <div><FileText size={16} /> SM Data Scraper</div>
               <div><FileText size={16} /> Convertitore Video</div>
             </div>
-            <button className={styles.actionButton}>Vedi Tutti</button>
           </div>
         );
 
@@ -195,36 +187,29 @@ export default function Dashboard() {
 
   return (
     <>
-      <Head>
-        <title>Dashboard Utente</title>
-      </Head>
+      <Head><title>Dashboard Utente</title></Head>
 
-      <div className={styles.fullDashboard}>
+      <div className={styles.dashboardWrapper}>
         {/* Sidebar */}
         <aside className={styles.sidebar}>
-          <div className={styles.sidebarLogo}>
-            <Sparkles size={24} />
-          </div>
-          <nav className={styles.sidebarNav}>
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setActiveSection(item.id)}
-                className={`${styles.sidebarButton} ${activeSection === item.id ? styles.active : ''}`}
-              >
-                {item.icon}
-                <span className={styles.sidebarLabel}>{item.label}</span>
-              </button>
-            ))}
-          </nav>
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setActiveSection(item.id)}
+              className={`${styles.sidebarItem} ${activeSection === item.id ? styles.active : ''}`}
+            >
+              <span className={styles.sidebarIcon}>{item.icon}</span>
+              <span className={styles.sidebarLabel}>{item.label}</span>
+            </button>
+          ))}
         </aside>
 
-        {/* Main Content */}
-        <main className={styles.mainContent}>
-          <h1 className={styles.dashboardHeader}>
-            <Sparkles size={24} /> Benvenuto, {user?.email?.split('@')[0]}
-          </h1>
-          {renderContent()}
+        {/* Contenuto dinamico */}
+        <main className={styles.dashboardContent}>
+          <div className={styles.sectionContent}>
+            <h1 className={styles.dashboardHeader}><Sparkles size={24} /> Benvenuto, {user?.email?.split('@')[0]}</h1>
+            {renderContent()}
+          </div>
         </main>
       </div>
 
@@ -246,9 +231,7 @@ export default function Dashboard() {
                   <button onClick={handleEmailUpdate} className={styles.confirmButton} disabled={isLoading}>
                     {isLoading ? 'Aggiornamento...' : 'Conferma'}
                   </button>
-                  <button onClick={() => { setPendingEdit(null); setInputValue(''); }} className={styles.cancelButton}>
-                    Annulla
-                  </button>
+                  <button onClick={resetPasswordFlow} className={styles.cancelButton}>Annulla</button>
                 </div>
               </>
             ) : (
@@ -256,7 +239,6 @@ export default function Dashboard() {
                 <h3 className={styles.popupTitle}>
                   {passwordStep === 'verify' ? 'Verifica Password Attuale' : 'Nuova Password'}
                 </h3>
-
                 {passwordStep === 'verify' ? (
                   <>
                     <input
@@ -270,9 +252,7 @@ export default function Dashboard() {
                       <button onClick={handlePasswordVerify} className={styles.confirmButton} disabled={isLoading}>
                         Verifica
                       </button>
-                      <button onClick={resetPasswordFlow} className={styles.cancelButton}>
-                        Annulla
-                      </button>
+                      <button onClick={resetPasswordFlow} className={styles.cancelButton}>Annulla</button>
                     </div>
                   </>
                 ) : (
@@ -288,9 +268,7 @@ export default function Dashboard() {
                       <button onClick={handlePasswordChange} className={styles.confirmButton} disabled={isLoading}>
                         Conferma
                       </button>
-                      <button onClick={resetPasswordFlow} className={styles.cancelButton}>
-                        Annulla
-                      </button>
+                      <button onClick={resetPasswordFlow} className={styles.cancelButton}>Annulla</button>
                     </div>
                   </>
                 )}
