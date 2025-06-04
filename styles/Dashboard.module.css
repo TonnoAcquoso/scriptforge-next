@@ -37,21 +37,15 @@
 }
 
 /* 🔧 Sidebar */
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
 .sidebar {
   width: 80px;
   min-width: 80px;
   height: 100vh;
-<<<<<<< HEAD
   background-color: #f2f2f2;
-=======
-  background-color: #111827;
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem 0.5rem;
-<<<<<<< HEAD
   gap: 2rem;
   border-right: 1px solid #ddd;
 =======
