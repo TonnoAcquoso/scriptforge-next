@@ -69,7 +69,7 @@ export default function ProfilePanel({ onClose }) {
               >
                 <Clock size={16} />
                 <span>
-                  Cronologia Script
+                  Dashboard
                   <span className={styles.badge}>In Arrivo</span>
                 </span>
               </button>
