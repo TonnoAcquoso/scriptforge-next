@@ -99,6 +99,7 @@ export default function Dashboard() {
   ];
 
   const renderContent = () => {
+<<<<<<< HEAD
   switch (activeSection) {
     case 'userinfo':
       return (
@@ -183,6 +184,92 @@ export default function Dashboard() {
       return <div className={styles.emptyState}>Dashboard</div>;
   }
 };
+=======
+    switch (activeSection) {
+      case 'userinfo':
+        return (
+          <div className={styles.card}>
+            <h2 className={styles.cardTitle}><ShieldCheck size={18} /> Informazioni Utente</h2>
+            <div className={styles.cardList}>
+              <div><Mail size={16} /> Email: {user?.email}</div>
+              <div><ShieldCheck size={16} /> Autenticazione MFA attiva</div>
+            </div>
+          </div>
+        );
+
+      case 'settings':
+        return (
+          <div className={styles.card}>
+            <h2 className={styles.cardTitle}><KeyRound size={18} /> Modifica Profilo</h2>
+            <p className={styles.toggleQuestion} onClick={() => setShowEditOptions(!showEditOptions)}>
+              Vuoi modificare i tuoi dati?
+            </p>
+            {showEditOptions && (
+              <div className={styles.editList}>
+                <div className={styles.editItem}>
+                  <span>Email: {user?.email}</span>
+                  <button onClick={() => setPendingEdit('email')} className={styles.editButton}>Modifica</button>
+                </div>
+                <div className={styles.editItem}>
+                  <span>Password: ********</span>
+                  <button onClick={() => setPendingEdit('password')} className={styles.editButton}>Modifica</button>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+
+      case 'scripts':
+        return (
+          <div className={styles.card}>
+            <h2 className={styles.cardTitle}><FolderOpenDot size={18} /> Script Salvati</h2>
+            <div className={styles.cardList}>
+              <div><FileText size={16} /> Script Elaborazione Dati</div>
+              <div><FileText size={16} /> SM Data Scraper</div>
+              <div><FileText size={16} /> Convertitore Video</div>
+            </div>
+            <button className={styles.editButton}>Vedi Tutti</button>
+          </div>
+        );
+
+      case 'analytics':
+        return (
+          <div className={styles.card}>
+            <h2 className={styles.cardTitle}><BarChart3 size={18} /> Statistiche d'Uso</h2>
+            <div className={styles.statsGrid}>
+              <div className={styles.statBlock}>
+                <div className={styles.statNumber}>35</div>
+                <span>Script Totali</span>
+              </div>
+              <div className={styles.statBlock}>
+                <div className={styles.statNumber}>15</div>
+                <span>Raffinati</span>
+              </div>
+              <div className={styles.statBlock}>
+                <div className={styles.statNumber}>12</div>
+                <span>Ultimi 7 giorni</span>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'gpt':
+        return (
+          <div className={styles.card}>
+            <h2 className={styles.cardTitle}><Bot size={18} /> GPT Personalizzati</h2>
+            <div className={styles.cardList}>
+              <div><Bot size={16} /> AnimeTube</div>
+              <div><Bot size={16} /> HookMind</div>
+              <div><Bot size={16} /> ScriptForge Core</div>
+            </div>
+          </div>
+        );
+
+      default:
+        return <div className={styles.emptyState}>Dashboard</div>;
+    }
+  };
+>>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
 
   return (
     <>
@@ -209,9 +296,14 @@ export default function Dashboard() {
         {/* Contenuto */}
         <main className={styles.mainContent}>
           <div className={styles.sectionContent}>
+<<<<<<< HEAD
             <Sparkles className={styles.StellaTitolo}/>
             <h1 className={styles.dashboardHeader}>
                Benvenuto, {user?.email?.split('@')[0]}
+=======
+            <h1 className={styles.dashboardHeader}>
+              <Sparkles size={22} /> Benvenuto, {user?.email?.split('@')[0]}
+>>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
             </h1>
             {renderContent()}
           </div>
