@@ -144,7 +144,7 @@ export default function Home() {
         >
           ✨ Inizia a Creare
         </button>
-        <p className={styles.ctaNote}>Nessuna registrazione. Nessun limite. Solo creatività pura.</p>
+        <p className={styles.ctaNote}>Nessun limite. Solo creatività pura.</p>
       </div>
     </section>
   );

@@ -36,6 +36,20 @@ export default function SignUpPage() {
   const router = useRouter();
   const { redirect } = router.query;
   const [redirectPath, setRedirectPath] = useState('/');
+  const [showGuideModal, setShowGuideModal] = useState(false);
+
+  // ✨ Component guida MFA (interno al file)
+const AuthGuide = () => (
+  <div className={styles.authGuideBox}>
+    <h4>🔒 Come verificarti</h4>
+    <ul>
+      <li>1. Scarica l'app 'Google Authenticator' dallo store</li>
+      <li>2. Apri l'app</li>
+      <li>3. Clicca sul + in basso a destra e inserisci il codice fornito manualmente o scansiona il QR</li>
+      <li>4. Se non trovi l’account, ricontrolla il QR o il codice manuale</li>
+    </ul>
+  </div>
+);
 
   useEffect(() => {
     if (typeof redirect === 'string') {
@@ -225,12 +239,13 @@ export default function SignUpPage() {
 
 
   return (
-    <div className={styles.signupContainer}>
-      <h1 className={styles.pageTitle}>
-        <span className={styles.gradient}>ScriptForge AI</span>
-      </h1>
+  <div className={styles.signupContainer}>
+    <h1 className={styles.pageTitle}>
+      <span className={styles.gradient}>ScriptForge AI</span>
+    </h1>
 
-      <div className={styles.signupCard}>
+    <div className={styles.signupCard}>
+      <div className={styles.formContent}>
         <h2 className={styles.signupTitle}>
           {mfaRequired
             ? 'Verifica con Google Authenticator'
@@ -268,40 +283,53 @@ export default function SignUpPage() {
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
-            {!isLogin && (
-                <div className={styles.passwordCriteria}>
-                  <p className={password.length >= 8 ? styles.valid : styles.invalid}>
-                    Almeno 8 caratteri
-                  </p>
-                  <p className={/\d/.test(password) ? styles.valid : styles.invalid}>
-                    Almeno un numero
-                  </p>
-                  <p className={/[A-Z]/.test(password) ? styles.valid : styles.invalid}>
-                    Almeno una lettera maiuscola
-                  </p>
-                </div>
-              )}
-                {!isLogin && (
-                  <ReCAPTCHA
-                    sitekey="6LdwZ1IrAAAAALY0PKNRMAdFNUMBQ8mQGw3y2X-D"
-                    size="invisible"
-                    onChange={(token) => setRecaptchaToken(token || '')}
-                    ref={recaptchaRef}
-                  />
-                )}
-            <button
-                onClick={handleSubmit}
-                className={styles.signupButton}
-                disabled={isLoading}
-              >
-                {isLoading ? 'Caricamento...' : isLogin ? 'Login' : 'Registrati'}
-              </button>
 
-            {message && ( <p className={
-            message.toLowerCase().includes('esistente') ||
-            message.toLowerCase().includes('errore')
-              ? styles.errorMessage
-              : styles.message}>{message}</p>)}
+            {!isLogin && (
+              <div className={styles.passwordCriteria}>
+                <p className={password.length >= 8 ? styles.valid : styles.invalid}>
+                  Almeno 8 caratteri
+                </p>
+                <p className={/\d/.test(password) ? styles.valid : styles.invalid}>
+                  Almeno un numero
+                </p>
+                <p className={/[A-Z]/.test(password) ? styles.valid : styles.invalid}>
+                  Almeno una lettera maiuscola
+                </p>
+                <p className={/[^A-Za-z0-9]/.test(password) ? styles.valid : styles.invalid}>
+                  Almeno un carattere speciale
+                </p>
+              </div>
+            )}
+
+            {!isLogin && (
+              <ReCAPTCHA
+                sitekey="6LdwZ1IrAAAAALY0PKNRMAdFNUMBQ8mQGw3y2X-D"
+                size="invisible"
+                onChange={token => setRecaptchaToken(token || '')}
+                ref={recaptchaRef}
+              />
+            )}
+
+            <button
+              onClick={handleSubmit}
+              className={styles.signupButton}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Caricamento...' : isLogin ? 'Login' : 'Registrati'}
+            </button>
+
+            {message && (
+              <p
+                className={
+                  message.toLowerCase().includes('esistente') ||
+                  message.toLowerCase().includes('errore')
+                    ? styles.errorMessage
+                    : styles.message
+                }
+              >
+                {message}
+              </p>
+            )}
 
             <p className={styles.toggleText}>
               {isLogin ? 'Non hai un account?' : 'Hai già un account?'}{' '}
@@ -318,6 +346,11 @@ export default function SignUpPage() {
           </>
         ) : (
           <>
+            {/* 📱 Pulsante guida mobile */}
+            <div className={styles.mobileGuideLink}>
+              <button onClick={() => setShowGuideModal(true)}>❓ Come fare?</button>
+            </div>
+
             {qrUrl && (
               <>
                 <p className={styles.qrInstructions}>
@@ -353,29 +386,60 @@ export default function SignUpPage() {
         )}
       </div>
 
-      {!mfaRequired && (
-  <div className={styles.disclaimerWrapper}>
-    <button
-      onClick={() => setShowDisclaimer(!showDisclaimer)}
-      className={styles.disclaimerToggle}
-      aria-expanded={showDisclaimer}
-      aria-controls="disclaimerContent"
-    >
-      ⚠️ Termini & Privacy
-    </button>
+      {/* 🖥️ Mini guida desktop */}
+      {mfaRequired && (
+        <div className={styles.desktopGuideBox}>
+          <AuthGuide />
+        </div>
+      )}
 
-    <div
-      id="disclaimerContent"
-      className={`${styles.disclaimerContent} ${showDisclaimer ? styles.open : ''}`}
-    >
-      <p>
-        Accedendo o creando un account, accetti i nostri{' '}
-        <a href="/termini" target="_blank" rel="noopener noreferrer">Termini di Servizio</a>{' '}
-        e l' <a href="/privacy" target="_blank" rel="noopener noreferrer">Informativa sulla Privacy</a>.
-      </p>
+      {/* 📱 Modal guida mobile */}
+      {showGuideModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <button
+              className={styles.closeModal}
+              onClick={() => setShowGuideModal(false)}
+            >
+              Chiudi
+            </button>
+            <AuthGuide />
+          </div>
+        </div>
+      )}
     </div>
+
+    {!mfaRequired && (
+      <div className={styles.disclaimerWrapper}>
+        <button
+          onClick={() => setShowDisclaimer(!showDisclaimer)}
+          className={styles.disclaimerToggle}
+          aria-expanded={showDisclaimer}
+          aria-controls="disclaimerContent"
+        >
+          ⚠️ Termini & Privacy
+        </button>
+
+        <div
+          id="disclaimerContent"
+          className={`${styles.disclaimerContent} ${showDisclaimer ? styles.open : ''}`}
+        >
+          <p>
+            Accedendo o creando un account, accetti i nostri{' '}
+            <a href="/termini" target="_blank" rel="noopener noreferrer">
+              Termini di Servizio
+            </a>{' '}
+            e l'{' '}
+            <a href="/privacy" target="_blank" rel="noopener noreferrer">
+              Informativa sulla Privacy
+            </a>.
+          </p>
+        </div>
+      </div>
+    )}
   </div>
-)}
-    </div>
-  );
+);
+
+
+
 }

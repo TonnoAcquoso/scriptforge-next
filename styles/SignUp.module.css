@@ -6,12 +6,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(
-    145deg,
-    #e5f2f9 0%,
-    #dbeafe 40%,
-    #f0f9ff 100%
-  );
+  background: linear-gradient(145deg, #e5f2f9 0%, #dbeafe 40%, #f0f9ff 100%);
   backdrop-filter: blur(8px);
 }
 
@@ -29,6 +24,7 @@
   background: linear-gradient(90deg, #0ea5e9, #2563eb, #9333ea);
   background-size: 200% auto;
   -webkit-background-clip: text;
+    background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientGlow 10s linear infinite;
 }
@@ -42,12 +38,15 @@
 /* 📦 Card del form */
 .signupCard {
   width: 100%;
-  max-width: 420px;
+  max-width: 900px;
   background: rgba(250, 250, 250, 0.8);
   border: 1px solid rgba(180, 200, 240, 0.4);
   border-radius: 1.25rem;
   padding: 2.2rem;
   backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 /* 🧾 Titolo interno card */
@@ -142,27 +141,6 @@
   border: 1px solid #ff4d4f;
 }
 
-.otpText {
-  margin: 1rem 0 0.3rem;
-  font-size: 0.85rem;
-  color: #ccc;
-  text-align: center;
-}
-
-.otpButton {
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
-  border-radius: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #f0f3f6;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-.otpButton:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-}
-
 /* 🔐 Istruzioni per QR code */
 .qrInstructions {
   font-size: 0.95rem;
@@ -194,9 +172,9 @@
   padding: 0.75rem 1rem;
   border-radius: 0.65rem;
   color: #0f172a;
-  word-break: break-all;
+  word-break: break-word;
   border: 1px dashed #38bdf8;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 .secretKey strong {
   font-family: monospace;
@@ -206,14 +184,12 @@
 
 /* 🟥 Messaggio di errore visivo */
 .errorMessage {
-  color: #dc2626; /* rosso intenso */
+  color: #dc2626;
   font-weight: 600;
   text-align: center;
   margin-top: 1.2rem;
   animation: shakeError 0.4s ease;
 }
-
-/* 🔄 Animazione leggera shake */
 @keyframes shakeError {
   0% { transform: translateX(0); }
   20% { transform: translateX(-6px); }
@@ -224,14 +200,10 @@
 }
 
 /* DISCLAIMER */
-
-/* ⚠️ Contenitore disclaimer */
 .disclaimerWrapper {
   margin-top: 2rem;
   text-align: center;
 }
-
-/* 🪧 Bottone toggle disclaimer */
 .disclaimerToggle {
   background: none;
   border: none;
@@ -244,8 +216,6 @@
 .disclaimerToggle:hover {
   color: #0ea5e9;
 }
-
-/* 📜 Contenuto disclaimer nascosto */
 .disclaimerContent {
   max-height: 0;
   overflow: hidden;
@@ -254,14 +224,10 @@
   font-size: 0.85rem;
   color: #475569;
 }
-
-/* ✅ Quando visibile */
 .disclaimerContent.open {
   max-height: 120px;
   padding: 1rem 0.5rem;
 }
-
-/* 🔗 Stile link all’interno del disclaimer */
 .disclaimerContent a {
   color: #0ea5e9;
   font-weight: 500;
@@ -271,7 +237,7 @@
   color: #0284c7;
 }
 
-/* 🔐 Blocco criteri password */
+/* 🔐 Password criteria */
 .passwordCriteria {
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(180, 200, 240, 0.3);
@@ -285,33 +251,196 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
-
-/* ✅ Criterio soddisfatto */
 .valid::before {
   content: "✔ ";
-  color: #10b981; /* verde */
+  color: #10b981;
   font-weight: 600;
 }
 .valid {
   color: #10b981;
-  transition: color 0.3s ease;
 }
-
-/* ❌ Criterio non soddisfatto */
 .invalid::before {
   content: "✘ ";
-  color: #ef4444; /* rosso */
+  color: #ef4444;
   font-weight: 600;
 }
 .invalid {
   color: #ef4444;
-  text-decoration: none;
   opacity: 0.85;
-  transition: color 0.3s ease, opacity 0.3s ease;
 }
 
-.signupButton:disabled {
-  background: linear-gradient(to right, #94a3b8, #64748b); /* grigio/blu sobrio */
-  cursor: not-allowed;
-  opacity: 0.8;
+/* 🔐 Guida MFA Desktop */
+.desktopGuideBox {
+  display: none;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 320px;
 }
+
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modalContent {
+  background: rgb(255, 255, 255);
+  color: black;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.closeModal {
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+
+.mobileGuideLink {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.mobileGuideLink button {
+  background: none;
+  border: none;
+  color: #0ea5e9;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.mobileGuideLink button:hover {
+  color: #0284c7;
+}
+
+/* 📐 Struttura interna organizzata */
+.formContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+
+/* 📱 Mobile layout guida + form impilati */
+@media (max-width: 767px) {
+  .signupCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.8rem;
+    padding: 2rem 1.2rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .formContent {
+    width: 100%;
+  }
+
+  .desktopGuideBox {
+    display: none !important;
+  }
+
+  .mobileGuideLink {
+    display: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .mobileGuideLink button {
+    background: none;
+    border: none;
+    color: #0ea5e9;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .mobileGuideLink button:hover {
+    text-decoration: underline;
+    color: #0284c7;
+  }
+
+  .modalOverlay {
+    display: flex;
+    position: fixed;
+    inset: 0; /* sostituisce top: 0, left: 0, width, height */
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 9999; /* molto alto per stare sopra tutto */
+    backdrop-filter: blur(3px); /* effetto blur opzionale */
+  }
+
+  .modalContent {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem 1.2rem;
+    max-width: 360px;
+    width: 100%;
+    color: #1e293b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+  .closeModal {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.8rem;
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .closeModal:hover {
+    text-decoration: underline;
+  }
+
+  .authGuideBox {
+    padding: 1.2rem;
+    font-size: 0.92rem;
+    border-radius: 10px;
+    max-width: 100%;
+  }
+}
+

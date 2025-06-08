@@ -12,7 +12,7 @@ import Navbar from '../components/Navbar';
 import withAuth from '../utils/withAuth';
 import { useRouter } from 'next/router';
 import { useUser } from '../components/UserContext';
-
+import posthog from 'posthog-js';
 
 
 export function Hero() {
@@ -149,6 +149,12 @@ const handleTxtDownload = () => {
   }
 };
 
+useEffect(() => {
+  posthog.capture('test_event', {
+    email: 'prova@email.com',
+  });
+}, []);
+
 // Genera lo script chiamando l’API personalizzata
 const handleGenerate = async () => {
   setLoading(true);
@@ -160,7 +166,37 @@ const handleGenerate = async () => {
       body: JSON.stringify({ topic, niche, style, intensity }),
     });
     const data = await response.json();
+    
     setScriptResult(data.script || 'Nessuna risposta generata');
+    
+console.log('📡 Invio evento a PostHog:', {
+  user_email: user?.email,
+  name: user.name || '',
+  created_at: user.created_at || '',
+  type: 'refined',
+  style,
+  intensity,
+  topic,
+  niche,
+});
+
+posthog.capture('script_generated', {
+  user_email: user?.email,
+  type: 'base',
+  style,
+  intensity,
+  topic,
+  niche,
+});
+
+    posthog.capture('script_generated', {
+      user_email: user?.email,
+      type: 'base',
+      style,
+      intensity,
+      topic,
+      niche,
+    });
   } catch (err) {
     alert('Errore durante la generazione dello script');
   } finally {

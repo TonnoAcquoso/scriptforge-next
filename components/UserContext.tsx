@@ -7,6 +7,7 @@ import {
   ReactNode,
 } from 'react';
 import { supabase } from '../utils/supabaseClient';
+import posthog from 'posthog-js';
 
 type User = any; // 🔧 Puoi sostituirlo con il tipo corretto di Supabase user se desideri
 
@@ -32,6 +33,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
       setUser(data?.user ?? null);
+      if (data?.user?.email) {
+  posthog.identify(data.user.email, {
+    email: data.user.email,
+    name: data.user.user_metadata?.full_name || '',
+    created_at: data.user.created_at || '',
+  });
+}
       setLoading(false);
     };
     getUser();
@@ -39,6 +47,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUser(session?.user ?? null);
+        if (session?.user?.email) {
+  posthog.identify(session.user.email, {
+    email: session.user.email,
+    name: session.user.user_metadata?.full_name || '',
+    created_at: session.user.created_at || '',
+  });
+}
       }
     );
 

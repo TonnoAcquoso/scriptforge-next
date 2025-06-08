@@ -12,7 +12,7 @@ import dynamic from 'next/dynamic';
 import highlightDiff from '../utils/highlightDiff'; // 🔍 Per evidenziare differenze
 import useThemeAndDraft from '../utils/useThemeAndDraft'; // 🌓 Tema + salvataggio automatico
 import withAuth from '../utils/withAuth';
-
+import posthog from 'posthog-js';
 
 
 
@@ -170,6 +170,10 @@ const handleExport = async (type: 'txt' | 'docx') => {
       const data = await response.json();
       const refined = data.script || 'Nessuna risposta generata.';
       setRefinedScript(refined);
+      posthog.capture('script_generated', {
+        user_email: user?.email,
+        type: 'refined',
+      });
 
       // 💾 Salva in cronologia (max 5)
       const history = JSON.parse(localStorage.getItem('refinedHistory') || '[]');
@@ -182,6 +186,7 @@ const handleExport = async (type: 'txt' | 'docx') => {
     } finally {
       setLoading(false);
     }
+    
   };
 
   // 🎨 Evidenzia differenze solo se attivo
@@ -259,7 +264,6 @@ const handleApplyChanges = () => {
     >
       {loading ? 'Raffinamento in corso...' : '✨ Migliora Testo'}
     </button>
-
     {/* ✅ Toggle per confronto visivo */}
     <label style={{ display: 'block', marginTop: '1.5rem' }}>
       <input

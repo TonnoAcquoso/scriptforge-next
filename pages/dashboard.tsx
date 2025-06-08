@@ -1,3 +1,6 @@
+import { useUser } from '@supabase/auth-helpers-react'
+
+import { WeeklySparkline } from '../components/WeeklySparkline'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -15,15 +18,19 @@ import {
   KeyRound,
   FileText,
   FolderOpenDot,
-  Sparkles
+  Sparkles,
+  ArrowUpRight,
+  ArrowDownRight
 } from 'lucide-react';
+import { useUserStatsFromPosthog } from '../hooks/useUserStatsFromPosthog';
+
 
 export default function Dashboard() {
   const router = useRouter();
+  const supaUser = useUser();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState<string | null>(null);
-
   const [showEditOptions, setShowEditOptions] = useState(false);
   const [pendingEdit, setPendingEdit] = useState<null | 'email' | 'password'>(null);
   const [inputValue, setInputValue] = useState('');
@@ -31,6 +38,16 @@ export default function Dashboard() {
   const [newPassword, setNewPassword] = useState('');
   const [passwordStep, setPasswordStep] = useState<'verify' | 'change'>('verify');
   const [isLoading, setIsLoading] = useState(false);
+  const { base, refined, weeklyData } = useUserStatsFromPosthog(user?.email);
+
+const userStats = {
+  base,
+  refined,
+  total: base + refined,
+  last7Days: weeklyData.reduce((acc, cur) => acc + cur.count, 0),
+};
+  
+
 
   useEffect(() => {
     const getUser = async () => {
@@ -99,7 +116,6 @@ export default function Dashboard() {
   ];
 
   const renderContent = () => {
-<<<<<<< HEAD
   switch (activeSection) {
     case 'userinfo':
       return (
@@ -114,7 +130,7 @@ export default function Dashboard() {
 
     case 'settings':
       return (
-        <section className={styles.sectionBlock}>
+        <section className={styles.sectionSettings}>
           <h2 className={styles.sectionTitle}><KeyRound size={20} /> Modifica Profilo</h2>
           <p className={styles.toggleQuestion} onClick={() => setShowEditOptions(!showEditOptions)}>
             Vuoi modificare i tuoi dati?
@@ -136,7 +152,7 @@ export default function Dashboard() {
 
     case 'scripts':
       return (
-        <section className={styles.sectionBlock}>
+        <section className={styles.sectionScripts}>
           <h2 className={styles.sectionTitle}><FolderOpenDot className={styles.FolderOpenDot} size={20} /> Script Salvati</h2>
           <ul className={styles.infoList}>
            <FileText className={styles.FileText} size={18} /> <li> <span>Script Elaborazione Dati</span></li>
@@ -147,32 +163,69 @@ export default function Dashboard() {
         </section>
       );
 
-    case 'analytics':
-      return (
-        <section className={styles.sectionBlock}>
-          <h2 className={styles.sectionTitle}><BarChart3 size={20} /> Statistiche d'Uso</h2>
-          <div className={styles.statsGrid}>
-            <div className={styles.statBlock}>
-              <div className={styles.statNumber}>35</div>
-              <span>Script Totali</span>
-            </div>
-            <div className={styles.statBlock}>
-              <div className={styles.statNumber}>15</div>
-              <span>Raffinati</span>
-            </div>
-            <div className={styles.statBlock}>
-              <div className={styles.statNumber}>12</div>
-              <span>Ultimi 7 giorni</span>
-            </div>
-          </div>
-        </section>
-      );
+   case 'analytics':
+  return (
+    <section className={styles.sectionAnalytics}>
+      <h2 className={styles.sectionTitleAnalytics}>
+        <BarChart3 className={styles.iconaGrafico} /> Statistiche d'Uso
+      </h2>
+      <p className={styles.subtitleAnalytics}>
+        Monitoraggio delle performance settimanali dei tuoi script GPT
+      </p>
+
+      <div className={styles.statsGridAnalytics}>
+        <div className={styles.statBlockAnalytics}>
+          <div className={styles.statNumberAnalytics}>{userStats.base}</div>
+          <span>Script Base</span>
+        </div>
+
+        <div className={styles.statBlockAnalytics}>
+          <div className={styles.statNumberAnalytics}>{userStats.refined}</div>
+          <span>Script Raffinati</span>
+        </div>
+
+        <div className={styles.statBlockAnalytics}>
+          <div className={styles.statNumberAnalytics}>{userStats.total}</div>
+          <span>Script Totali</span>
+        </div>
+
+        <div className={styles.statBlockAnalytics}>
+          <div className={styles.statNumberAnalytics}>{userStats.last7Days}</div>
+          <span>Ultimi 7 Giorni</span>
+        </div>
+      </div>
+
+      <div className={styles.statBlockAnalytics}>
+        <div className={styles.statNumberAnalytics}>📈</div>
+        <span>Andamento settimanale</span>
+        <div style={{ width: '100%', height: 100, marginTop: '1rem' }}>
+          {weeklyData?.length > 0 ? (
+            <WeeklySparkline data={weeklyData} />
+          ) : (
+            <p
+              style={{
+                fontSize: '0.85rem',
+                color: '#94a3b8',
+                textAlign: 'center',
+              }}
+            >
+              Nessun dato negli ultimi 7 giorni
+            </p>
+          )}
+        </div>
+        <pre style={{ fontSize: '0.7rem', color: '#64748b' }}>
+          {JSON.stringify(weeklyData, null, 2)}
+        </pre>
+      </div>
+    </section>
+  );
+
 
     case 'gpt':
       return (
-        <section className={styles.sectionBlock}>
-          <h2 className={styles.sectionTitle}><Bot size={20} /> GPT Personalizzati</h2>
-          <ul className={styles.infoList}>
+        <section className={styles.sectionGpt}>
+          <h2 className={styles.sectionTitleGpt}><Bot className={styles.iconaBotGpt}/> GPT Personalizzati</h2>
+          <ul className={styles.infoListGpt}>
             <li><Bot size={18} /> <span>AnimeTube</span></li>
             <li><Bot size={18} /> <span>HookMind</span></li>
             <li><Bot size={18} /> <span>ScriptForge Core</span></li>
@@ -184,92 +237,6 @@ export default function Dashboard() {
       return <div className={styles.emptyState}>Dashboard</div>;
   }
 };
-=======
-    switch (activeSection) {
-      case 'userinfo':
-        return (
-          <div className={styles.card}>
-            <h2 className={styles.cardTitle}><ShieldCheck size={18} /> Informazioni Utente</h2>
-            <div className={styles.cardList}>
-              <div><Mail size={16} /> Email: {user?.email}</div>
-              <div><ShieldCheck size={16} /> Autenticazione MFA attiva</div>
-            </div>
-          </div>
-        );
-
-      case 'settings':
-        return (
-          <div className={styles.card}>
-            <h2 className={styles.cardTitle}><KeyRound size={18} /> Modifica Profilo</h2>
-            <p className={styles.toggleQuestion} onClick={() => setShowEditOptions(!showEditOptions)}>
-              Vuoi modificare i tuoi dati?
-            </p>
-            {showEditOptions && (
-              <div className={styles.editList}>
-                <div className={styles.editItem}>
-                  <span>Email: {user?.email}</span>
-                  <button onClick={() => setPendingEdit('email')} className={styles.editButton}>Modifica</button>
-                </div>
-                <div className={styles.editItem}>
-                  <span>Password: ********</span>
-                  <button onClick={() => setPendingEdit('password')} className={styles.editButton}>Modifica</button>
-                </div>
-              </div>
-            )}
-          </div>
-        );
-
-      case 'scripts':
-        return (
-          <div className={styles.card}>
-            <h2 className={styles.cardTitle}><FolderOpenDot size={18} /> Script Salvati</h2>
-            <div className={styles.cardList}>
-              <div><FileText size={16} /> Script Elaborazione Dati</div>
-              <div><FileText size={16} /> SM Data Scraper</div>
-              <div><FileText size={16} /> Convertitore Video</div>
-            </div>
-            <button className={styles.editButton}>Vedi Tutti</button>
-          </div>
-        );
-
-      case 'analytics':
-        return (
-          <div className={styles.card}>
-            <h2 className={styles.cardTitle}><BarChart3 size={18} /> Statistiche d'Uso</h2>
-            <div className={styles.statsGrid}>
-              <div className={styles.statBlock}>
-                <div className={styles.statNumber}>35</div>
-                <span>Script Totali</span>
-              </div>
-              <div className={styles.statBlock}>
-                <div className={styles.statNumber}>15</div>
-                <span>Raffinati</span>
-              </div>
-              <div className={styles.statBlock}>
-                <div className={styles.statNumber}>12</div>
-                <span>Ultimi 7 giorni</span>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'gpt':
-        return (
-          <div className={styles.card}>
-            <h2 className={styles.cardTitle}><Bot size={18} /> GPT Personalizzati</h2>
-            <div className={styles.cardList}>
-              <div><Bot size={16} /> AnimeTube</div>
-              <div><Bot size={16} /> HookMind</div>
-              <div><Bot size={16} /> ScriptForge Core</div>
-            </div>
-          </div>
-        );
-
-      default:
-        return <div className={styles.emptyState}>Dashboard</div>;
-    }
-  };
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
 
   return (
     <>
@@ -296,14 +263,9 @@ export default function Dashboard() {
         {/* Contenuto */}
         <main className={styles.mainContent}>
           <div className={styles.sectionContent}>
-<<<<<<< HEAD
             <Sparkles className={styles.StellaTitolo}/>
             <h1 className={styles.dashboardHeader}>
                Benvenuto, {user?.email?.split('@')[0]}
-=======
-            <h1 className={styles.dashboardHeader}>
-              <Sparkles size={22} /> Benvenuto, {user?.email?.split('@')[0]}
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
             </h1>
             {renderContent()}
           </div>

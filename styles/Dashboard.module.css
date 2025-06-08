@@ -1,14 +1,10 @@
-<<<<<<< HEAD
+
 /* 🌤️ FULL DASHBOARD - Stile chiaro Apple/AI */
-=======
-/* 🔧 FIX layout principale */
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
 .fullDashboard {
   display: flex;
   flex-direction: row;
   min-height: 100vh;
   overflow: hidden;
-<<<<<<< HEAD
   background: linear-gradient(135deg, #f9f9f9, #ffffff);
   color: #1a1a1a;
   box-sizing: border-box;
@@ -29,12 +25,7 @@
   font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
-/* 🔧 SIDEBAR */
-=======
-  background: linear-gradient(145deg, #0f0f1a, #1a1b2f);
-  color: #ffffff;
-  box-sizing: border-box;
-}
+
 
 /* 🔧 Sidebar */
 .sidebar {
@@ -48,37 +39,21 @@
   padding: 1rem 0.5rem;
   gap: 2rem;
   border-right: 1px solid #ddd;
-=======
-  gap: 2.2rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.07);
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
   position: fixed;
   top: 0;
   left: 0;
   z-index: 20;
 }
 
-<<<<<<< HEAD
-=======
-/* Icone */
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
 .sidebarItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-<<<<<<< HEAD
   gap: 0.25rem;
 }
 
 .sidebarIcon {
   color: #888;
-=======
-  gap: 0.2rem;
-}
-
-.sidebarIcon {
-  color: #bbbbbb;
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
   font-size: 1.4rem;
   background: transparent;
   border: none;
@@ -88,18 +63,13 @@
 
 .sidebarIcon:hover,
 .sidebarIcon.active {
-<<<<<<< HEAD
   color: #1e90ff;
-=======
-  color: #00ffe7;
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
   transform: scale(1.15);
 }
 
 .sidebarLabel {
   font-size: 0.6rem;
   text-align: center;
-<<<<<<< HEAD
   color: #555;
 }
 
@@ -139,6 +109,231 @@
     filter: drop-shadow(0 0 2px #00c7be);
   }
 }
+
+/* 🌐 IMPOSTAZIONI (Modifica Profilo) - Mobile */
+.sectionSettings {
+  background: linear-gradient(135deg, #fefefe, #f5f5f5);
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+/* 📁 SCRIPT SALVATI - Mobile */
+.sectionScripts {
+  background: linear-gradient(to right, #e0ecff, #f5f9ff);
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  border: 1px solid #c3d4f5;
+  box-shadow: inset 0 0 8px rgba(0, 102, 255, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+/* 📊 Sezione Analitica - Mobile first */
+.sectionAnalytics {
+  background: linear-gradient(135deg, rgba(248, 250, 253, 0.85), rgba(240, 244, 250, 0.9));
+  border: 1px solid rgba(215, 225, 240, 0.7);
+  border-radius: 1.2rem;
+  padding: 1.8rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(8px);
+  margin-bottom: 2.2rem;
+  transition: all 0.3s ease;
+}
+
+.sectionTitleAnalytics {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.subtitleAnalytics {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 1.6rem;
+}
+
+/* 📈 Icona */
+.iconaGrafico {
+  color: #3b82f6;
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.iconaGrafico:hover {
+  transform: rotate(4deg) scale(1.05);
+}
+
+/* 🔢 Griglia Statistiche */
+.statsGridAnalytics {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+}
+
+/* 🧱 Blocco singolo */
+.statBlockAnalytics {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(230, 235, 245, 0.7);
+  border-radius: 1rem;
+  padding: 1.2rem;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.statBlockAnalytics:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 102, 255, 0.08);
+}
+
+/* 🔢 Numeri */
+.statNumberAnalytics {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0ea5e9;
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.5px;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+/* 📈 Badge percentuale */
+.statBadgeAnalytics {
+  margin-top: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  transition: background-color 0.3s ease;
+  line-height: 1;
+}
+
+/* Icona all'interno del badge */
+.badgeIcon {
+  flex-shrink: 0;
+  margin-bottom: -1px;
+}
+
+/* Positivo */
+.statBadgeAnalytics.positive {
+  color: #16a34a;
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+.statBadgeAnalytics.positive .badgeIcon {
+  color: #16a34a;
+}
+
+/* Negativo */
+.statBadgeAnalytics.negative {
+  color: #dc2626;
+  background-color: rgba(239, 68, 68, 0.12);
+}
+
+.statBadgeAnalytics.negative .badgeIcon {
+  color: #dc2626;
+}
+
+
+
+
+/* 🤖 Sezione GPT Personalizzati - Mobile */
+.sectionGpt {
+  background: linear-gradient(to bottom right, #fefbf8, #fff6eb);
+  padding: 1.4rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(245, 197, 135, 0.4);
+  box-shadow: 0 4px 18px rgba(251, 187, 100, 0.12);
+  margin-bottom: 1.8rem;
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(4px);
+}
+
+/* 🤖 Icona Bot GPT - Mobile */
+.iconaBotGpt {
+  color: #ff9e42; /* Arancione AI-friendly */
+  stroke-width: 1.8;
+  flex-shrink: 0;
+  transition: transform 0.25s ease, color 0.25s ease;
+  width: 20px;
+  height: 20px;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+.iconaBotGpt:hover {
+  transform: scale(1.1);
+  color: #ffae63;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 6px rgba(255, 179, 102, 0.5)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+}
+
+/* 🧠 Titolo Sezione GPT */
+.sectionTitleGpt {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin-bottom: 1rem;
+}
+
+/* 📋 Lista GPT */
+.infoListGpt {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.infoListGpt li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: #ffffff;
+  border: 1px solid #f2e4d7;
+  border-radius: 0.8rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #4b3c2f;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.infoListGpt li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(255, 190, 120, 0.15);
+  background-color: #fffaf3;
+}
+
 
   .mobileCardTitle {
     display: flex;
@@ -430,6 +625,7 @@
 
 
 
+
   .sectionTitle {
     display: flex;
     align-items: center;
@@ -439,6 +635,214 @@
     color: #1f1f1f;
     margin-bottom: 1.5rem;
   }
+
+  /* 🌐 IMPOSTAZIONI (Modifica Profilo) - Desktop */
+  .sectionSettings {
+    background: linear-gradient(135deg, #ffffff, #f0f0f0);
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    border: 1px solid #d1d1d1;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    margin-bottom: 2rem;
+  }
+
+  /* 📁 SCRIPT SALVATI - Desktop */
+  .sectionScripts {
+    background: linear-gradient(to right, #dceeff, #f0f7ff);
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    border: 1px solid #aacbfd;
+    box-shadow: inset 0 0 10px rgba(64, 112, 255, 0.12);
+    margin-bottom: 2rem;
+  }
+
+  /* 📊 Sezione Analytics - DESIGN FUTURISTICO DESKTOP */
+.sectionAnalytics {
+  padding: 2.8rem 3.2rem;
+  border-radius: 1.6rem;
+  background: linear-gradient(135deg, rgba(250, 252, 255, 0.85), rgba(240, 245, 255, 0.9));
+  border: 1px solid rgba(200, 215, 240, 0.4);
+  box-shadow:
+    inset 0 0 0.5px rgba(255, 255, 255, 0.6),
+    0 8px 40px rgba(28, 60, 90, 0.08),
+    0 1px 1px rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+/* 🧠 Titolo + Icona */
+.sectionTitleAnalytics {
+  display: flex;
+  align-items: center;
+  font-size: 1.7rem;
+  gap: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.015em;
+}
+
+.subtitleAnalytics {
+  font-size: 1.05rem;
+  color: #6b7280;
+  margin-bottom: 1.8rem;
+}
+
+/* 📈 Icona */
+.iconaGrafico {
+  width: 28px;
+  height: 28px;
+  color: #2563eb;
+  stroke-width: 2.2;
+  transition: transform 0.3s ease;
+}
+.iconaGrafico:hover {
+  transform: rotate(4deg) scale(1.1);
+}
+
+/* 🧱 Griglia dinamica */
+.statsGridAnalytics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+/* 📦 Blocco statistica */
+.statBlockAnalytics {
+  padding: 1.8rem;
+  border-radius: 1.3rem;
+  background: linear-gradient(135deg, #ffffff, #f9fafe);
+  border: 1px solid rgba(225, 232, 245, 0.6);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 12px 32px rgba(0, 102, 255, 0.06);
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.statBlockAnalytics:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 10px 30px rgba(0, 106, 255, 0.1),
+    inset 0 0 0 rgba(0, 0, 0, 0);
+}
+
+/* 🔢 Numero animato */
+.statNumberAnalytics {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #0284c7;
+  letter-spacing: -1px;
+  margin-bottom: 0.4rem;
+  animation: fadeUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🪄 Badge dinamico */
+.statBadgeAnalytics {
+  margin-top: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  transition: background-color 0.3s ease;
+  line-height: 1;
+}
+
+/* Icona all'interno del badge */
+.badgeIcon {
+  flex-shrink: 0;
+  margin-bottom: -1px;
+}
+
+/* Positivo */
+.statBadgeAnalytics.positive {
+  color: #16a34a;
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+.statBadgeAnalytics.positive .badgeIcon {
+  color: #16a34a;
+}
+
+/* Negativo */
+.statBadgeAnalytics.negative {
+  color: #dc2626;
+  background-color: rgba(239, 68, 68, 0.12);
+}
+
+.statBadgeAnalytics.negative .badgeIcon {
+  color: #dc2626;
+}
+
+  /* 🤖 GPT PERSONALIZZATI - Desktop */
+  .sectionGpt {
+    padding: 2rem 2.5rem;
+    border-radius: 1.2rem;
+    background: linear-gradient(to right top, #fff7f1, #fef5eb);
+    border: 1px solid rgba(245, 180, 100, 0.4);
+    box-shadow: 0 8px 32px rgba(255, 180, 100, 0.15);
+  }
+
+  .iconaBotGpt {
+    width: 24px;
+    height: 24px;
+    color: #f99538;
+    stroke-width: 2;
+    animation: pulseGlow 2s infinite ease-in-out;
+  }
+
+  .iconaBotGpt:hover {
+    transform: scale(1.15);
+    color: #fdb065;
+    filter: drop-shadow(0 0 6px rgba(255, 168, 80, 0.3));
+  }
+
+  @keyframes pulseGlow {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 6px rgba(255, 179, 102, 0.5)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+}
+
+
+
+  .sectionTitleGpt {
+    font-size: 1.5rem;
+    gap: 0.8rem;
+  }
+
+  .infoListGpt li {
+    font-size: 1.05rem;
+    padding: 1rem 1.4rem;
+    border-radius: 1rem;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+
+  .infoListGpt li:hover {
+    background-color: #fff1e5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(252, 180, 110, 0.25);
+  }
+
+
 
   .infoList {
     display: flex;
@@ -546,120 +950,6 @@
   font-size: 1rem;
 }
 
-=======
-  color: #aaa;
-}
-
-/* Contenuto principale */
-.dashboardContent {
-  margin-left: 0;
-  padding: 1.2rem 1rem;
-  flex: 1;
-  width: 100%;
-  min-height: 100vh;
-  box-sizing: border-box;
-  overflow-x: hidden;
-  overflow-y: auto;
-  background: rgba(255, 255, 255, 0.01);
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.sectionContent {
-    width: 100%;
-  }
-
-
-
-/* Titolo */
-.dashboardHeader {
-  font-size: 1.7rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  color: white;
-}
-
-/* Card */
-.card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.2rem;
-  padding: 1.5rem 1.5rem 1.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Titolo card */
-.cardTitle {
-  font-size: 1.3rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: white;
-}
-
-/* Lista ordinata su una riga */
-.cardList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-
-.cardList div {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.95rem;
-  color: #e3e3e3;
-}
-
-/* Pulsanti */
-.editButton,
-.confirmButton,
-.cancelButton,
-.actionButton {
-  padding: 0.75rem 1.2rem;
-  border-radius: 0.75rem;
-  border: none;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  background: linear-gradient(90deg, #8f00ff, #00ffe7);
-  color: black;
-}
-
-.cancelButton {
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.editButton:hover,
-.confirmButton:hover,
-.cancelButton:hover {
-  transform: scale(1.04);
-}
-
-/* Input */
-.inputField {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 0.7rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
-  font-size: 1rem;
-}
-
-/* Popup */
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
 .popupOverlay {
   position: fixed;
   top: 0;
@@ -667,11 +957,7 @@
   z-index: 100;
   width: 100vw;
   height: 100vh;
-<<<<<<< HEAD
   background: rgba(0, 0, 0, 0.45);
-=======
-  background: rgba(0, 0, 0, 0.65);
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
   display: flex;
   justify-content: center;
   align-items: center;
@@ -679,17 +965,12 @@
 }
 
 .popup {
-<<<<<<< HEAD
   background: #fff;
-=======
-  background: #111827;
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
   padding: 2rem 1.5rem;
   border-radius: 1.25rem;
   width: 100%;
   max-width: 400px;
   animation: popupFade 0.3s ease-out;
-<<<<<<< HEAD
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
@@ -705,8 +986,6 @@
   justify-content: space-between;
   gap: 0.5rem;
   margin-top: 1.5rem;
-=======
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
 }
 
 @keyframes popupFade {
@@ -718,39 +997,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-<<<<<<< HEAD
 } 
 
-=======
-}
-
-/* Responsive mobile */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 64px;
-    min-width: 64px;
-    padding: 1rem 0.3rem;
-    gap: 1.2rem;
-  }
-
-  .sidebarLabel {
-    display: none;
-  }
-
-  .dashboardContent {
-    margin-left: 64px;
-    padding: 1.2rem 1rem;
-    min-height: 100vh;
-    height: auto;
-    overflow-y: visible;
-  }
-
-  .card {
-    padding: 1.2rem;
-  }
-
-  .cardList div {
-    font-size: 1rem;
-  }
->>>>>>> 9d022658c1b5f81e434f3dc2f914a5120599e0d7
 }
