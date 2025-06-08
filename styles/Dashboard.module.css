@@ -363,7 +363,7 @@
     color: #1f1f1f;
     margin-bottom: 1.5rem;
     box-shadow: black;
-    composes: mobileCardTitle;
+
   }
 
   .FolderOpenDot {
