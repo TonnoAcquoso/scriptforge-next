@@ -1,6 +1,6 @@
 import { useUser } from '@supabase/auth-helpers-react'
 
-import { WeeklySparkline } from '../components/WeeklySparkline'
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -193,29 +193,6 @@ const userStats = {
           <div className={styles.statNumberAnalytics}>{userStats.last7Days}</div>
           <span>Ultimi 7 Giorni</span>
         </div>
-      </div>
-
-      <div className={styles.statBlockAnalytics}>
-        <div className={styles.statNumberAnalytics}>📈</div>
-        <span>Andamento settimanale</span>
-        <div style={{ width: '100%', height: 100, marginTop: '1rem' }}>
-          {weeklyData?.length > 0 ? (
-            <WeeklySparkline data={weeklyData} />
-          ) : (
-            <p
-              style={{
-                fontSize: '0.85rem',
-                color: '#94a3b8',
-                textAlign: 'center',
-              }}
-            >
-              Nessun dato negli ultimi 7 giorni
-            </p>
-          )}
-        </div>
-        <pre style={{ fontSize: '0.7rem', color: '#64748b' }}>
-          {JSON.stringify(weeklyData, null, 2)}
-        </pre>
       </div>
     </section>
   );
